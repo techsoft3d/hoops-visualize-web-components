@@ -1,0 +1,35 @@
+{
+  "name": "ui-demo",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:npm": "tsc -p tsconfig.npm.json && vite build -c vite.npm.config.mjs",
+    "preview": "vite preview",
+    "build-and-preview": "npm run build && npm run preview -- --port 4200",
+    "preview:npm": "vite preview -c vite.npm.config.mjs --port 4200",
+    "build-and-preview:npm": "npm run build:npm && npm run preview:npm"
+  },
+  "devDependencies": {
+    "typescript": "5.4.5",
+    "vite": "5.2.9"
+  },
+  "dependencies": {
+    "@ts3d-hoops/ui-kit": "2025.8.0",
+    "@ts3d-hoops/ui-kit-react": "2025.8.0",
+    "@ts3d-hoops/web-viewer-components": "2025.8.0",
+    "@ts3d-hoops/web-viewer-components-react": "2025.8.0",
+    "@types/react": "18.3.1",
+    "@types/react-dom": "18.3.0",
+    "@vitejs/plugin-react": "4.3.1",
+    "@xstate/react": "^5.0.2",
+    "color-string": "^2.0.1",
+    "html2canvas-pro": "^1.5.8",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "6.11.2",
+    "vite-plugin-static-copy": "^2.2.0",
+    "xstate": "^5.19.2"
+  }
+}

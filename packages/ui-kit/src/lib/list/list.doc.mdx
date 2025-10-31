@@ -1,0 +1,115 @@
+import { html } from 'lit';
+import { Meta } from '@storybook/blocks';
+
+import * as ListStories from './hoops-list.stories.ts';
+
+<Meta of={ListStories} />
+
+# List
+
+The List component is a generalist list view. it registers a hoops-list
+custom element into the dom that can then be used like a regular HTML tag.
+
+The component is meant to be as generalist and minimalist as possible so that
+you can customize it at will. It only handles the lay out of the list.
+The rest is up to user to define.
+
+## How to use the list
+
+First you need to import the `hoops-list` so it can register the tag in the DOM.
+
+```html
+<!doctype html>
+<html lang="en">
+  <body>
+    <hoops-list id="list"></hoops-list>
+    <script type="module">
+      import './lib/list/hoops-list';
+    </script>
+  </body>
+</html>
+```
+
+If you do this you should see no error but, nothing will be displayed.
+Indeed, we did not provide any data to display into our list.
+
+The list component needs to get passed a map of id's and display names.
+
+The context is defined by the ListContext interface:
+
+```ts
+export interface ListContext {
+  elementsData?: Map<number, string>;
+  sortedByValue: boolean;
+}
+```
+
+You can now define your own list context and pass it to the list so that it can
+display it.
+
+```html
+<!doctype html>
+<html lang="en">
+  <body>
+    <!-- ... -->
+    <hoops-list id="list"></hoops-list>
+    <!-- ... -->
+    <script type="module">
+      import './lib/list/hoops-list';
+
+      const listElm = document.getElementById('list');
+
+      listElm.list = {
+        context: {
+          elementsData: new Map<number, string>([
+            [0, 'First element'],
+            [1, 'Second element'],
+            [2, 'Last element'],
+          ]),
+          sortedByValue: false,
+        },
+      };
+    </script>
+  </body>
+</html>
+```
+
+It will display your list in a list view, sorted alphabetically by display name if
+sortedByValue is set to true.
+User may also listen to `hoops-list-element-click` to know when a element is
+clicked.
+
+You can also use the List.selected member to set the keys of the element that you
+want to select.
+
+In order to do that you have to reassign the List.selected member to trigger an
+update:
+
+```ts
+listElm.selected = [
+  /* your keys */
+];
+```
+
+Alternatively you can update the selected elements using `List.updateSelected`:
+
+```ts
+listElm.updateSelected();
+```
+
+In order to reset the list context, you also need to reassign the List.list
+member:
+
+```ts
+listElm.list = {
+  context: {
+    /* ... */
+  },
+};
+```
+
+Alternatively you can update the context using `List.updateContext`:
+
+```ts
+listElm.updateContext();
+```

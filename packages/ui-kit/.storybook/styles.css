@@ -1,0 +1,91 @@
+:root {
+  color-scheme: light dark;
+  --body-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --black: #1b2b34;
+    --blue: #0078d4;
+
+    /* derivations */
+    --hoops-background: #fafafa; /* dom background */
+    --hoops-foreground: #303030; /* panel background */
+
+    --hoops-neutral-foreground: var(--hoops-foreground); /* text color */
+    --hoops-neutral-foreground-20: color-mix(
+      in srgb,
+      var(--hoops-neutral-foreground),
+      #000000 20%
+    ); /* separator color */
+    --hoops-neutral-foreground-hover: color-mix(
+      in srgb,
+      var(--hoops-neutral-background),
+      #000000 90%
+    );
+
+    --hoops-neutral-background: var(--hoops-background); /* buton, context-menu background */
+    --hoops-neutral-background-20: #fafafa;
+    --hoops-neutral-background-50: #f0f0f0;
+    --hoops-neutral-background-hover: #dddddddd; /* button hovering */
+
+    --hoops-accent-foreground: var(--blue);
+    --hoops-accent-foreground-hover: var(--blue); /* model-tree selected */
+    --hoops-accent-foreground-active: var(--blue); /* model-tree arrows */
+
+    --hoops-dropdown-background-color: var(--hoops-neutral-background-50);
+
+    --hoops-separator-color: var(--hoops-neutral-foreground-20);
+    --hoops-svg-stroke-color: #303030;
+    --hoops-svg-fill-color: #f0f0f0;
+    --hoops-svg-accent-color: #1181d7;
+
+    --hoops-accent-foreground-disabled: #888888; /* context-menu */
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --white: #c0c5ce;
+    --black: #1b2b34;
+    --blue: #4aa4fd;
+    --pastel-blue: #6699cc;
+    --pastel-cyan: #5fb3b3;
+
+    /* derivations */
+    --hoops-background: var(--black);
+    --hoops-foreground: var(--white);
+
+    --hoops-neutral-foreground: var(--white);
+    --hoops-neutral-foreground-20: #0f1519;
+    --hoops-neutral-foreground-hover: color-mix(
+      in srgb,
+      var(--hoops-neutral-background),
+      #ffffff 90%
+    );
+
+    --hoops-neutral-background: var(--black);
+    --hoops-neutral-background-20: color-mix(in srgb, var(--hoops-neutral-background), #000000 20%);
+    --hoops-neutral-background-50: color-mix(in srgb, var(--hoops-neutral-background), #000000 50%);
+    --hoops-neutral-background-hover: color-mix(
+      in srgb,
+      var(--hoops-neutral-background),
+      #ffffff 10%
+    );
+
+    --hoops-accent-foreground: var(--pastel-blue);
+    --hoops-accent-foreground-hover: var(--blue);
+    --hoops-accent-foreground-active: var(--pastel-cyan);
+
+    --hoops-dropdown-background-color: var(--hoops-neutral-background-50);
+
+    --hoops-separator-color: #2b2e31;
+    --hoops-svg-stroke-color: var(--hoops-neutral-foreground);
+    --hoops-svg-fill-color: var(--hoops-neutral-background-20);
+    --hoops-svg-accent-color: var(--hoops-neutral-foreground);
+
+    --hoops-accent-foreground-disabled: var(--hoops-neutral-foreground);
+  }
+}

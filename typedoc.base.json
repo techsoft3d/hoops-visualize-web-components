@@ -1,0 +1,17 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "includeVersion": true,
+  "cleanOutputDir": true,
+  "exclude": ["**/*.spec.ts", "**/*.test.ts", "**/*.test-d.ts", "**/lib/specs/**/*"],
+  "excludeExternals": false,
+  "excludeInternal": true,
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "categorizeByGroup": true,
+  "hideGenerator": true,
+  "sort": ["static-first", "required-first", "visibility", "alphabetical"],
+  "validation": {
+    "notExported": true,
+    "invalidLink": true
+  }
+}

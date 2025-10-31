@@ -1,0 +1,259 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="lib/model-tree/hoops-model-tree/Docs"/>
+
+# Model Tree
+
+The Model Tree components is a tree view that represents the web-viewer's model.
+It registers a `hoops-model-tree` custom element into the dom that can then be
+used like a regular HTML tag.
+
+The component is meant to be customizable, stylable and testable therefore it is
+not directly couple with the `Model` class.
+
+# How to use the model tree
+
+First you need to import the `hoops-model-tree` so it can register the tag in
+the DOM.
+
+```ts
+import './lib/model-tree/hoops-model-tree';
+```
+
+This will allow you to add the tag into your HTML/JSX code:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <hoops-model-tree id="model-tree"></hoops-model-tree>
+    <script type="module">
+      import './lib/model-tree/hoops-model-tree';
+    </script>
+  </body>
+</html>
+```
+
+If you do this you should see no error but, nothing will be displayed.
+Indeed, we did not provide data to display into our model tree.
+
+The model-tree component needs to get passed the model in order to render the
+data.
+
+If you already have a model all you need to do is to assign it to your
+model-tree element like this:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <!-- ... -->
+    <hoops-model-tree id="model-tree"></hoops-model-tree>
+    <!-- ... -->
+    <script type="module">
+      import './lib/model-tree/hoops-model-tree';
+
+      /* ... */
+
+      const modelTreeElm = document.getElementById('model-tree');
+
+      /* ... */
+
+      hwv.setCallBacks({
+        modelStructureReady: () => {
+          modelTreeElm.model = model;
+        },
+      });
+    </script>
+  </body>
+</html>
+```
+
+> Note that you need to update the tree if it changes from the webviewer.
+>
+> To update the entire tree, you can reassign the model to the tree.
+> The underlying framework will detect a change in the context and update the
+> tree.
+
+## Interaction with the viewer
+
+The click on a node may trigger some action in the code for example, in our demo
+implementation we have added support to selection and we have also a little
+clickable icon to toggle the visibility of each node.
+
+In order to support it you can attach event listeners on the model tree:
+
+```ts
+modelTreeElm.addEventListener('hoops-model-tree-node-click', (event: ModelTreeNodeClickEvent) => {
+  event.stopPropagation();
+
+  hwv.selectionManager.clear(false);
+  hwv.selectionManager.selectNode(event.detail.nodeId, SelectionMode.Add);
+});
+
+modelTreeElm.addEventListener(
+  'hoops-model-tree-node-visibility-change',
+  (event: ModelTreeNodeVisibilityClickEvent) => {
+    event.stopPropagation();
+
+    hwv.model.setNodesVisibility([event.detail.nodeId], event.detail.visibility);
+    modelTreeElm.updateNodeData(event.detail.nodeId, {
+      visible: event.detail.visibility,
+    });
+  }
+);
+```
+
+The connection must be established in both ways so we also need to set the
+values on the model tree when the model changes.
+
+To handle that we relye on the web-viewer callbacks to update the model tree:
+
+```ts
+hwv.setCallBacks({
+  selectionArray: () => {
+    /**
+     * We will discuss model tree members and methods in the next section.
+     */
+    modelTreeElm.selected = this.hwv!.selectionManager.getResults().map((current) =>
+      current.getNodeId()
+    );
+  },
+
+  visibilityChanged: (shownBodyIds, hiddenBodyIds) => {
+    shownBodyIds.forEach((nodeId: number) =>
+      modelTreeElm.updateNodeData(nodeId, { visible: true })
+    );
+
+    hiddenBodyIds.forEach((nodeId: number) =>
+      modelTreeElm.updateNodeData(nodeId, { visible: false })
+    );
+  },
+});
+```
+
+Now our model selection and nodes visibility are bound to the model tree and
+should be kept up to date with the viewer.
+
+## The selection
+
+The Model tree internally relies on `hoops-tree` selection system.
+In order to simplify the manipulation of the Tree.selected member, the ModelTree
+class provides a property ModelTree.selected and updates the tree when it is
+reassigned.
+
+## Adding custom data
+
+The component rendered for each node can be customize through the
+ModelAdapter. Some component may need extra reactive properties to watch and
+trigger updates themselves. The easiest way to store these component is to use
+ModelAdapter.nodesData, a literal object using the node ids as key and anything
+as value.
+
+It will be passed to the component at creation and trigger an update of the
+components if it changes.
+
+From the exterior, the most convenient way to get and set the
+ModelAdapter.nodesData is through ModelTree.getNodeData and
+ModelTree.setNodeData, alternatively you can use ModelTree.updateNodeData to
+modify the object instead of overwriting it.
+
+## How does it works
+
+internally it relies on two blocks
+
+- The `hoops-tree` component
+- The `ModelAdapter` class
+
+> Note that `hoops-tree` APIs use `key` as the id of the nodes like most
+> component library. The model-tree uses the node ids as key for each tree node.
+> If you interact directly with the `Tree` class you should keep in mind that it
+> uses `key` rather than `nodeId`.
+
+Let's discuss the `ModelAdapter`. In order to make the `ModelTree` independent
+from the `Model` we have created an object that is used as a bridge between the
+model and the UI.
+
+The ModelAdapter class is pretty simple:
+
+```ts
+export default class ModelAdapter implements TreeContext {
+  model?: IModel;
+  nodeFactory: ModelTreeNodeFactory = defaultNodeFactory;
+  nodesData: Record<number, unknown> = {};
+  expandedIcon = html`${downIcon}`;
+  collapsedIcon = html`${rightIcon}`;
+
+  getRoot(): number;
+  getChildren(nodeId: number): number[];
+  getContent(
+    _: TreeContext,
+    id: number,
+    selected?: boolean,
+    nodeData?: unknown
+  ): HTMLTemplateResult | typeof nothing;
+}
+```
+
+The `ModelAdapter` contains a reference to a IModel and a nodeFactory (we will
+explain this later). It also has html fragments for the expand and the collapse
+icons.
+It also query the IModel for the nodes' information.
+
+Let's talk about IModel and ModelTreeNodeFactory.
+
+Internally the ModelAdapter queries information from the IModel in order to fill
+the model tree. The IModel type is an interface that has a small subset of the
+`Model` class APIs. The idea is to allow someone to mock the Model or replace it
+by any structure he may want and use it to provide data to the model tree.
+
+```ts
+export interface IModel {
+  getAbsoluteRootNode: () => number;
+  getNodeChildren: (nodeId: number) => number[];
+  getNodeName: (nodeId: number) => string | null;
+  getNodeType: (nodeId: number) => NodeType;
+}
+```
+
+While this is convenient it would be interesting for users to be able to
+customize the nodes in the model tree. This is the point for the nodeFactory.
+
+```ts
+export type ModelTreeNodeFactory = (
+  treeContext: TreeContext,
+  model: IModel,
+  nodeId: number,
+  selected?: boolean,
+  nodeData?: unknown
+) => HTMLTemplateResult | typeof nothing;
+```
+
+A user can create his own nodeFactory and assign it to the `ModelAdapter`
+instance. Inside of the factory the user can cast the IModel into a Model or
+whatever type he wants and extract any data he wants out of it.
+
+The `ModelTree` class also provide some interesting APIs:
+
+```ts
+@customElement('hoops-model-tree')
+export default class ModelTree extends LitElement {
+  /* ... */
+
+  readonly treeElement: Tree | undefined;
+  selected: number[];
+  model: IModel | undefined;
+  modelAdapter: ModelAdapter | undefined;
+
+  /* ... */
+
+  selectNodes(nodeIds: number[], selected: boolean): void;
+  getNodeData<T = unknown>(nodeId: number): T;
+  setNodeData(nodeId: number, data: unknown): void;
+  updateNodeData(nodeId: number, data: unknown): void;
+
+  /* ... */
+}
+```
+
+Refer to the `ModelTree` documentation to know more abouut these APIs.

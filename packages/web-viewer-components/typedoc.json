@@ -1,0 +1,8 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "extends": ["../../typedoc.base.json"],
+  "name": "@ts3d-hoops/web-viewer-components API",
+  "entryPoints": ["src/index.ts"],
+  "tsconfig": "tsconfig.lib.json",
+  "readme": "public/README.md"
+}

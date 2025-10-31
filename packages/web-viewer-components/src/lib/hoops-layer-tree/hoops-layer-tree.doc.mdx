@@ -1,0 +1,257 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="lib/layer-list/hoops-layer-list/Docs"/>
+
+# Layer List
+
+The Layer List components is a list view that represents the model's layers.
+It registers a `hoops-layer-list` custom element into the dom that can then be
+used like a regular HTML tag.
+
+The component is meant to be customizable, stylable and testable therefore it is
+not directly couple with the `Model` class.
+
+# How to use the layer list
+
+First you need to import the `hoops-layer-list` so it can register the tag in
+the DOM.
+
+```ts
+import './lib/layer-list/hoops-layer-list';
+```
+
+This will allow you to add the tag into your HTML/JSX code:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <hoops-layer-list id="layer-list"></hoops-layer-list>
+    <script type="module">
+      import './lib/layer-list/hoops-layer-list';
+    </script>
+  </body>
+</html>
+```
+
+If you do this you should see no error but, nothing will be displayed.
+Indeed, we did not provide data to display into our layer list.
+
+The layer-list component needs to get passed the layers container in order to render the
+data.
+
+If you already have a layer all you need to do is to assign it to your
+layer-list element like this:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <!-- ... -->
+    <hoops-layer-list id="layer-list"></hoops-layer-list>
+    <!-- ... -->
+    <script type="module">
+      import './lib/layer-list/hoops-layer-list';
+
+      /* ... */
+
+      const layerListElm = document.getElementById('layer-list');
+
+      /* ... */
+
+      hwv.setCallBacks({
+        modelStructureReady: () => {
+          layerListElm.layersContainer = layersContainer;
+        },
+      });
+    </script>
+  </body>
+</html>
+```
+
+> Note that you need to update the list if it changes from the webviewer.
+>
+> To update the entire list, you can reassign the layers container to the list.
+> The underlying framework will detect a change in the context and update the
+> list.
+
+## Interaction with the viewer
+
+The click on a layer may trigger some action in the code for example, in our demo
+implementation we have added support to selection and we have also a little
+clickable icon to toggle the visibility of each layer.
+
+In order to support it you can attach event listeners on the layer list:
+
+```ts
+layerListElm.addListener('hoops-layer-list-element-click', (event: LayerListElementClickEvent) => {
+  event.stopPropagation();
+
+  hwv.selectionManager.clear(false);
+  hwv.selectionManager.selectLayer(event.detail.layerId, SelectionMode.Add);
+});
+
+layerListElm.addListener(
+  'hoops-layer-list-element-visibility-change',
+  (event: LayerListElementVisibilityClickEvent) => {
+    event.stopPropagation();
+
+    hwv.layersContainer.setLayersVisibility([event.detail.layerId], event.detail.visibility);
+    layerListElm.updateLayerData(event.detail.layerId, {
+      visible: event.detail.visibility,
+    });
+  }
+);
+```
+
+The connection must be established in both ways so we also need to set the
+values on the layer list when the layer changes.
+
+To handle that we relye on the web-viewer callbacks to update the layer list:
+
+```ts
+hwv.setCallBacks({
+  selectionArray: () => {
+    /**
+     * We will discuss layer list members and methods in the next section.
+     */
+    layerListElm.selected = this.hwv!.selectionManager.getResults().map((current) =>
+      current.getLayerId()
+    );
+  },
+
+  visibilityChanged: (shownBodyIds, hiddenBodyIds) => {
+    shownBodyIds.forEach((layerId: number) =>
+      layerListElm.updateLayerData(layerId, { visible: true })
+    );
+
+    hiddenBodyIds.forEach((layerId: number) =>
+      layerListElm.updateLayerData(layerId, { visible: false })
+    );
+  },
+});
+```
+
+Now our layer selection and layers visibility are bound to the layer list and
+should be kept up to date with the viewer.
+
+## The selection
+
+The Layer list internally relies on `hoops-list` selection system.
+In order to simplify the manipulation of the List.selected member, the LayerList
+class provides a property LayerList.selected and updates the list when it is
+reassigned.
+
+## Adding custom data
+
+The component rendered for each layer can be customize through the
+LayerAdapter. Some component may need extra reactive properties to watch and
+trigger updates themselves. The easiest way to store these component is to use
+LayerAdapter.layersData, a literal object using the layer ids as key and anything
+as value.
+
+It will be passed to the component at creation and trigger an update of the
+components if it changes.
+
+From the exterior, the most convenient way to get and set the
+LayerAdapter.layersData is through LayerList.getLayerData and
+LayerList.setLayerData, alternatively you can use LayerList.updateLayerData to
+modify the object instead of overwriting it.
+
+## How does it works
+
+internally it relies on two blocks
+
+- The `hoops-list` component
+- The `LayerAdapter` class
+
+> Note that `hoops-list` APIs use `key` as the id of the layers like most
+> component library. The layer-list uses the layer ids as key for each list layer.
+> If you interact directly with the `List` class you should keep in mind that it
+> uses `key` rather than `layerId`.
+
+Let's discuss the `LayerAdapter`. In order to make the `LayerList` independent
+from the `Layer` we have created an object that is used as a bridge between the
+layer and the UI.
+
+The LayerAdapter class is pretty simple:
+
+```ts
+export default class LayerAdapter implements ListContext {
+  layersContainer?: ILayersContainer;
+  layerFactory: LayerListElementFactory = defaultLayerFactory;
+  layersData: Record<number, unknown> = {};
+  expandedIcon = html`${downIcon}`;
+  collapsedIcon = html`${rightIcon}`;
+
+  getRoot(): number;
+  getChildren(layerId: number): number[];
+  getContent(
+    _: ListContext,
+    id: number,
+    selected?: boolean,
+    layerData?: unknown
+  ): HTMLTemplateResult | typeof nothing;
+}
+```
+
+The `LayerAdapter` contains a reference to a ILayersContainer and a layerFactory (we will
+explain this later). It also has html fragments for the expand and the collapse
+icons.
+It also query the ILayersContainer for the layers' information.
+
+Let's talk about ILayersContainer and LayerListElementFactory.
+
+Internally the LayerAdapter queries information from the ILayersContainer in order to fill
+the layer list. The ILayersContainer type is an interface that has a small subset of the
+`Layer` class APIs. The idea is to allow someone to mock the Layer or replace it
+by any structure he may want and use it to provide data to the layer list.
+
+```ts
+export interface ILayersContainer {
+  getFirstElement: () => number;
+  getLayerName: (layerId: number) => string | null;
+}
+```
+
+While this is convenient it would be interesting for users to be able to
+customize the layers in the layer list. This is the point for the layerFactory.
+
+```ts
+export type LayerListElementFactory = (
+  listContext: ListContext,
+  layersContainer: ILayersContainer,
+  layerId: number,
+  selected?: boolean,
+  layerData?: unknown
+) => HTMLTemplateResult | typeof nothing;
+```
+
+A user can create his own layerFactory and assign it to the `LayerAdapter`
+instance. Inside of the factory the user can cast the ILayersContainer into a Layer or
+whatever type he wants and extract any data he wants out of it.
+
+The `LayerList` class also provide some interesting APIs:
+
+```ts
+@customElement('hoops-layer-list')
+export default class LayerList extends LitElement {
+  /* ... */
+
+  readonly listElement: List | undefined;
+  selected: number[];
+  layersContainer: ILayersContainer | undefined;
+  layerAdapter: LayerAdapter | undefined;
+
+  /* ... */
+
+  selectLayers(layerIds: number[], selected: boolean): void;
+  getLayerData<T = unknown>(layerId: number): T;
+  setLayerData(layerId: number, data: unknown): void;
+  updateLayerData(layerId: number, data: unknown): void;
+
+  /* ... */
+}
+```
+
+Refer to the `LayerList` documentation to know more abouut these APIs.

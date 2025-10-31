@@ -1,0 +1,28 @@
+# Toolbar
+
+The Toolbar component serves as vertical flexible component.
+
+## Usage
+
+Start by importing the hoops-toolbar module, this allows the HTML tag to be registered in the DOM. Then you can add any elements as children.
+
+The toolbar comes with hoops-horizontal-separator component to visually create a separation between sections in the toolbar.
+
+```html
+<!doctype html>
+<html lang="en">
+  <body>
+    <hoops-toolbar>
+      <button>Button</button>
+      <p>Label</p>
+      <hoops-horizontal-separator></hoops-horizontal-separator>
+      <button>Other button</button>
+      <p>Other Label</p>
+    </hoops-toolbar>
+    <script type="module">
+      import './lib/toolbar/hoops-toolbar';
+      import './lib/toolbar/utils';
+    </script>
+  </body>
+</html>
+```

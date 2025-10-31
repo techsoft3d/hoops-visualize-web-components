@@ -1,0 +1,182 @@
+import { html } from 'lit';
+import { Meta } from '@storybook/blocks';
+
+import * as TreeStories from './hoops-tree.stories.ts';
+
+<Meta of={TreeStories} />
+
+# Tree
+
+The Tree component is a generalist tree view. it registers a hoops-tree
+custom element into the dom that can then be used like a regular HTML tag.
+
+The component is meant to be as generalist and minimalist as possible so that
+you can customize it at will. It only handles the lay out of the tree and the
+expansion/collapsing of the nodes. The rest is up to user to define.
+
+## How to use the tree
+
+First you need to import the `hoops-tree` so it can register the tag in the DOM.
+
+```html
+<!doctype html>
+<html lang="en">
+  <body>
+    <hoops-tree id="tree"></hoops-tree>
+    <script type="module">
+      import './lib/tree/hoops-tree';
+    </script>
+  </body>
+</html>
+```
+
+If you do this you should see no error but, nothing will be displayed.
+Indeed, we did not provide any data to display into our tree.
+
+The tree component needs to get passed a model in order to render the
+data.
+
+The context is defined by the TreeContext interface:
+
+```ts
+export interface TreeContext {
+  expandedIcon: HTMLTemplateResult;
+  collapsedIcon: HTMLTemplateResult;
+  leafIcon?: HTMLTemplateResult;
+
+  getRoot(): number;
+  getChildren(key: number): number[];
+  getContent(key: number, selected?: boolean): HTMLTemplateResult | typeof nothing;
+}
+```
+
+You can now define your own tree context and pass it to the tree so that it can
+display it.
+
+```html
+<!doctype html>
+<html lang="en">
+  <body>
+    <!-- ... -->
+    <hoops-tree id="tree"></hoops-tree>
+    <!-- ... -->
+    <script type="module">
+      import './lib/tree/hoops-tree';
+
+      const treeElm = document.getElementById('tree');
+
+      const data = {
+        childrenMap: new Map([
+          [0, [1, 2]],
+          [2, [3, 4, 5, 6]],
+          [6, [7, 8, 9]],
+        ]),
+        contentMap: new Map([...Array(10)].map((_, index) => [index, '#' + index])),
+      };
+
+      treeElm.tree = {
+        context: {
+          expandedIcon: html`${downIcon}`,
+          collapsedIcon: html`${rightIcon}`,
+
+          getRoot: () => 0,
+          getChildren: (key) => data.childrenMap.get(key) ?? [],
+          getContent: (key) => html`${data.contentMap.get(key)}`,
+        },
+      };
+    </script>
+  </body>
+</html>
+```
+
+It will display your data and handle expanding and collapsing nodes.
+User can add listener to `hoops-tree-node-expand` events to know when nodes
+get expanded/collapsed..
+User may also listen to `hoops-tree-node-click` to know when a node is
+clicked. When the expand icon is clicked the `hoops-tree-node-click` is not
+emitted.
+
+You can also use the Tree.selected member to set the keys of the node that you
+want to select.
+
+In order to do that you have to reassigne the Tree.selected member to trigger an
+update:
+
+```ts
+treeElm.selected = [
+  /* your keys */
+];
+```
+
+Alternatively you can update the selected nodes using `Tree.updateSelected`:
+
+```ts
+treeElm.updateSelected();
+```
+
+In order to reset the tree context, you also need to reassign the Tree.tree
+member:
+
+```ts
+treeElm.tree = {
+  context: {
+    /* ... */
+  },
+};
+```
+
+Alternatively you can update the context using `Tree.updateContext`:
+
+```ts
+treeElm.updateContext();
+```
+
+## How does it works internally
+
+The Tree itself does not do much. The data are queried from the tree context and
+then displayed in the Tree. The tree only query the nodes he is currently
+drawing. It means that the tree will query node data when their parents are
+expanded but it will not remove them from the node when their parents are
+collapsed.
+
+If you want to delete this nodes you can remove them from the Tree.entries
+member. This field is a literal object which uses node keys as keys and some
+meaningful information for the tree:
+
+```ts
+export type TreeEntryData = {
+  key: number;
+  parentKey?: number;
+  expanded: boolean;
+  children: number[];
+};
+```
+
+You should not need to alter the values of the TreeEntryData but you can delete
+the entries in the map:
+
+```ts
+const keysToDelete = [
+  /* ... */
+];
+
+keysToDelete.forEach((key: number) => delete treeElm.entries[key]);
+
+// Since Tree.entries is a reactive variable you need to reassign it to trigger
+// an update or you can call Tree.updateEntries.
+treeElm.updateEntries();
+```
+
+This will remove the nodes' entries in the tree and trigger an update.
+you can also do the opposite and preload nodes' children by using
+`Tree.loadChildren`:
+
+```ts
+treeElm.loadChildrenData(treeElm.entries[yourNodeKey]);
+```
+
+By default, the tree queries the root of the TreeContext then it renders its
+structure and call Tree.getNode to render the tree root and its children.
+The Tree.getNode method is recursive, if the node is not loaded it will return
+`nothing` otherwise it will render the node, then it will load the children of
+the node if the node is expanded and call itself for each children.

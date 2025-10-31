@@ -1,0 +1,50 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ts3d-hoops/ui-kit": [
+        "packages/ui-kit/src/lib/index.ts"
+      ],
+      "@ts3d-hoops/ui-kit-react": [
+        "packages/ui-kit-react/src/lib/index.ts"
+      ],
+      "@ts3d-hoops/ui-kit/*": [
+        "packages/ui-kit/src/lib/*"
+      ],
+      "@ts3d-hoops/web-viewer-components": [
+        "packages/web-viewer-components/src/index.ts"
+      ],
+      "@ts3d-hoops/web-viewer-components-react": [
+        "packages/web-viewer-components-react/src/lib/index.ts"
+      ],
+      "@ts3d-hoops/web-viewer-components/*": [
+        "packages/web-viewer-components/src/lib/*"
+      ]
+    },
+    "typeRoots": [
+      "./@types",
+      "./node_modules/@types",
+      "./node_modules"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}

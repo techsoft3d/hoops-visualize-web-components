@@ -1,0 +1,51 @@
+# Layout
+
+The Layout component serves as a fundamental layout manager. It establishes the hoops-layout custom element into the DOM, making it accessible as a conventional HTML tag.
+
+## Usage
+
+Start by importing the hoops-layout module, this allows the HTML tag to be registered in the DOM:
+
+```html
+<!doctype html>
+<html lang="en">
+  <body>
+    <hoops-layout></hoops-layout>
+    <script type="module">
+      import './lib/layout/hoops-layout';
+    </script>
+  </body>
+</html>
+```
+
+The hoops-layout component supports the following slots: menu-bar, status-bar, panel-left, panel-right, panel-top, panel-bottom, toolbar-left, toolbar-right, toolbar-top, toolbar-bottom, and central-widget.
+You can specify slots by placing elements as direct children to the hoops-layout component and using the slot attribute like so:
+
+```html
+<!doctype html>
+<html lang="en">
+  <body>
+    <hoops-layout>
+      <div slot="menu-bar"></div>
+      <div slot="toolbar-left"></div>
+      <div slot="panel-left"></div>
+      <div slot="central-widget"></div>
+      <div slot="panel-right"></div>
+      <div slot="status-bar"></div>
+    </hoops-layout>
+    <script type="module">
+      import './lib/layout/hoops-layout';
+    </script>
+  </body>
+</html>
+```
+
+## Features
+
+### Floating Panels
+
+To have the panels float above the central view, remove them from the regular flow by enabling the floatingPanels flag.
+
+## API
+
+The showSlot and hideSlot API methods are available to dynamically hide or display specific slots on the Layout component.

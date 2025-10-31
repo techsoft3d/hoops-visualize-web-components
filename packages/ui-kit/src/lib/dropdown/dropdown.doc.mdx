@@ -1,0 +1,52 @@
+# Dropdown
+
+The dropdown component serves as flexible dropdown component.
+
+## Usage
+
+Start by importing the hoops-dropdown module, this allows the HTML tag to be registered in the DOM:
+
+```html
+<!doctype html>
+<html lang="en">
+  <body>
+    <hoops-dropdown>
+      <hoops-button>Toggle dropdown</hoops-button>
+      <div slot="dropdown-popup">
+        <hoops-button><span slot="icon">1</span> - Entry 1</hoops-button>
+        <hoops-button><span slot="icon">2</span> - Entry 2</hoops-button>
+      </div>
+    </hoops-dropdown>
+    <script type="module">
+      import './lib/dropdown/hoops-dropdown';
+      import './lib/dropdown/hoops-button';
+    </script>
+  </body>
+</html>
+```
+
+By default it opens below the component, it is possible to change this behavior with the position attribute
+
+```html
+<hoops-dropdown position="right">
+  <hoops-button>Toggle dropdown</hoops-button>
+  <div slot="dropdown-popup">
+    <hoops-button><span slot="icon">1</span> - Entry 1</hoops-button>
+    <hoops-button><span slot="icon">2</span> - Entry 2</hoops-button>
+  </div>
+</hoops-dropdown>
+```
+
+Focusing the first element when the dropdown opens is automatically done using a
+focusableSelector property on the component, if you use custom component not found
+by this query it is possible to override it.
+
+```html
+<hoops-dropdown>
+  <hoops-button>Toggle dropdown</hoops-button>
+  <div slot="dropdown-popup">
+    <hoops-button><span slot="icon">1</span> - Entry 1</hoops-button>
+    <hoops-button><span slot="icon">2</span> - Entry 2</hoops-button>
+  </div>
+</hoops-dropdown>
+```

@@ -1,0 +1,19 @@
+{
+  "name": "@ts3d-hoops/ui-kit-react",
+  "type": "module",
+  "version": "2025.8.0",
+  "typings": "./lib/index.d.ts",
+  "license": "Apache-2.0",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./lib/index.js"
+  },
+  "dependencies": {
+    "@ts3d-hoops/ui-kit": "2025.8.0",
+    "@lit/react": "^1.0.7",
+    "lit": "^3.2.1"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1"
+  }
+}

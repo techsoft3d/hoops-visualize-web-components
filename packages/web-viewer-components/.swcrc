@@ -1,0 +1,11 @@
+{
+  "jsc": {
+    "parser": {
+      "dynamicImport": true,
+      "decorators": true,
+      "importMeta": true,
+      "syntax": "typescript"
+    },
+    "target": "es2016"
+  }
+}

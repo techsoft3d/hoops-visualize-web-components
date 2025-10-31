@@ -1,0 +1,101 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`model-tree @UI.1 > Each node has an icon corresponding to its type: product occurrence or body @UI.1.6 1`] = `
+<svg
+  version="1.1"
+  viewBox="0 0 100 100"
+  xml:space="preserve"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g
+    fill-opacity="0"
+    stroke="var(--hoops-svg-stroke-color)"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="3.8"
+  >
+    <path
+      d="m1.9945 8.6568v82.819h96.165v-71.954h-50.164l-12.073-10.865z"
+    />
+    <path
+      d="m3.8678 35.922h92.835"
+    />
+  </g>
+</svg>
+`;
+
+exports[`model-tree @UI.1 > Each node has an icon corresponding to its type: product occurrence or body @UI.1.6 2`] = `
+<svg
+  version="1.1"
+  viewBox="0 0 100 100"
+  xml:space="preserve"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g
+    fill-opacity="0"
+    stroke="var(--hoops-svg-stroke-color)"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path
+      d="m50.387 63.925 21.789-7.8668zm-48.48-17.645 48.48 17.645v34.244m-26.864-86.507 24.134 8.784m0 26.744-24.134-8.784m23.985-18.014 24.494 8.9152v26.744l-24.494-8.9152zm24.494 35.659 25.983-9.457zm0-26.744 25.983-9.457m-24.494-8.9152-25.983 9.457"
+      stroke-width="1.9"
+    />
+    <path
+      d="m73.491 10.935 24.494 8.9152v26.744m-48.48-44.389-25.983 9.457v26.744m25.983-36.201 24.134 8.784zm-47.598 78.318 48.48 17.645 47.598-17.324m-74.605-42.139-21.473 7.5743v34.244m96.078-33.923v34.244z"
+      stroke-width="3.8"
+    />
+  </g>
+</svg>
+`;
+
+exports[`model-tree @UI.1 > Each node has an icon corresponding to its type: product occurrence or body @UI.1.6 3`] = `
+<svg
+  version="1.1"
+  viewBox="0 0 100 100"
+  xml:space="preserve"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g
+    fill-opacity="0"
+    fill-rule="evenodd"
+    stroke="var(--hoops-svg-stroke-color)"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="3.8"
+  >
+    <path
+      d="m50.137 98.078-48.23-17.554v-61.153m48.23 78.707 47.898-17.433v-61.153l-48.23-17.554-47.898 17.433"
+    />
+    <path
+      d="m1.9077 19.371 48.23 17.554v61.153m0-61.153 47.898-17.433z"
+      stroke-width="1.9"
+    />
+  </g>
+</svg>
+`;
+
+exports[`model-tree @UI.1 > Each node has an icon corresponding to its type: product occurrence or body @UI.1.6 4`] = `
+<svg
+  version="1.1"
+  viewBox="0 0 100 100"
+  xml:space="preserve"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g
+    fill-opacity="0"
+    stroke="var(--hoops-svg-stroke-color)"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path
+      d="m50.387 63.925 21.789-7.8668zm-48.48-17.645 48.48 17.645v34.244m-26.864-86.507 24.134 8.784m0 26.744-24.134-8.784m23.985-18.014 24.494 8.9152v26.744l-24.494-8.9152zm24.494 35.659 25.983-9.457zm0-26.744 25.983-9.457m-24.494-8.9152-25.983 9.457"
+      stroke-width="1.9"
+    />
+    <path
+      d="m73.491 10.935 24.494 8.9152v26.744m-48.48-44.389-25.983 9.457v26.744m25.983-36.201 24.134 8.784zm-47.598 78.318 48.48 17.645 47.598-17.324m-74.605-42.139-21.473 7.5743v34.244m96.078-33.923v34.244z"
+      stroke-width="3.8"
+    />
+  </g>
+</svg>
+`;

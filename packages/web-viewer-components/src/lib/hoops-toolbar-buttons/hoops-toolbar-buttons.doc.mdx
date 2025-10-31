@@ -1,0 +1,41 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="lib/hoops-toolbar-buttons/hoops-toolbar-buttons/Docs" />
+
+# Toolbar buttons
+
+The toolbar buttons are a set of buttons with pre-defined behavior to control the web viewer.
+
+They can be use with the hoops-toolbar component to quickly have a full functional toolbar.
+
+## Usage
+
+Start by importing the toolbar-buttons module, this allows the HTML tag to be registered in the DOM:
+
+```html
+<!doctype html>
+<html lang="en">
+  <body>
+    <hoops-toolbar-model-tree></hoops-toolbar-model-tree>
+    <hoops-toolbar-home></hoops-toolbar-home>
+    <hoops-toolbar-camera></hoops-toolbar-camera>
+    <script type="module">
+      import './lib/toolbar-buttons/toolbar-buttons';
+    </script>
+  </body>
+</html>
+```
+
+Some buttons are just a basic icon button with a pre-defined icon and the click action needs to be handle by the application logic
+while others self contain all the logic and will use the hoops-webviewer-context-manager component to directly interact with the web viewer and
+automatically update their internal states.
+
+- hoops-toolbar-model-tree: simple button to toggle the model tree, logic needs to be implemented at application level.
+- hoops-toolbar-layers: simple button to toggle the layers view, logic needs to be implemented at application level.
+- hoops-toolbar-properties: simple button to show the properties panel, logic needs to be implemented at application level.
+- hoops-toolbar-cad-configuration: simple button to toggle the CAD configurations panel, logic needs to be implemented at application level.
+- hoops-toolbar-home: standalone button that will reset the viewer to its initial state on click.
+- hoops-toolbar-camera: standalone dropdown to control the camera view (projection and builtin views).
+- hoops-toolbar-snapshot: simple button to trigger a snapshot, logic needs to be implemented at application level.
+- hoops-toolbar-drawmode: standalone dropdown to change the draw mode of the viewer.
+- hoops-toolbar-camera-operator: standalone dropdown to enable different camera operators.

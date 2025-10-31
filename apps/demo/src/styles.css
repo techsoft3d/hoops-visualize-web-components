@@ -1,0 +1,93 @@
+@import url('themes.css');
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--hoops-neutral-foreground-hover);
+  font-family: var(--body-font);
+  background-color: var(--hoops-background);
+}
+
+h1 {
+  margin: 0;
+  font-weight: 10;
+  font-size: 3rem;
+}
+
+.logo {
+  height: 3rem;
+  display: inline-block;
+  margin-right: 0.8rem;
+}
+
+[slot='menu-bar'] {
+  display: flex;
+  align-items: center;
+  background-color: var(--hoops-neutral-background-20);
+  border-bottom: var(--hoops-demo-layout-panel-border) solid 1px;
+  padding-left: 1rem;
+  padding-top: 0.1rem;
+  box-sizing: border-box;
+}
+
+[slot='toolbar-left'] {
+  background-color: var(--hoops-neutral-background-50);
+  border-right: var(--hoops-demo-layout-panel-border) solid 1px;
+}
+
+[slot='panel-left'],
+[slot='panel-right'] {
+  width: 25vw;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(8px);
+  background: var(--hoops-demo-layout-panel-background);
+  overflow: auto;
+}
+
+[slot='panel-left'] {
+  border-right: var(--hoops-demo-layout-panel-border) solid 1px;
+}
+
+[slot='panel-right'] {
+  border-left: var(--hoops-demo-layout-panel-border) solid 1px;
+}
+
+[slot='panel-left'][hidden],
+[slot='panel-right'][hidden] {
+  display: none;
+}
+
+.right-panel-up {
+  flex-grow: 2;
+  flex-shrink: 1;
+  overflow: 'auto';
+}
+
+.left-panel-up {
+  flex-grow: 2;
+  flex-shrink: 1;
+  overflow: 'auto';
+}
+
+[slot='panel-right'] > * {
+  border-bottom: var(--hoops-demo-layout-panel-border) solid 1px;
+}
+
+.viewer {
+  width: 100%;
+  height: 100%;
+}
+
+.properties-view {
+  padding: 0px 1rem 0px;
+}
+
+.cad-configuration-list {
+  padding: 0px 1rem 0px;
+}
+
+.settings-panel {
+  padding: 0px 1rem 0px;
+}
