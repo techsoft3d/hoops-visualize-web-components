@@ -128,18 +128,36 @@
         "command": "npx typedoc --options typedoc.json",
         "cwd": "packages/web-viewer-components",
         "args": [
-          "--out",
-          "../../docs/web-viewer-components"
+          "--json",
+          "../../docs/web-viewer-components/web-viewer-components-api.json"
         ]
       },
       "configurations": {
-        "json": {
+        "html": {
           "args": [
-            "--json",
-            "../../docs/web-viewer-components/api.json"
+            "--out",
+            "../../docs/web-viewer-components"
           ]
         }
       }
+    },
+    "api-ref": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "clio apidoc"
+        ],
+        "args": [
+          "--name wvc",
+          "--typedoc-json ./docs/web-viewer-components/web-viewer-components-api.json",
+          "-o ../../../documentation/source/api_ref/wvc",
+          "--remove-old",
+          "--verbose"
+        ]
+      },
+      "dependsOn": [
+        "typedoc"
+      ]
     }
   }
 }

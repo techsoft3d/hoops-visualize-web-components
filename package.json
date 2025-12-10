@@ -1,11 +1,11 @@
 {
   "name": "@ts3d-hoops/visualize-web",
-  "version": "2025.8.0",
+  "version": "2025.9.0",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "nx run-many -t build,typedoc --configuration=json",
+    "build": "nx run-many -t build,typedoc",
     "build:dev": "nx run-many -t build",
-    "doc": "nx run-many -t typedoc --configuration=json"
+    "doc": "npm run api-ref && node ./tools/scripts/build-doc.mjs"
   },
   "private": true,
   "dependencies": {
@@ -36,10 +36,10 @@
     "tslib": "^2.3.0",
     "xstate": "^5.19.2",
     "zero-md": "^3.1.7",
-    "@ts3d-hoops/common": "2025.8.0",
-    "@ts3d-hoops/sc-engine": "2025.8.0",
-    "@ts3d-hoops/streamcache": "2025.8.0",
-    "@ts3d-hoops/web-viewer": "2025.8.0"
+    "@ts3d-hoops/common": "2025.9.0",
+    "@ts3d-hoops/sc-engine": "2025.9.0",
+    "@ts3d-hoops/streamcache": "2025.9.0",
+    "@ts3d-hoops/web-viewer": "2025.9.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.6",

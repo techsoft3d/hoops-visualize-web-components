@@ -9,25 +9,29 @@ import '../icons/hoops-icon';
  *
  * @element hoops-accordion
  *
- * @slot header - Slot for the accordion header content.
- * @slot toolbar - Slot for the accordion header toolbar.
- * @slot icon - Slot for the accordion icon, defaults to an arrow icon.
- * @slot content - Slot for the accordion content.
+ * @slot header - Slot for the accordion header content
+ * @slot toolbar - Slot for the accordion header toolbar
+ * @slot icon - Slot for the accordion icon, defaults to an arrow icon
+ * @slot content - Slot for the accordion content
  *
- * @csspart button - The button element that toggles the accordion.
- * @csspart panel - The panel element that contains the accordion content.
+ * @csspart button - The button element that toggles the accordion
+ * @csspart panel - The panel element that contains the accordion content
  *
- * @cssprop --hoops-svg-accent-color - The accent color for the accordion.
- * @cssprop --hoops-svg-fill-color - The fill color for the accordion icon.
- * @cssprop --font-family - The font family for the accordion text.
- * @cssprop --hoops-background - The background color for the accordion panel.
- * @cssprop --hoops-foreground - The foreground color for the accordion text.
+ * @cssprop --hoops-svg-accent-color - The accent color for the accordion
+ * @cssprop --hoops-svg-fill-color - The fill color for the accordion icon
+ * @cssprop --font-family - The font family for the accordion text
+ * @cssprop --hoops-background - The background color for the accordion panel
+ * @cssprop --hoops-foreground - The foreground color for the accordion text
  *
- * @fires change - Dispatched when the accordion is toggled.
+ * @fires change - Dispatched when the accordion is toggled
  *
- * @property {boolean} expanded - Indicates whether the accordion is expanded.
- * @property {boolean} disabled - Indicates whether the accordion is disabled.
- * @property {number} [level] - The aria-level attribute for the heading element.
+ * @attribute {boolean} expanded - Indicates whether the accordion is expanded
+ * @attribute {boolean} disabled - Indicates whether the accordion is disabled
+ * @attribute {number} level - The aria-level attribute for the heading element
+ *
+ * @example <hoops-accordion expanded><span slot="header">My Header</span><div slot="content">Content here</div></hoops-accordion>
+ *
+ * @since 2025.8.0
  */
 @customElement('hoops-accordion')
 export class HoopsAccordion extends LitElement {
@@ -126,6 +130,10 @@ export class HoopsAccordion extends LitElement {
     `;
   }
 
+  /**
+   * Toggles the accordion's expanded state.
+   * @internal
+   */
   private _toggle() {
     if (this.disabled) {
       return;

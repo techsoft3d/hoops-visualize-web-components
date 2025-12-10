@@ -8,12 +8,24 @@ import { componentBaseStyle } from '../css-common';
 import NodePropertyAdapter from './NodePropertyAdapter';
 
 /**
- * This class implements the hoops-node-properties
+ * A web component that displays properties and user data for a selected node in a tabular format.
  *
- * @export
- * @class NodeProperties
- * @typedef {NodeProperties}
- * @extends {LitElement}
+ * The component fetches and renders node information including the node name, ID, properties,
+ * and associated user data in organized tables.
+ *
+ * @element hoops-node-properties
+ *
+ * @cssprop --hoops-node-properties-table-border - Border style for property tables
+ * @cssprop --hoops-node-properties-header-padding - Padding for table headers
+ *
+ * @attribute {number} nodeId - The ID of the node to display properties for
+ *
+ * @example
+ * ```html
+ * <hoops-node-properties nodeId="12345"></hoops-node-properties>
+ * ```
+ *
+ * @since 2025.7.0
  */
 @customElement('hoops-node-properties')
 export class NodeProperties extends LitElement {
@@ -58,25 +70,24 @@ export class NodeProperties extends LitElement {
   ];
 
   /**
-   * This property represents the id node we want to display the properties from
+   * The ID of the node to display properties for.
    *
-   * @type {number}
+   * @default Number.NaN
    */
   @property({ type: Number })
   nodeId = Number.NaN;
 
   /**
-   * This state variable will hold the API to access the node's information.
+   * The adapter instance used to fetch node data.
    *
-   * The default type of this variable is NodePropertyAdapter but it can be
-   * overridden for customization purposes. It accepts anything implementing the
-   * INodePropertyAdapter interface.
+   * Can be customized by providing any object implementing the INodePropertyAdapter interface.
    *
-   * @type {INodePropertyAdapter}
+   * @default new NodePropertyAdapter()
    */
   @state()
   node = new NodePropertyAdapter() as INodePropertyAdapter;
 
+  /** @internal */
   private loadDataTask = new Task<
     [number, INodePropertyAdapter],
     { name: string; properties: [string, string][]; userData: [string, string][] }
@@ -96,13 +107,13 @@ export class NodeProperties extends LitElement {
   );
 
   /**
-   * This function generates a table to display the properties within two
-   * columns, the name and the value.
+   * Generates a table HTML template to display property data in a two-column format.
    *
-   * @private
-   * @param {[string, string][]} rows
-   * @param {?(input: string) => HTMLTemplateResult} [formatter]
-   * @returns {HTMLTemplateResult) => any}
+   * @param rows - Array of key-value pairs to display in the table
+   * @param formatter - Optional function to format the value column content
+   * @returns HTML template for the table or nothing if rows array is empty
+   *
+   * @internal
    */
   private generateTable(
     rows: [string, string][],
@@ -132,6 +143,13 @@ export class NodeProperties extends LitElement {
     `;
   }
 
+  /**
+   * Renders the component's template.
+   *
+   * @returns HTML template for the node properties display
+   *
+   * @internal
+   */
   render() {
     if (Number.isNaN(this.nodeId)) {
       return html`<div>No properties to display</div>`;

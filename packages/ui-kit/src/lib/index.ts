@@ -22,4 +22,7 @@ export * as nodeProperties from './node-properties';
 export * as toolbar from './toolbar';
 export * as tree from './tree';
 export * as treeItem from './tree-item';
+
+export * from './utils';
+
 export * from './css-common';

@@ -6,6 +6,10 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
+    "npm-deploy": {
+      "cache": false,
+      "parallel": 1
+    },
     "test": {
       "cache": true,
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]

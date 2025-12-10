@@ -10,21 +10,29 @@ import { Tree, ContextWrapper, type TreeNodeClickEvent } from '@ts3d-hoops/ui-ki
 export type * from './custom-events.d.ts';
 
 /**
- * This class implements the view tree web component. It has no property but it
- * has some members and methods. In order to set the model you can assign it to
- * HoopsViewTree.model and it will update automatically.
+ * Provides a tree view for displaying and managing saved views and view configurations.
  *
- * It mainly relies on ViewAdapter and hoops-tree.
- * Thanks to hoops-tree, the nodes in the tree are lazy loaded, expansion and
- * selection are handle.
+ * This component displays a hierarchical tree of saved views including standard views,
+ * annotation views, and combined state views. It supports lazy loading for better
+ * performance with large view sets and provides selection and navigation capabilities.
  *
- * Lazy loading allows better performance and memory consumption especially at
- * loading.
+ * @element hoops-view-tree
  *
- * @export
- * @class HoopsViewTree
- * @typedef {HoopsViewTree}
- * @extends {LitElement}
+ * @fires hoops-view-tree-node-click - Emitted when a view node is clicked
+ *
+ * @example
+ * ```html
+ * <hoops-view-tree></hoops-view-tree>
+ *
+ * <script>
+ *   document.getElementsByTagName('hoops-view-tree')[0].model = modelInstance;
+ *   document.getElementsByTagName('hoops-view-tree')[0].addEventListener('hoops-view-tree-node-click', (event) => {
+ *     console.log('View clicked:', event.detail);
+ *   });
+ * </script>
+ * ```
+ *
+ * @since 2025.8.0
  */
 @customElement('hoops-view-tree')
 export class HoopsViewTreeElement extends LitElement {
@@ -39,46 +47,34 @@ export class HoopsViewTreeElement extends LitElement {
   ];
 
   /**
-   * A reference to the `hoop-tree` element
-   *
-   * @private
-   * @type {Ref<Tree>}
+   * Reference to the internal tree component element.
+   * @internal
    */
   private treeRef = createRef<Tree>();
 
   /**
-   * Get the Tree element
-   *
-   * This is a syntactic sugar to simplify getting the tree element and expose
-   * it externally
-   *
-   * @readonly
-   * @type {(Tree | undefined)}
+   * Gets the internal tree component element.
+   * Provides access to the underlying tree functionality.
+   * @returns {Tree | undefined} The tree element instance or undefined if not initialized
    */
   get treeElement(): Tree | undefined {
     return this.treeRef.value;
   }
 
   /**
-   * Get/Set the selected nodes
-   *
-   * This is a syntactic sugar to access Tree.selected.
-   * If the Tree is not set it returns an empty array.
-   *
-   * Reassigning the selected will trigger an update.
-   *
-   * Trying to set the selected nodes while the tree is not set would result in
-   * an error being thrown.
-   *
-   * This should not happen in a normal use case since the tree is added to the
-   * view tree at initialization.
-   *
-   * @type {number[]}
+   * Gets the currently selected view nodes.
+   * @returns {number[]} Array of selected node IDs
    */
   get selected(): number[] {
     return this.treeElement?.selected ?? [];
   }
 
+  /**
+   * Sets the currently selected view nodes.
+   * @param value - Array of node IDs to select
+   * @returns {void}
+   * @throws {Error} When setting selected nodes before tree initialization
+   */
   set selected(value: number[]) {
     if (!this.treeElement) {
       throw new Error(`HoopsViewTree.selected [set]: Tree element is not set.`);
@@ -101,12 +97,19 @@ export class HoopsViewTreeElement extends LitElement {
    * This should not happen in a normal use case since the viewAdapter is added
    * to the view tree at initialization.
    *
-   * @type {(IModel | undefined)}
+   * @return {(IModel | undefined)} The current model instance or undefined
    */
   get model(): IModel | undefined {
     return this.viewAdapter?.model;
   }
 
+  /**
+   * Sets the model instance for view data.
+   * Setting a new model will refresh the tree view.
+   * @param model - The model instance to set
+   * @returns {void}
+   * @throws {Error} When setting model before view adapter initialization
+   */
   set model(model: IModel | undefined) {
     const viewAdapter = this.viewAdapter;
     if (!viewAdapter) {
@@ -119,26 +122,20 @@ export class HoopsViewTreeElement extends LitElement {
   }
 
   /**
-   * Get/Set the ViewAdapter
-   *
-   * This is a syntactic sugar to access tree.context
-   * If the Tree is not set it returns undefined.
-   *
-   * Reassigning the viewAdapter will trigger an update.
-   *
-   * Trying to set the viewAdapter while the tree is not set would result in
-   * an error being thrown.
-   *
-   * This should not happen in a normal use case since the tree is added to the
-   * view tree at initialization.
-   *
-   * @public
-   * @type {(ViewAdapter | undefined)}
+   * Gets the view adapter that manages tree data and operations.
+   * @returns {ViewAdapter | undefined} The current view adapter or undefined
    */
   public get viewAdapter(): ViewAdapter | undefined {
     return this.treeElement?.tree.context as ViewAdapter | undefined;
   }
 
+  /**
+   * Sets the view adapter that manages tree data and operations.
+   * The adapter handles communication between the tree component and the model.
+   * @param value - The view adapter to set
+   * @returns {void}
+   * @throws {Error} When setting adapter before tree initialization
+   */
   public set viewAdapter(value: ViewAdapter) {
     if (!this.treeElement) {
       throw new Error(`HoopsViewTree.viewAdapter [set]: Tree element is not set.`);
@@ -148,10 +145,11 @@ export class HoopsViewTreeElement extends LitElement {
   }
 
   /**
-   * Select a node in the Tree.
-   *
-   * @param {number[]} nodeIds The ids of the nodes to select
-   * @param {boolean} selected Either to select or deselect the node
+   * Selects or deselects view nodes in the tree.
+   * @param nodeIds - Array of node IDs to select or deselect
+   * @param selected - Whether to select (true) or deselect (false) the nodes
+   * @returns {void}
+   * @throws {Error} When tree element is not initialized
    */
   selectNodes(nodeIds: number[], selected: boolean): void {
     if (!this.treeElement) {
@@ -169,14 +167,10 @@ export class HoopsViewTreeElement extends LitElement {
   }
 
   /**
-   * In order to allow user to attach reactive data to the nodes this is a
-   * shorthand to get the custom data for a node given its id.
-   *
-   * If the viewAdapter does not exist it will throw an Error.
-   * Otherwise it will return the data if any or your node.
-   *
-   * @param {number} nodeId The id of the node that owns the data.
-   * @returns {unknown} The data stored by the user.
+   * Retrieves custom data associated with a view node.
+   * @param nodeId - The ID of the node to get data from
+   * @returns {T} The custom data stored for the node
+   * @throws {Error} When view adapter is not initialized
    */
   getNodeData<T = unknown>(nodeId: number): T {
     const viewAdapter = this.viewAdapter;
@@ -188,17 +182,11 @@ export class HoopsViewTreeElement extends LitElement {
   }
 
   /**
-   * Set some custom data to a node. If the node had already a value it is
-   * erased.
-   *
-   * Setting node data will trigger an update.
-   *
-   * If the viewAdapter does not exist it will throw an Error.
-   *
-   * If the treeElm does not exist it will throw an Error.
-   *
-   * @param {number} nodeId The id of the node that owns the data;
-   * @param {unknown} data The data to store.
+   * Sets custom data for a view node, replacing any existing data.
+   * @param nodeId - The ID of the node to store data for
+   * @param data - The data to store with the node
+   * @returns {void}
+   * @throws {Error} When view adapter or tree element is not initialized
    */
   setNodeData(nodeId: number, data: unknown): void {
     const viewAdapter = this.viewAdapter;
@@ -217,23 +205,12 @@ export class HoopsViewTreeElement extends LitElement {
   }
 
   /**
-   * Merge some custom data into a node's data. If the node did not have data,
-   * it is added to the context.
-   *
-   * If the given data is an array and the context node data is an array, the
-   * data passed as argument are appended to the context data.
-   * If both are objects, then the objects are merged using Object.assign, with
-   * the data argument being the last object of the merge.
-   * Otherwise it is equivalent to setNodeData.
-   *
-   * Updating node data will trigger an update.
-   *
-   * If the viewAdapter does not exist it will throw an Error.
-   *
-   * If the treeElm does not exist it will throw an Error.
-   *
-   * @param {number} nodeId The id of the node that owns the data;
-   * @param {unknown} data The data to store.
+   * Merges custom data into a view node's existing data.
+   * Arrays are concatenated, objects are merged, other types replace existing data.
+   * @param nodeId - The ID of the node to update data for
+   * @param data - The data to merge with existing node data
+   * @returns {void}
+   * @throws {Error} When view adapter or tree element is not initialized
    */
   updateNodeData(nodeId: number, data: unknown): void {
     const viewAdapter = this.viewAdapter;
@@ -261,11 +238,21 @@ export class HoopsViewTreeElement extends LitElement {
     treeElm.tree = { ...treeElm.tree };
   }
 
+  /**
+   * Resets the tree to its initial state and expands the root node.
+   * @internal
+   * @returns {void}
+   */
   private resetTree() {
     this.treeRef.value?.resetTree();
     this.treeRef.value?.expandPath([ViewTreeNodeId.RootNode]);
   }
 
+  /**
+   * Renders the view tree component template.
+   * @internal
+   * @returns {TemplateResult} The component's HTML template
+   */
   protected override render(): unknown {
     return html`<hoops-tree
       class="viewtree"

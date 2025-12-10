@@ -130,18 +130,36 @@
         "command": "npx typedoc --options typedoc.json",
         "cwd": "packages/ui-kit",
         "args": [
-          "--out",
-          "../../docs/ui-kit"
+          "--json",
+          "../../docs/ui-kit/ui-kit-api.json"
         ]
       },
       "configurations": {
-        "json": {
+        "html": {
           "args": [
-            "--json",
-            "../../docs/ui-kit/api.json"
+            "--out",
+            "../../docs/ui-kit"
           ]
         }
       }
+    },
+    "api-ref": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "clio apidoc"
+        ],
+        "args": [
+          "--name ui",
+          "--typedoc-json ./docs/ui-kit/ui-kit-api.json",
+          "-o ../../../documentation/source/api_ref/ui",
+          "--remove-old",
+          "--verbose"
+        ]
+      },
+      "dependsOn": [
+        "typedoc"
+      ]
     }
   }
 }

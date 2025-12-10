@@ -40,6 +40,26 @@ import MeasurementService from '../services/measurement/MeasurementService';
 import ViewService from '../services/view/ViewService';
 import FloorplanService from '../services/floorplan';
 
+/**
+ * Provides centralized context management for the Hoops Web Viewer ecosystem.
+ *
+ * This component acts as a context provider that manages the global state and coordinates
+ * communication between different web viewer components. It provides shared access to
+ * the WebViewer instance, state management, and service coordination.
+ *
+ * @element hoops-web-viewer-context-manager
+ *
+ * @example
+ * ```html
+ * <hoops-web-viewer-context-manager></hoops-web-viewer-context-manager>
+ *
+ * <script>
+ *   document.getElementsByTagName('hoops-web-viewer-context-manager')[0].webViewer = webViewerInstance;
+ * </script>
+ * ```
+ *
+ * @since 2025.8.0
+ */
 @customElement('hoops-web-viewer-context-manager')
 export default class WebViewerContextManager extends LitElement {
   @provide({ context: webViewerStateContext })
@@ -55,10 +75,22 @@ export default class WebViewerContextManager extends LitElement {
   @provide({ context: webViewerContext })
   private _webViewer?: WebViewer;
 
+  /**
+   * Gets the current WebViewer instance.
+   *
+   * @returns {WebViewer | undefined} The current WebViewer instance or undefined if not set
+   */
   get webViewer() {
     return this._webViewer;
   }
 
+  /**
+   * Sets the WebViewer instance and initializes all associated services.
+   * When set, automatically configures service dependencies and refreshes operator states.
+   *
+   * @param value - The WebViewer instance to set
+   * @returns {void}
+   */
   set webViewer(value: WebViewer | undefined) {
     this._webViewer = value;
 
@@ -99,6 +131,14 @@ export default class WebViewerContextManager extends LitElement {
       ) as Operators.SpaceMouseOperator;
   }
 
+  /**
+   * Updates the web viewer state with the specified draw mode.
+   * Dispatches state change to all consuming components via context.
+   *
+   * @internal
+   * @param drawMode - The new draw mode to set in the state
+   * @returns {void}
+   */
   private dispatchDrawMode(drawMode: DrawMode) {
     this.webviewerState = {
       ...this.webviewerState,
@@ -106,6 +146,13 @@ export default class WebViewerContextManager extends LitElement {
     };
   }
 
+  /**
+   * Sets the draw mode for the web viewer and updates the context state.
+   * Changes how 3D models are rendered (wireframe, shaded, etc.).
+   *
+   * @param drawMode - The draw mode to apply to the web viewer
+   * @returns {void}
+   */
   setDrawMode(drawMode: DrawMode) {
     if (this._webViewer) {
       this._webViewer.view.setDrawMode(drawMode);
@@ -113,6 +160,12 @@ export default class WebViewerContextManager extends LitElement {
     }
   }
 
+  /**
+   * Resets the web viewer and all associated services to their initial state.
+   * Clears all active operations, handles, and resets service states.
+   *
+   * @returns {Promise<void>} Promise that resolves when reset is complete
+   */
   async reset() {
     if (!this.webViewer) {
       return;
@@ -137,6 +190,14 @@ export default class WebViewerContextManager extends LitElement {
     getService<ExplodeService>('ExplodeService').reset();
   }
 
+  /**
+   * Updates the web viewer state with the specified camera operator.
+   * Dispatches camera operator change to all consuming components via context.
+   *
+   * @internal
+   * @param cameraOp - The camera operator ID to set in the state
+   * @returns {void}
+   */
   private dispatchCameraOperator(cameraOp: OperatorId) {
     this.webviewerState = {
       ...this.webviewerState,
@@ -144,6 +205,14 @@ export default class WebViewerContextManager extends LitElement {
     };
   }
 
+  /**
+   * Updates the web viewer state with the specified tool operator.
+   * Dispatches tool operator change to all consuming components via context.
+   *
+   * @internal
+   * @param redlineOperator - The tool operator ID to set in the state
+   * @returns {void}
+   */
   private dispatchToolOperator(redlineOperator: OperatorId) {
     this.webviewerState = {
       ...this.webviewerState,
@@ -151,6 +220,12 @@ export default class WebViewerContextManager extends LitElement {
     };
   }
 
+  /**
+   * Refreshes the camera operator state from the web viewer and updates the context.
+   * Synchronizes the context state with the current camera operator.
+   *
+   * @returns {void}
+   */
   refreshCameraOperator() {
     if (this._webViewer) {
       const currentCameraOp = this._webViewer.view.operatorManager.get(CameraOperatorPosition);
@@ -158,6 +233,12 @@ export default class WebViewerContextManager extends LitElement {
     }
   }
 
+  /**
+   * Refreshes the tool operator state from the web viewer and updates the context.
+   * Synchronizes the context state with the current active tool operator.
+   *
+   * @returns {void}
+   */
   refreshToolOperator() {
     if (this._webViewer) {
       const currentRedlineOp = this._webViewer.view.operatorManager.get(ActiveToolOperatorPosition);
@@ -165,6 +246,13 @@ export default class WebViewerContextManager extends LitElement {
     }
   }
 
+  /**
+   * Sets the active redline operator for drawing markup annotations.
+   * Validates the operator ID against supported redline modes before setting.
+   *
+   * @param redlineOperatorId - The redline operator ID to activate
+   * @returns {void}
+   */
   setRedlineOperator(redlineOperatorId: OperatorId) {
     if (!redlineModes.includes(redlineOperatorId as (typeof redlineModes)[number])) {
       console.error('Invalid redline operator ID:', redlineOperatorId);
@@ -174,6 +262,12 @@ export default class WebViewerContextManager extends LitElement {
     this.activeToolOperator = redlineOperatorId;
   }
 
+  /**
+   * Checks if a redline operator is currently active.
+   * Returns true if any redline drawing mode is currently enabled.
+   *
+   * @returns {boolean} True if a redline operator is active, false otherwise
+   */
   isRedlineOperatorActive() {
     if (!this._webViewer) {
       return false;
@@ -186,6 +280,12 @@ export default class WebViewerContextManager extends LitElement {
     );
   }
 
+  /**
+   * Gets the currently active tool operator.
+   * Returns the operator ID if a tool is active, undefined otherwise.
+   *
+   * @returns {OperatorId | undefined} The active tool operator ID or undefined if none is active
+   */
   get activeToolOperator(): OperatorId | undefined {
     if (!this._webViewer) {
       return undefined;
@@ -199,6 +299,14 @@ export default class WebViewerContextManager extends LitElement {
     return op;
   }
 
+  /**
+   * Sets the active tool operator and updates the context state.
+   * Activates the specified operator in the web viewer's operator manager and 
+   * synchronizes the context state to notify all consuming components.
+   *
+   * @param value - The operator ID to set as active, or undefined to clear
+   * @returns {void}
+   */
   set activeToolOperator(value: OperatorId | undefined) {
     if (!this._webViewer) {
       console.error('Cannot set operator: WebViewer not initialized');
@@ -209,10 +317,24 @@ export default class WebViewerContextManager extends LitElement {
     this.refreshToolOperator();
   }
 
+  /**
+   * Returns the element itself as the render root instead of creating a shadow DOM.
+   * This ensures the context provider doesn't interfere with application styling.
+   *
+   * @internal
+   * @returns {Element} The element itself
+   */
   protected createRenderRoot() {
     return this;
   }
 
+  /**
+   * Renders an empty template since this component is purely functional.
+   * The component's purpose is context management, not visual rendering.
+   *
+   * @internal
+   * @returns {unknown} Empty HTML template
+   */
   protected override render(): unknown {
     return html``;
   }

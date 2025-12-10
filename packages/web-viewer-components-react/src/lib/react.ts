@@ -31,6 +31,12 @@ import {
   HoopsTypesTreeElement,
   HoopsServiceRegistryElement,
   HoopsIFCRelationshipElement,
+  HoopsCuttingPlaneEditorElement,
+  HoopsCuttingPlaneToolbarElement,
+  HoopsCuttingPlaneElement,
+  HoopsCuttingPlanePanelElement,
+  HoopsCuttingSectionElement,
+  HoopsCuttingSectionToolbarElement,
 } from '@ts3d-hoops/web-viewer-components';
 
 export const WebViewerComponent = createComponent({
@@ -301,5 +307,59 @@ export const HoopsContextMenu = createComponent({
   react: React,
   events: {
     contextMenuItemClicked: 'context-menu-item-clicked',
+  },
+});
+
+export const HoopsCuttingPlaneEditor = createComponent({
+  tagName: 'hoops-cutting-plane-editor',
+  elementClass: HoopsCuttingPlaneEditorElement,
+  react: React,
+  events: {
+    onChange: 'change',
+  },
+});
+
+export const HoopsCuttingPlaneToolbar = createComponent({
+  tagName: 'hoops-cutting-plane-toolbar',
+  elementClass: HoopsCuttingPlaneToolbarElement,
+  react: React,
+  events: {
+    onChange: 'change',
+  },
+});
+
+export const HoopsCuttingPlane = createComponent({
+  tagName: 'hoops-cutting-plane',
+  elementClass: HoopsCuttingPlaneElement,
+  react: React,
+  events: {
+    onChange: 'change',
+  },
+});
+
+export const HoopsCuttingPlanePanel = createComponent({
+  tagName: 'hoops-cutting-plane-panel',
+  elementClass: HoopsCuttingPlanePanelElement,
+  react: React,
+  events: {
+    onChange: 'change',
+  },
+});
+
+export const HoopsCuttingSection = createComponent({
+  tagName: 'hoops-cutting-section',
+  elementClass: HoopsCuttingSectionElement,
+  react: React,
+  events: {
+    onChange: 'change',
+  },
+});
+
+export const HoopsCuttingSectionToolbar = createComponent({
+  tagName: 'hoops-cutting-section-toolbar',
+  elementClass: HoopsCuttingSectionToolbarElement,
+  react: React,
+  events: {
+    onChange: 'change',
   },
 });

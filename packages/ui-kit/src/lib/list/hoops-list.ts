@@ -8,13 +8,28 @@ import './hoops-list-element';
 import './custom-events.d.ts';
 
 /**
- * This class implements a list view as an HTML custom element. You can
- * integrate it in your application using the `hoops-list` tag.
+ * Provides a list view component for displaying sortable elements.
  *
- * @export
- * @class List
- * @typedef {List}
- * @extends {LitElement}
+ * @element hoops-list
+ *
+ * @example
+ * ```html
+ * <hoops-list></hoops-list>
+ *
+ * <script>
+ *   const list = document.getElementsByTagName("hoops-list")[0];
+ *   list.list = {
+ *     context: {
+ *       elementsData: new Map([[1, 'Item A'], [2, 'Item B']]),
+ *       sortedByValue: true,
+ *       getContent: (context, key, selected) => `${key}: ${context.elementsData.get(key)}`
+ *     }
+ *   };
+ *   list.selected = [1];
+ * </script>
+ * ```
+ *
+ * @since 2025.8.0
  */
 @customElement('hoops-list')
 export default class List extends LitElement {
@@ -32,26 +47,15 @@ export default class List extends LitElement {
   ];
 
   /**
-   * This property holds the selected elements in the list.
-   * It is a reactive property so in order to update the component you need to
-   * reassign the value (ie: this.selected = [...])
+   * Array of selected element keys. Reassign to trigger updates.
    *
-   * @public
-   * @type {number[]}
+   * @default []
    */
   @property({ attribute: false })
   public selected: number[] = [];
 
   /**
-   * The list context used to get the list elements data.
-   * This is a reactive property that can be set externally but it cannot be
-   * passed to the tag.
-   *
-   * To trigger an update when we edit the list we need to reassign it.
-   * Usually you will reassign it to itself (ie: this.list = { ...this.list }).
-   *
-   * @public
-   * @type {ListContext}
+   * Context wrapper providing list data access methods. Reassign to trigger updates.
    */
   @provide({ context: listContext })
   @property({ attribute: false })
@@ -66,22 +70,20 @@ export default class List extends LitElement {
   } as ContextWrapper;
 
   /**
-   * This is a syntactic sugar to improve readability of updating the context.
-   * this is equivalent to: `this.list = { ...this.list }`;
+   * Triggers a re-render by reassigning list context.
    *
-   * @public
+   * @returns void
    */
-  public updateContext() {
+  public updateContext(): void {
     this.list = { ...this.list };
   }
 
   /**
-   * This is a syntactic sugar to improve readability of updating the selected.
-   * this is equivalent to: `this.selected = [ ...this.selected ]`;
+   * Triggers a re-render by reassigning selected elements.
    *
-   * @public
+   * @returns void
    */
-  public updateSelected() {
+  public updateSelected(): void {
     this.selected = [...this.selected];
   }
 
@@ -108,14 +110,12 @@ export default class List extends LitElement {
   }
 
   /**
-   * Generate the HTML template for a element structure.
+   * Generates HTML template for a list element.
    *
-   * @private
-   * @param {number} [elementKey] ID of the element
-   * @param {string} [elementName] Displayed name of the element
-   * @param {boolean} [selected] Whether the element is selected
-   * @returns {(HTMLTemplateResult)} a HTML template for the element
-   * with support to expanding and click.
+   * @internal
+   * @param elementKey - The element's unique key
+   * @param selected - Whether the element is selected
+   * @returns HTML template for the element
    */
   private getElementHtml(elementKey: number, selected: boolean): HTMLTemplateResult {
     return html`<hoops-list-element class="element" key=${elementKey} ?selected=${selected}>

@@ -10,15 +10,31 @@ import type { TreeNodeExpandEvent } from './custom-events.d.ts';
 import { TreeEntryData } from './types';
 
 /**
- * This class implements a tree view as an HTML custom element. You can
- * integrate it in your application using the `hoops-tree` tag.
+ * Provides a tree view component for displaying hierarchical data structures.
  *
- * @todo maybe move it to a ui kit project since it is general.
+ * @element hoops-tree
  *
- * @export
- * @class Tree
- * @typedef {Tree}
- * @extends {LitElement}
+ * @example
+ * ```html
+ * <hoops-tree></hoops-tree>
+ *
+ * <script>
+ *   const tree = document.getElementsByTagName("hoops-tree")[0];
+ *   tree.tree = {
+ *     context: {
+ *       expandedIcon: '▼',
+ *       collapsedIcon: '▶',
+ *       getRoot: () => 0,
+ *       getChildren: (key) => key === 0 ? [1, 2] : [],
+ *       getContent: (key) => `Node ${key}`,
+ *       isSelected: (key) => tree.selected.includes(key)
+ *     }
+ *   };
+ *   tree.selected = [1];
+ * </script>
+ * ```
+ *
+ * @since 2025.8.0
  */
 @customElement('hoops-tree')
 export default class Tree extends LitElement {
@@ -36,41 +52,24 @@ export default class Tree extends LitElement {
   ];
 
   /**
-   * This structure holds all the information needed by the tree to render the
-   * nodes hierarchy.
+   * Holds all tree node data needed for rendering the hierarchy.
+   * Maps node keys to TreeEntryData. Reassign to trigger updates.
    *
-   * It uses the node keys as key and TreeEntryData as value.
-   * Since this variable is reactive if you want to trigger an update when you
-   * edit the data you need to reassign the member (ie: `this.entries = {...}`).
-   * Alternatively you can use the updateEntries method to update the nodes.
-   *
-   * @public
-   * @type {Record<number, TreeEntryData>}
+   * @default {}
    */
   @state()
   public entries: Record<number, TreeEntryData> = {};
 
   /**
-   * This property holds the selected nodes in the tree.
-   * It is a reactive property so in order to update the component you need to
-   * reassign the value (ie: this.selected = [...])
+   * Array of selected node keys. Reassign to trigger updates.
    *
-   * @public
-   * @type {number[]}
+   * @default []
    */
   @property({ attribute: false })
   public selected: number[] = [];
 
   /**
-   * The tree context used to get the tree nodes data.
-   * This is a reactive property that can be set externally but it cannot be
-   * passed to the tag.
-   *
-   * To trigger an update when we edit the tree we need to reassign it.
-   * Usually you will reassign it to itself (ie: this.tree = { ...this.tree }).
-   *
-   * @public
-   * @type {TreeContext}
+   * Context wrapper providing tree data access methods. Reassign to trigger updates.
    */
   @provide({ context: treeContext })
   @property({ attribute: false })
@@ -89,42 +88,39 @@ export default class Tree extends LitElement {
   } as ContextWrapper;
 
   /**
-   * This is a syntactic sugar to improve readability of updating the entries.
-   * this is equivalent to: `this.entries = { ...this.entries }`;
+   * Triggers a re-render by reassigning entries.
    *
-   * @public
+   * @returns void
    */
-  public updateEntries() {
+  public updateEntries(): void {
     this.entries = { ...this.entries };
   }
 
   /**
-   * This is a syntactic sugar to improve readability of updating the context.
-   * this is equivalent to: `this.tree = { ...this.tree }`;
+   * Triggers a re-render by reassigning tree context.
    *
-   * @public
+   * @returns void
    */
-  public updateContext() {
+  public updateContext(): void {
     this.tree = { ...this.tree };
   }
 
   /**
-   * This is a syntactic sugar to improve readability of updating the selected.
-   * this is equivalent to: `this.selected = [ ...this.selected ]`;
+   * Triggers a re-render by reassigning selected entries.
    *
-   * @public
+   * @returns void
    */
-  public updateSelected() {
+  public updateSelected(): void {
     this.selected = [...this.selected];
   }
 
   /**
-   * Loads the children for a given node.
+   * Loads and registers child nodes for a parent node.
    *
-   * @public
-   * @param {TreeEntryData} parent The entry corresponding to the parent
+   * @param parent - The parent node entry
+   * @returns void
    */
-  public loadChildrenData(parent: TreeEntryData) {
+  public loadChildrenData(parent: TreeEntryData): void {
     /*
       For each children we create an entry and we add it to `this.entries` if it
       is not yet loaded.
@@ -147,13 +143,13 @@ export default class Tree extends LitElement {
   }
 
   /**
-   * Expand a path through the tree.
-   * Every node in the path will be expanded.
+   * Expands all nodes along the specified path.
    *
-   * @public
-   * @param {number[]} nodePath The path to expand
+   * @param nodePath - Array of node keys representing the path to expand
+   * @returns void
+   * @throws Error when a node in the path is not found
    */
-  public expandPath(nodePath: number[]) {
+  public expandPath(nodePath: number[]): void {
     const rootKey = this.tree?.context.getRoot() ?? Number.NaN;
     if (isNaN(rootKey)) {
       return;
@@ -174,14 +170,12 @@ export default class Tree extends LitElement {
   }
 
   /**
-   * Trigger a refresh of the data for a given node.
-   * Useful if data provided by the context has changed (child nodes added to it).
-   * If node is not loaded, it does nothing since data will be properly loaded when expanded.
+   * Refreshes node data from context. No-op if node is not loaded.
    *
-   * @public
-   * @param {number} nodeKey The key of the node to update
+   * @param nodeKey - The key of the node to refresh
+   * @returns void
    */
-  public refreshNodeData(nodeKey: number) {
+  public refreshNodeData(nodeKey: number): void {
     // The node is not even loaded yet
     // We can skip and the node will be loaded properly when expanded
     if (!this.entries[nodeKey]) {
@@ -194,14 +188,12 @@ export default class Tree extends LitElement {
   }
 
   /**
-   * Notify the tree a node has been removed from the context.
-   * This will remove the node and all its children from the tree.
-   * If the node is not loaded yet, it does nothing.
+   * Removes a node and all its children from the tree. No-op if node is not loaded.
    *
-   * @public
-   * @param {number} nodeKey The key of the removed node
+   * @param nodeKey - The key of the node to remove
+   * @returns void
    */
-  public removeNode(nodeKey: number) {
+  public removeNode(nodeKey: number): void {
     // Try to find the parent
     const parent = Object.entries(this.entries).find(([, entry]) => {
       return entry.children.includes(nodeKey);
@@ -235,7 +227,12 @@ export default class Tree extends LitElement {
     this.updateEntries();
   }
 
-  public resetTree() {
+  /**
+   * Resets the tree to its initial state, clearing all entries and selections.
+   *
+   * @returns void
+   */
+  public resetTree(): void {
     this.entries = {};
     this.selected = [];
   }
@@ -257,14 +254,10 @@ export default class Tree extends LitElement {
   }
 
   /**
-   * When a node is expanded we load is children in the tree structure so we do
-   * not build the whole tree at start.
+   * Handles node expansion events and loads children on demand.
    *
-   * We do not remove the nodes from the parent is collapsed but this can be
-   * implemented by adding a listener to the tree.
-   *
-   * @private
-   * @param {TreeNodeExpandEvent} event
+   * @internal
+   * @param event - The tree node expand event
    */
   private handleNodeExpanded(event: TreeNodeExpandEvent): void {
     this.entries[event.detail.key].expanded = event.detail.expanded;
@@ -276,16 +269,11 @@ export default class Tree extends LitElement {
   }
 
   /**
-   * Generate the HTML template for a node structure.
+   * Recursively generates HTML template for a node and its loaded children.
    *
-   * This function is recursive, it will call itself for each child of the node
-   * it visits up to the point where there is either no children (node is a
-   * leaf) or the children have not been loaded (parent never expanded).
-   *
-   * @private
-   * @param {?TreeEntryData} [nodeData] The entry corresponding to the node in entries
-   * @returns {(HTMLTemplateResult | typeof nothing)} a HTML template for the node
-   * with support to expanding and click.
+   * @internal
+   * @param nodeData - Optional node entry data
+   * @returns HTML template for the node or nothing if node is not loaded
    */
   private getNode(nodeData?: TreeEntryData): HTMLTemplateResult | typeof nothing {
     if (!nodeData) {
@@ -308,14 +296,13 @@ export default class Tree extends LitElement {
   }
 
   /**
-   * Get the root node data. If the entries for this node is not created yet
-   * this function creates it
+   * Gets or creates the root node entry data.
    *
-   * @private
-   * @param {number} rootKey The key for the root node
-   * @returns {Record<number, TreeEntryData>}
+   * @internal
+   * @param rootKey - The key for the root node
+   * @returns The root node entry data
    */
-  private getRootNodeData(rootKey: number) {
+  private getRootNodeData(rootKey: number): TreeEntryData {
     if (!this.entries[rootKey]) {
       this.entries[rootKey] = {
         key: rootKey,

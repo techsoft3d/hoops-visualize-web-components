@@ -10,21 +10,29 @@ import { componentBaseStyle } from '@ts3d-hoops/ui-kit';
 export type * from './custom-events.d.ts';
 
 /**
- * This class implements the model tree web component. It has no property but it
- * has some members and methods. In order to set the model you can assign it to
- * ModelTree.model and it will update automatically.
+ * Provides a tree view for displaying and navigating the model structure.
  *
- * It mainly relies on ModelAdapter and hoops-tree.
- * Thanks to hoops-tree, the nodes in the tree are lazy loaded, expansion and
- * selection are handle.
+ * This component renders a lazy-loaded tree of model nodes using the model adapter.
+ * It supports selection, contextual data storage, and emits events when nodes are interacted with.
  *
- * Lazy loading allows better performance and memory consumption especially at
- * loading.
+ * @element hoops-model-tree
  *
- * @export
- * @class ModelTree
- * @typedef {ModelTree}
- * @extends {LitElement}
+ * @fires hoops-model-tree-node-click - Emitted when a model node is clicked (primary or auxiliary button)
+ *
+ * @example
+ * ```html
+ * <hoops-model-tree></hoops-model-tree>
+ *
+ * <script>
+ *   const tree = document.getElementsByTagName('hoops-model-tree')[0];
+ *   tree.model = modelInstance;
+ *   tree.addEventListener('hoops-model-tree-node-click', (event) => {
+ *     console.log('Node clicked:', event.detail.nodeId);
+ *   });
+ * </script>
+ * ```
+ *
+ * @since 2025.8.0
  */
 @customElement('hoops-model-tree')
 export class HoopsModelTreeElement extends LitElement {
@@ -39,46 +47,34 @@ export class HoopsModelTreeElement extends LitElement {
   ];
 
   /**
-   * A reference to the `hoop-tree` element
-   *
-   * @private
-   * @type {Ref<Tree>}
+   * Reference to the internal tree component element.
+   * @internal
    */
   private treeRef = createRef<Tree>();
 
   /**
-   * Get the Tree element
-   *
-   * This is a syntactic sugar to simplify getting the tree element and expose
-   * it externally
-   *
-   * @readonly
-   * @type {(Tree | undefined)}
+   * Gets the internal tree component instance.
+   * Provides access to the underlying tree API when needed.
+   * @returns {Tree | undefined} The tree element instance or undefined if not initialized
    */
   get treeElement(): Tree | undefined {
     return this.treeRef.value;
   }
 
   /**
-   * Get/Set the selected nodes
-   *
-   * This is a syntactic sugar to access Tree.selected.
-   * If the Tree is not set it returns an empty array.
-   *
-   * Reassigning the selected will trigger an update.
-   *
-   * Trying to set the selected nodes while the tree is not set would result in
-   * an error being thrown.
-   *
-   * This should not happen in a normal use case since the tree is added to the
-   * model tree at initialization.
-   *
-   * @type {number[]}
+   * Gets the currently selected model node IDs.
+   * @returns {number[]} Array of selected node IDs
    */
   get selected(): number[] {
     return this.treeElement?.selected ?? [];
   }
 
+  /**
+   * Sets the currently selected model node IDs.
+   * @param value - Array of node IDs to select
+   * @returns {void}
+   * @throws {Error} When the tree element is not initialized
+   */
   set selected(value: number[]) {
     if (!this.treeElement) {
       throw new Error(`ModelTree.selected [set]: Tree element is not set.`);
@@ -88,25 +84,20 @@ export class HoopsModelTreeElement extends LitElement {
   }
 
   /**
-   * The IModel interface that represents the Model.
-   *
-   * This is a syntactic sugar to access ModelTree.modelAdapter.model.
-   * If the ModelAdapter is not set it returns an undefined.
-   *
-   * Reassigning the model will trigger a reset of the tree.
-   *
-   * Trying to set the model while the modelAdapter is not set would result in
-   * an error being thrown.
-   *
-   * This should not happen in a normal use case since the modelAdapter is added
-   * to the model tree at initialization.
-   *
-   * @type {(IModel | undefined)}
+   * Gets the model instance used to populate the tree.
+   * @returns {IModel | undefined} The current model instance or undefined
    */
   get model(): IModel | undefined {
     return this.modelAdapter?.model;
   }
 
+  /**
+   * Sets the model instance used to populate the tree.
+   * Setting the model refreshes the displayed tree structure.
+   * @param model - The model instance to set
+   * @returns {void}
+   * @throws {Error} When the model adapter is not initialized
+   */
   set model(model: IModel | undefined) {
     const modelAdapter = this.modelAdapter;
     if (!modelAdapter) {
@@ -119,26 +110,19 @@ export class HoopsModelTreeElement extends LitElement {
   }
 
   /**
-   * Get/Set the ModelAdapter
-   *
-   * This is a syntactic sugar to access tree.context
-   * If the Tree is not set it returns undefined.
-   *
-   * Reassigning the modelAdapter will trigger an update.
-   *
-   * Trying to set the modelAdapter while the tree is not set would result in
-   * an error being thrown.
-   *
-   * This should not happen in a normal use case since the tree is added to the
-   * model tree at initialization.
-   *
-   * @public
-   * @type {(ModelAdapter | undefined)}
+   * Gets the model adapter that supplies data to the tree.
+   * @returns {ModelAdapter | undefined} The current model adapter or undefined
    */
   public get modelAdapter(): ModelAdapter | undefined {
     return this.treeElement?.tree.context as ModelAdapter | undefined;
   }
 
+  /**
+   * Sets the model adapter that supplies data to the tree.
+   * @param value - The model adapter to set
+   * @returns {void}
+   * @throws {Error} When the tree element is not initialized
+   */
   public set modelAdapter(value: ModelAdapter) {
     if (!this.treeElement) {
       throw new Error(`ModelTree.modelAdapter [set]: Tree element is not set.`);
@@ -148,10 +132,14 @@ export class HoopsModelTreeElement extends LitElement {
   }
 
   /**
-   * Select a node in the Tree.
+   * Selects or deselects nodes in the tree.
    *
-   * @param {number[]} nodeIds The ids of the nodes to select
-   * @param {boolean} selected Either to select or deselect the node
+   * Reassigning the selected nodes will trigger an update.
+   *
+   * @param nodeIds - Array of node IDs to update
+   * @param selected - Whether to select (true) or deselect (false) the nodes
+   * @returns {void}
+   * @throws {Error} When the tree element is not initialized
    */
   selectNodes(nodeIds: number[], selected: boolean): void {
     if (!this.treeElement) {
@@ -169,14 +157,13 @@ export class HoopsModelTreeElement extends LitElement {
   }
 
   /**
-   * In order to allow user to attach reactive data to the nodes this is a
-   * shorthand to get the custom data for a node given its id.
+   * Retrieves custom data associated with a node.
    *
-   * If the modelAdapter does not exist it will throw an Error.
-   * Otherwise it will return the data if any or your node.
+   * This is a shorthand to allow users to attach reactive data to nodes.
    *
-   * @param {number} nodeId The id of the node that owns the data.
-   * @returns {unknown} The data stored by the user.
+   * @param nodeId - The ID of the node that owns the data
+   * @returns {T} The stored custom data
+   * @throws {Error} When the model adapter is not initialized
    */
   getNodeData<T = unknown>(nodeId: number): T {
     const modelAdapter = this.modelAdapter;
@@ -188,17 +175,15 @@ export class HoopsModelTreeElement extends LitElement {
   }
 
   /**
-   * Set some custom data to a node. If the node had already a value it is
-   * erased.
+   * Stores custom data for a node, replacing any existing value.
    *
+   * If the node had already a value it is erased.
    * Setting node data will trigger an update.
    *
-   * If the modelAdapter does not exist it will throw an Error.
-   *
-   * If the treeElm does not exist it will throw an Error.
-   *
-   * @param {number} nodeId The id of the node that owns the data;
-   * @param {unknown} data The data to store.
+   * @param nodeId - The ID of the node that owns the data
+   * @param data - The data to store
+   * @returns {void}
+   * @throws {Error} When the model adapter or tree element is not initialized
    */
   setNodeData(nodeId: number, data: unknown): void {
     const modelAdapter = this.modelAdapter;
@@ -216,23 +201,19 @@ export class HoopsModelTreeElement extends LitElement {
   }
 
   /**
-   * Merge some custom data into a node's data. If the node did not have data,
-   * it is added to the context.
+   * Merges custom data into an existing node entry.
    *
-   * If the given data is an array and the context node data is an array, the
-   * data passed as argument are appended to the context data.
-   * If both are objects, then the objects are merged using Object.assign, with
-   * the data argument being the last object of the merge.
+   * If the node did not have data, it is added to the context.
+   * If the given data is an array and the context node data is an array, the data passed as argument are appended to the context data.
+   * If both are objects, then the objects are merged using Object.assign, with the data argument being the last object of the merge.
    * Otherwise it is equivalent to setNodeData.
    *
    * Updating node data will trigger an update.
    *
-   * If the modelAdapter does not exist it will throw an Error.
-   *
-   * If the treeElm does not exist it will throw an Error.
-   *
-   * @param {number} nodeId The id of the node that owns the data;
-   * @param {unknown} data The data to store.
+   * @param nodeId - The ID of the node that owns the data
+   * @param data - The data to merge into the node entry
+   * @returns {void}
+   * @throws {Error} When the model adapter or tree element is not initialized
    */
   updateNodeData(nodeId: number, data: unknown): void {
     const modelAdapter = this.modelAdapter;
@@ -261,29 +242,36 @@ export class HoopsModelTreeElement extends LitElement {
   }
 
   /**
-   * Trigger a refresh of the data for a given node.
-   * Usefull if data provided by the model has changed (child nodes added or removed).
+   * Refreshes the data for a specific node.
+   *
+   * Useful if data provided by the model has changed (child nodes added or removed).
    * If node is not loaded, it does nothing since data will be properly loaded when expanded.
    *
-   * @public
-   * @param {number} nodeId The id of the node to update
+   * @param nodeId - The ID of the node to refresh
+   * @returns {void}
    */
   public refreshNodeData(nodeId: number) {
     this.treeRef.value?.refreshNodeData(nodeId);
   }
 
   /**
-   * Notify the tree a node has been removed from the model.
-   * This will remove the node and all its children from the tree.
+   * Removes a node and its descendants from the displayed tree.
+   *
+   * This notifies the tree that a node has been removed from the model.
    * If the node is not loaded yet, it does nothing.
    *
-   * @public
-   * @param {number} nodeId The id of the removed node
+   * @param nodeId - The ID of the removed node
+   * @returns {void}
    */
   public removeNode(nodeId: number) {
     this.treeRef.value?.removeNode(nodeId);
   }
 
+  /**
+   * Resets the tree and expands default nodes for user visibility.
+   * @internal
+   * @returns {void}
+   */
   private resetTree() {
     this.treeRef.value?.resetTree();
 
@@ -314,6 +302,12 @@ export class HoopsModelTreeElement extends LitElement {
     this.treeRef.value?.expandPath(defaultExpandedPath);
   }
 
+  /**
+   * Handles low-level tree click events and re-emits them as model tree events.
+   * @internal
+   * @param event - The original tree click event
+   * @returns {void}
+   */
   private handleNodeClick(
     event: CustomEventMap['hoops-tree-node-click'] | CustomEventMap['hoops-tree-node-aux-click'],
   ): void {
@@ -331,6 +325,11 @@ export class HoopsModelTreeElement extends LitElement {
     );
   }
 
+  /**
+   * Renders the tree component template.
+   * @internal
+   * @returns {unknown} The Lit HTML template
+   */
   protected override render(): unknown {
     return html`<hoops-tree
       data-html2canvas-ignore

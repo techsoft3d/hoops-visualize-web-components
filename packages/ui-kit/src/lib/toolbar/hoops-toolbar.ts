@@ -2,12 +2,33 @@ import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
 /**
- * Basic vertical toolbar to stack buttons
+ * A basic vertical toolbar component for stacking buttons and other interactive elements.
  *
- * @export
- * @class Toolbar
- * @typedef {Toolbar}
- * @extends {LitElement}
+ * This component provides a flexible container with consistent spacing and alignment
+ * for toolbar buttons. It automatically arranges child elements vertically with
+ * proper gaps and centers them within a fixed-width container.
+ *
+ * @element hoops-toolbar
+ *
+ * @slot - Default slot for toolbar buttons and other interactive elements
+ *
+ * @cssprop --hoops-dropdown-gap - Gap spacing for dropdown elements within the toolbar (default: 0.8rem)
+ *
+ * @example
+ * ```html
+ * <hoops-toolbar>
+ *   <button>Button 1</button>
+ *   <button>Button 2</button>
+ *   <button>Button 3</button>
+ * </hoops-toolbar>
+ *
+ * <script>
+ *   const toolbar = document.getElementsByTagName("hoops-toolbar")[0];
+ *   // Toolbar will automatically arrange children vertically
+ * </script>
+ * ```
+ *
+ * @since 2025.7.0
  */
 @customElement('hoops-toolbar')
 export class Toolbar extends LitElement {
@@ -28,6 +49,12 @@ export class Toolbar extends LitElement {
     `,
   ];
 
+  /**
+   * Renders the toolbar container with default slot for child elements.
+   *
+   * @returns The toolbar template with a flex column layout and default slot
+   * @internal
+   */
   protected override render(): unknown {
     return html`<div class="toolbar">
       <slot></slot>

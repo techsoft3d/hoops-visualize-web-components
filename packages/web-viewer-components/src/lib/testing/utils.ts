@@ -8,3 +8,7 @@ export function renderTemplate(template: TemplateResult) {
 export function tick() {
   return new Promise((ok) => setTimeout(ok.bind(undefined))); // wait for the event loop to flush tasks
 }
+
+export async function nextFrame() {
+  return new Promise((resolve) => requestAnimationFrame(resolve));
+}

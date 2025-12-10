@@ -80,3 +80,21 @@ export const HoopsAccordion = createComponent({
     onChange: 'change',
   },
 });
+
+export const HoopsCoordinateInput = createComponent({
+  tagName: 'hoops-coordinate-input',
+  elementClass: common.HoopsCoordinateInputElement,
+  react: React,
+  events: {
+    onHoopsCoordinateChanged: 'hoops-coordinate-changed',
+  },
+});
+
+export const HoopsColorButton = createComponent({
+  tagName: 'hoops-color-button',
+  elementClass: common.HoopsColorButtonElement,
+  react: React,
+  events: {
+    onChange: 'change',
+  },
+});

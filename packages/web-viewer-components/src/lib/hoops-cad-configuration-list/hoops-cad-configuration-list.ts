@@ -8,19 +8,28 @@ import { componentBaseStyle } from '@ts3d-hoops/ui-kit';
 export type * from './custom-events.d.ts';
 
 /**
- * This class implements the CAD configuration list web component. It has no property but it
- * has some members and methods. In order to set the model you can assign it to
- * HoopsCadConfigurationListElement.model and it will update automatically.
+ * Provides a selectable list of CAD configurations for 3D model viewing.
  *
- * It mainly relies on ModelAdapter to proxy the web viewer model and allow
- * customization of the cad configuration list.
+ * This web component displays available CAD configurations from a model and allows users
+ * to select different configurations. It automatically integrates with the model adapter
+ * to fetch configuration data and provides click interaction for configuration switching.
  *
- * Event `hoops-cad-configuration-list-click` is dispatched when a cad configuration is clicked.
+ * @element hoops-cad-configuration-list
  *
- * @export
- * @class HoopsCadConfigurationListElement
- * @typedef {HoopsCadConfigurationListElement}
- * @extends {LitElement}
+ * @fires hoops-cad-configuration-list-click - Emitted when a CAD configuration is clicked, includes configuration ID and mouse event details
+ *
+ * @attribute {number} active - The ID of the currently active CAD configuration
+ *
+ * @example
+ * ```html
+ * <hoops-cad-configuration-list active="1"></hoops-cad-configuration-list>
+ *
+ * <script>
+ *   document.getElementsByTagName('hoops-cad-configuration-list')[0].modelAdapter = adapter;
+ * </script>
+ * ```
+ *
+ * @since 2025.8.0
  */
 @customElement('hoops-cad-configuration-list')
 export class HoopsCadConfigurationListElement extends LitElement {
@@ -47,25 +56,22 @@ export class HoopsCadConfigurationListElement extends LitElement {
   ];
 
   /**
-   * The IModel interface that represents the Model.
+   * Gets or sets the 3D model containing CAD configurations.
    *
-   * This is a syntactic sugar to access HoopsCadConfigurationListElement.modelAdapter.model.
-   * If the ModelAdapter is not set it returns an undefined.
+   * This is a convenience accessor for the modelAdapter's model property.
+   * Setting a new model will reset the component state and reload configuration data.
    *
-   * Reassigning the model will trigger a reset of the tree.
-   *
-   * Trying to set the model while the modelAdapter is not set would result in
-   * an error being thrown.
-   *
-   * This should not happen in a normal use case since the modelAdapter is added
-   * at initialization.
-   *
-   * @type {(IModel | undefined)}
+   * @returns {IModel | undefined} The current model, or undefined if no model adapter is set
+   * @throws {Error} When attempting to set a model without a configured model adapter
    */
   get model(): IModel | undefined {
     return this.modelAdapter?.model;
   }
 
+  /**
+   * @param model - The model to set
+   * @returns {void}
+   */
   set model(model: IModel | undefined) {
     const modelAdapter = this.modelAdapter;
     if (!modelAdapter) {
@@ -78,25 +84,22 @@ export class HoopsCadConfigurationListElement extends LitElement {
   }
 
   /**
-   * ModelAdapter
+   * Model adapter used to proxy the web viewer model and allow customization of the CAD configuration list.
    *
-   * Model adapter is used to proxy the web viewer model and allow
-   * customization of the cad configuration list.
+   * Reassigning the modelAdapter will trigger an update of the component.
    *
-   * Reassigning the modelAdapter will trigger an update.
-   *
-   * @public
-   * @type {(ModelAdapter | undefined)}
+   * @default new ModelAdapter()
    */
   @property({ attribute: false })
   public modelAdapter?: ModelAdapter = new ModelAdapter();
 
   /**
-   * This property holds the active cad configuration id.
-   * Set to undefined if no active cad configuration is set.
+   * The ID of the currently active CAD configuration.
    *
-   * @public
-   * @type {number}
+   * When set, highlights the corresponding configuration in the list.
+   * Set to undefined if no active configuration is selected.
+   *
+   * @default undefined
    */
   @property({ attribute: false })
   public active?: number = undefined;
@@ -105,17 +108,31 @@ export class HoopsCadConfigurationListElement extends LitElement {
    * Internal data for the configuration list
    * Undefined means the data is not cached from the model yet.
    *
-   * @private
    * @type {CadConfigurationData[]}
    */
   @state()
   private cadConfigurationData?: CadConfigurationData[] = undefined;
 
+  /**
+   * Resets the component state by clearing the cached configuration data and active selection.
+   * Called when the model or model adapter changes to ensure fresh data loading.
+   *
+   * @internal
+   * @returns {void}
+   */
   private reset() {
     this.cadConfigurationData = undefined;
     this.active = undefined;
   }
 
+  /**
+   * Generates HTML template results for all CAD configuration items.
+   * Loads configuration data from model adapter if not cached, then maps each
+   * configuration to a clickable list item element.
+   *
+   * @internal
+   * @returns {HTMLTemplateResult[]} Array of HTML templates for configuration list items
+   */
   private getCadConfigurationHtmlElements(): HTMLTemplateResult[] {
     if (!this.modelAdapter) {
       return [];
@@ -144,6 +161,15 @@ export class HoopsCadConfigurationListElement extends LitElement {
     });
   }
 
+  /**
+   * Handles click events on CAD configuration list items.
+   * Stops event propagation and dispatches a custom event with configuration details.
+   *
+   * @internal
+   * @param event - The mouse click event
+   * @param cadConfigurationId - ID of the clicked CAD configuration
+   * @returns {void}
+   */
   private handleClick(event: MouseEvent, cadConfigurationId: number) {
     event.stopPropagation();
     const detail = {
@@ -163,6 +189,13 @@ export class HoopsCadConfigurationListElement extends LitElement {
     );
   }
 
+  /**
+   * Renders the CAD configuration list component.
+   * Creates a titled list with clickable configuration items generated from the model data.
+   *
+   * @internal
+   * @returns {unknown} HTML template for the configuration list
+   */
   protected override render(): unknown {
     const cadConfigurationHtmlElements = this.getCadConfigurationHtmlElements();
     return html`<div>

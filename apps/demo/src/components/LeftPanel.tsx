@@ -1,7 +1,7 @@
 import { useSelector } from '@xstate/react';
 import { uiActor } from '../statemachines/uiMachine';
 import ModelTreePanel from './ModelTreePanel';
-import CuttingPlanesPanel from './cutting-plane/CuttingPlanesPanel';
+import CuttingPlanesPanel from './CuttingPlanesPanel';
 import ToolsPanel from './ToolsPanel';
 import SettingsPanel from './SettingsPanel';
 import IFCRelationshipView from './IFCRelationshipView';

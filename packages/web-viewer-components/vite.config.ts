@@ -23,7 +23,11 @@ export default defineConfig({
     dts({
       entryRoot: 'src',
       tsconfigPath: path.join(__dirname, 'tsconfig.lib.json'),
-      aliasesExclude: [/@ts3d-hoops\/web-viewer.*/, /@ts3d-hoops\/ui-kit.*/],
+      aliasesExclude: [
+        /@ts3d-hoops\/common.*/,
+        /@ts3d-hoops\/web-viewer.*/,
+        /@ts3d-hoops\/ui-kit.*/,
+      ],
       copyDtsFiles: true,
     }),
   ],
@@ -44,7 +48,14 @@ export default defineConfig({
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: [/lit.*/, '@ts3d-hoops/web-viewer', /@ts3d-hoops\/ui-kit.*/, '@lit/context'],
+      external: [
+        /lit.*/,
+        '@ts3d-hoops/common',
+        '@ts3d-hoops/web-viewer',
+        /@ts3d-hoops\/ui-kit.*/,
+        '@lit/context',
+        'color-string',
+      ],
       output: {
         inlineDynamicImports: false,
         assetFileNames: () => {
@@ -80,10 +91,10 @@ export default defineConfig({
       reportsDirectory: '../../coverage/packages/web-viewer-components',
       reporter: ['text', 'html'],
       thresholds: {
-        lines: 53,
+        lines: 55,
         functions: 77,
-        branches: 87,
-        statements: 53,
+        branches: 85,
+        statements: 55,
         autoUpdate: true,
       },
     },

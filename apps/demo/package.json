@@ -16,10 +16,10 @@
     "vite": "5.2.9"
   },
   "dependencies": {
-    "@ts3d-hoops/ui-kit": "2025.8.0",
-    "@ts3d-hoops/ui-kit-react": "2025.8.0",
-    "@ts3d-hoops/web-viewer-components": "2025.8.0",
-    "@ts3d-hoops/web-viewer-components-react": "2025.8.0",
+    "@ts3d-hoops/ui-kit": "2025.9.0",
+    "@ts3d-hoops/ui-kit-react": "2025.9.0",
+    "@ts3d-hoops/web-viewer-components": "2025.9.0",
+    "@ts3d-hoops/web-viewer-components-react": "2025.9.0",
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.0",
     "@vitejs/plugin-react": "4.3.1",
