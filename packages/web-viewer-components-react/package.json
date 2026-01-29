@@ -1,11 +1,11 @@
 {
   "name": "@ts3d-hoops/web-viewer-components-react",
   "type": "module",
-  "version": "2025.9.0",
+  "version": "2026.1.0",
   "typings": "./lib/index.d.ts",
   "license": "Apache-2.0",
   "dependencies": {
-    "@ts3d-hoops/web-viewer-components": "2025.9.0",
+    "@ts3d-hoops/web-viewer-components": "2026.1.0",
     "@lit/react": "^1.0.7"
   },
   "peerDependencies": {

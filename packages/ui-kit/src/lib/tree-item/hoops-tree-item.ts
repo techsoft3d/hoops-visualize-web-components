@@ -75,20 +75,24 @@ export class HoopsTreeItemElement extends LitElement {
       }
 
       .tree-item:hover::before {
-        background-color: color-mix(in srgb, var(--hoops-svg-accent-color) 15%, transparent);
+        background-color: color-mix(
+          in srgb,
+          var(--hoops-neutral-foreground-20, #1181d7) 15%,
+          transparent
+        );
       }
 
       .tree-item.selected {
         font-weight: bold;
-        color: var(--hoops-svg-accent-color);
-        stroke: var(--hoops-svg-accent-color);
-        fill: var(--hoops-svg-accent-color);
+        color: var(--hoops-neutral-foreground-20, #1181d7);
+        stroke: var(--hoops-neutral-foreground-20, #1181d7);
+        fill: var(--hoops-neutral-foreground-20, #1181d7);
       }
 
       .expand-icon {
-        color: var(--hoops-foreground);
-        stroke: var(--hoops-svg-stroke-color);
-        fill: var(--hoops-svg-fill-color);
+        color: var(--hoops-foreground, #303030);
+        stroke: var(--hoops-svg-stroke-color, #303030);
+        fill: var(--hoops-svg-fill-color, #f0f0f0);
       }
 
       .children {

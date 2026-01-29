@@ -46,9 +46,9 @@ export class ModelTreeNode extends LitElement {
       }
 
       .model-tree-node.selected {
-        color: var(--hoops-accent-foreground-hover);
-        stroke: var(--hoops-accent-foreground-hover);
-        --hoops-svg-stroke-color: var(--hoops-accent-foreground-hover);
+        color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        stroke: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        --hoops-svg-stroke-color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
       }
 
       .type-icon,
@@ -80,10 +80,10 @@ export class ModelTreeNode extends LitElement {
 
       .content:hover,
       .visible-icon:hover {
-        color: var(--hoops-accent-foreground-hover);
-        stroke: var(--hoops-accent-foreground-hover);
-        fill: var(--hoops-accent-foreground-hover);
-        --hoops-svg-stroke-color: var(--hoops-accent-foreground-hover);
+        color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        stroke: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        fill: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        --hoops-svg-stroke-color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
       }
 
       .title {

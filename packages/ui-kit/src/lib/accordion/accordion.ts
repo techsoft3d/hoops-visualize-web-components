@@ -19,8 +19,8 @@ import '../icons/hoops-icon';
  *
  * @cssprop --hoops-svg-accent-color - The accent color for the accordion
  * @cssprop --hoops-svg-fill-color - The fill color for the accordion icon
- * @cssprop --font-family - The font family for the accordion text
  * @cssprop --hoops-background - The background color for the accordion panel
+ * @cssprop --hoops-neutral-background-50 - The background color of accordion button
  * @cssprop --hoops-foreground - The foreground color for the accordion text
  *
  * @fires change - Dispatched when the accordion is toggled
@@ -55,14 +55,12 @@ export class HoopsAccordion extends LitElement {
       align-items: center;
       width: 100%;
       padding: 0.5rem;
-      background-color: var(--hoops-neutral-background-50);
-      color: var(--hoops-foreground);
+      background-color: var(--hoops-neutral-background-50, #f0f0f0);
+      color: var(--hoops-foreground, #303030);
       cursor: pointer;
       border: none;
       text-align: left;
       outline: none;
-
-      font-family: var(--font-family);
       font-size: 1.25rem;
     }
 
@@ -81,16 +79,15 @@ export class HoopsAccordion extends LitElement {
       margin-left: 0.5rem;
       width: 2rem;
       height: 2rem;
-      stroke: var(--foreground);
+      stroke: var(--hoops-foreground, #303030);
     }
 
     .panel {
-      background-color: var(--hoops-background);
-      color: var(--hoops-foreground);
+      background-color: var(--hoops-background, #fafafa);
+      color: var(--hoops-foreground, #303030);
       height: 100%;
       display: none;
-      border: solid 1px var(--hoops-svg-accent-color);
-      font-family: var(--font-family);
+      border: solid 1px var(--hoops-neutral-foreground-20, #1181d7);
     }
 
     .panel[aria-hidden='false'] {
@@ -98,7 +95,7 @@ export class HoopsAccordion extends LitElement {
     }
 
     .expandIcon {
-      stroke: var(--hoops-foreground);
+      stroke: var(--hoops-foreground, #303030);
     }
   `;
 

@@ -1,7 +1,7 @@
 {
   "name": "@ts3d-hoops/ui-kit-react",
   "type": "module",
-  "version": "2025.9.0",
+  "version": "2026.1.0",
   "typings": "./lib/index.d.ts",
   "license": "Apache-2.0",
   "exports": {
@@ -9,7 +9,7 @@
     ".": "./lib/index.js"
   },
   "dependencies": {
-    "@ts3d-hoops/ui-kit": "2025.9.0",
+    "@ts3d-hoops/ui-kit": "2026.1.0",
     "@lit/react": "^1.0.7",
     "lit": "^3.2.1"
   },

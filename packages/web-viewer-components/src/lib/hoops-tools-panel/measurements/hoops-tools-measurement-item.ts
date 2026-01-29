@@ -58,7 +58,7 @@ export class HoopsToolsMeasurementItemElement extends LitElement {
         transition: background-color 0.15s ease;
         border-radius: 0.25rem;
         min-height: 1.8rem;
-        border-bottom: 1px dashed var(--hoops-foreground);
+        border-bottom: 1px dashed var(--hoops-foreground, #303030);
       }
       .measure-container {
         display: flex;

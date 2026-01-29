@@ -9,9 +9,8 @@ import { css } from 'lit';
 export const componentBaseStyle = css`
   :host {
     display: block;
-    color: var(--hoops-neutral-foreground);
-    stroke: var(--hoops-neutral-foreground);
-    font-family: var(--hoops-body-font);
+    color: var(--hoops-neutral-foreground, #303030);
+    stroke: var(--hoops-neutral-foreground, #303030);
     box-sizing: border-box;
   }
 

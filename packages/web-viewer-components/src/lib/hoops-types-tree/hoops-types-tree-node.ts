@@ -78,14 +78,14 @@ export class TypeTreeNodeElement extends LitElement {
       }
 
       .types-tree-node.selected {
-        color: var(--hoops-accent-foreground-hover);
-        stroke: var(--hoops-accent-foreground-hover);
+        color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        stroke: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
       }
 
       .content:hover {
-        color: var(--hoops-accent-foreground-hover);
-        stroke: var(--hoops-accent-foreground-hover);
-        fill: var(--hoops-accent-foreground-hover);
+        color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        stroke: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        fill: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
       }
     `,
   ];
@@ -189,19 +189,18 @@ export class TypeTreeNodeElement extends LitElement {
     event.stopPropagation();
     // Dispatch a custom event with all the nodeIds for type node selection
     this.dispatchEvent(
-      new CustomEvent<{ nodeIds: number[]; source: HTMLElement; isTypeNode: boolean } & BaseMouseEvent>(
-        'hoops-types-tree-type-node-click',
-        {
-          bubbles: true,
-          composed: true,
-          detail: {
-            nodeIds,
-            source: this,
-            isTypeNode: true,
-            ...toBaseMouseEvent(event),
-          },
+      new CustomEvent<
+        { nodeIds: number[]; source: HTMLElement; isTypeNode: boolean } & BaseMouseEvent
+      >('hoops-types-tree-type-node-click', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          nodeIds,
+          source: this,
+          isTypeNode: true,
+          ...toBaseMouseEvent(event),
         },
-      ),
+      }),
     );
   };
 

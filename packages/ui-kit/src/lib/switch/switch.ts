@@ -64,17 +64,17 @@ export class HoopsSwitchElement extends LitElement {
       width: 1rem;
       left: 0;
       bottom: calc(50% - 0.5rem);
-      background-color: var(--hoops-background);
+      background-color: var(--hoops-background, #fafafa);
       transition: 0.4s;
       border-radius: 50%;
     }
 
     input:checked + .slider {
-      background-color: var(--hoops-accent-foreground-active);
+      background-color: var(--hoops-accent-foreground-active, var(--blue, #0078d4));
     }
 
     input:checked + .slider.disabled {
-      background-color: var(--hoops-accent-foreground-active);
+      background-color: var(--hoops-accent-foreground-active, var(--blue, #0078d4));
       filter: grayscale(1);
     }
 

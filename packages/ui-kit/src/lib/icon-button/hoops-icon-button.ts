@@ -52,7 +52,7 @@ export default class HoopsIconButton extends LitElement {
         display: flex;
         align-items: center;
         background-color: transparent;
-        color: var(--hoops-neutral-foreground);
+        color: var(--hoops-neutral-foreground, #303030);
         transition: background-color linear 0.2s;
         justify-content: center;
         cursor: pointer;
@@ -60,20 +60,20 @@ export default class HoopsIconButton extends LitElement {
         overflow: hidden;
       }
       .container[color='default'] {
-        color: var(--hoops-neutral-foreground);
+        color: var(--hoops-neutral-foreground, #303030);
       }
       .container[color='accent'] {
-        color: var(--hoops-accent-foreground);
-        --hoops-svg-stroke-color: var(--hoops-accent-foreground);
+        color: var(--hoops-accent-foreground, var(--blue, #0078d4));
+        --hoops-svg-stroke-color: var(--hoops-accent-foreground, var(--blue, #0078d4));
       }
       :host(:is(:hover, :active, :focus))
         .container[color='default']:not([hoopsdisabled]):is(:hover, :active, :focus) {
-        color: var(--hoops-neutral-foreground-active);
+        color: var(--hoops-neutral-foreground-active, #f0f0f0);
         background-color: var(--hoops-neutral-background-hover, #303030cc);
       }
       :host(:is(:hover, :active, :focus))
         .container[color='accent']:not([hoopsdisabled]):is(:hover, :active, :focus) {
-        color: var(--hoops-accent-foreground-active);
+        color: var(--hoops-accent-foreground-active, var(--blue, #0078d4));
         background-color: var(--hoops-neutral-background-hover, #303030cc);
       }
       .container[size='xl'] {

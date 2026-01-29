@@ -13,6 +13,7 @@ import {
   toolbar,
   hoopsSwitch,
   accordion,
+  tabs,
 } from '@ts3d-hoops/ui-kit';
 
 export const HoopsLayout = createComponent({
@@ -97,4 +98,16 @@ export const HoopsColorButton = createComponent({
   events: {
     onChange: 'change',
   },
+});
+
+export const HoopsTabs = createComponent({
+  tagName: 'hoops-tabs',
+  elementClass: tabs.HoopsTabsElement,
+  react: React,
+});
+
+export const HoopsTab = createComponent({
+  tagName: 'hoops-tab',
+  elementClass: tabs.HoopsTabElement,
+  react: React,
 });

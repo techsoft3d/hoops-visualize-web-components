@@ -54,7 +54,7 @@ export default class TreeNode extends LitElement {
       }
 
       .expand-icon:hover {
-        stroke: var(--hoops-accent-foreground-hover);
+        stroke: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
       }
 
       .children {
@@ -71,13 +71,13 @@ export default class TreeNode extends LitElement {
       }
 
       .node {
-        color: var(--hoops-neutral-foreground-rest);
-        stroke: var(--hoops-neutral-foreground-rest);
+        color: var(--hoops-neutral-foreground-rest, color-mix(in srgb, #303030, #000000 20%));
+        stroke: var(--hoops-neutral-foreground-rest, color-mix(in srgb, #303030, #000000 20%));
       }
 
       .node.selected {
-        color: var(--hoops-accent-foreground-active);
-        stroke: var(--hoops-accent-foreground-active);
+        color: var(--hoops-accent-foreground-active, var(--blue, #0078d4));
+        stroke: var(--hoops-accent-foreground-active, var(--blue, #0078d4));
       }
 
       .header-caption {

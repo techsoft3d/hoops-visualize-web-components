@@ -38,16 +38,16 @@ export class CadConfigurationListItemElement extends LitElement {
       }
 
       .cad-configuration-item:hover {
-        color: var(--hoops-accent-foreground-hover);
-        stroke: var(--hoops-accent-foreground-hover);
-        fill: var(--hoops-accent-foreground-hover);
-        --hoops-svg-stroke-color: var(--hoops-accent-foreground-hover);
+        color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        stroke: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        fill: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        --hoops-svg-stroke-color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
       }
 
       .cad-configuration-item.active {
-        color: var(--hoops-accent-foreground);
-        stroke: var(--hoops-accent-foreground);
-        --hoops-svg-stroke-color: var(--hoops-accent-foreground);
+        color: var(--hoops-accent-foreground, var(--blue, #0078d4));
+        stroke: var(--hoops-accent-foreground, var(--blue, #0078d4));
+        --hoops-svg-stroke-color: var(--hoops-accent-foreground, var(--blue, #0078d4));
       }
 
       .title {

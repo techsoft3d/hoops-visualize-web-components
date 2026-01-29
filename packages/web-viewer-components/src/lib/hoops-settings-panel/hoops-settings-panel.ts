@@ -28,7 +28,7 @@ export class HoopsSettingsPanelElement extends LitElement {
     }
 
     hoops-button {
-      border: 1px solid var(--hoops-neutral-foreground);
+      border: 1px solid var(--hoops-neutral-foreground, #303030);
     }
   `;
 

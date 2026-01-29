@@ -33,8 +33,8 @@ export class ViewTreeNode extends LitElement {
       }
 
       .view-tree-node.selected {
-        color: var(--hoops-accent-foreground-hover);
-        stroke: var(--hoops-accent-foreground-hover);
+        color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        stroke: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
       }
 
       .content,
@@ -50,9 +50,9 @@ export class ViewTreeNode extends LitElement {
       }
 
       .content:hover {
-        color: var(--hoops-accent-foreground-hover);
-        stroke: var(--hoops-accent-foreground-hover);
-        fill: var(--hoops-accent-foreground-hover);
+        color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        stroke: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        fill: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
       }
 
       .title {

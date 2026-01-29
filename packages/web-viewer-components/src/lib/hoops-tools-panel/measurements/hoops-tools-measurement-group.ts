@@ -44,7 +44,7 @@ export class HoopsToolsMeasurementGroupElement extends LitElement {
         flex-direction: column;
         gap: 0.5rem;
         overflow-y: auto;
-        border: 1px solid var(--hoops-foreground);
+        border: 1px solid var(--hoops-foreground, #303030);
         border-radius: 0.25rem;
         scrollbar-width: thin;
         scrollbar-color: var(--hoops-neutral-foreground-20, #aaaaaa) transparent;

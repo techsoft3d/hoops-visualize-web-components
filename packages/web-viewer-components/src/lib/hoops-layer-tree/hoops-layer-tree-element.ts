@@ -93,14 +93,14 @@ export class LayerTreeElement extends LitElement {
 
       .layer-tree-element.selected,
       .layer-node-element.selected {
-        color: var(--hoops-accent-foreground-hover);
-        stroke: var(--hoops-accent-foreground-hover);
-        --hoops-svg-stroke-color: var(--hoops-accent-foreground-hover);
+        color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        stroke: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
+        --hoops-svg-stroke-color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
       }
 
       .layer-node-element:not(.selected) {
-        color: var(--hoops-neutral-foreground);
-        stroke: var(--hoops-neutral-foreground);
+        color: var(--hoops-neutral-foreground, #303030);
+        stroke: var(--hoops-neutral-foreground, #303030);
       }
 
       .title,

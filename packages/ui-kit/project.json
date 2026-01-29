@@ -142,24 +142,6 @@
           ]
         }
       }
-    },
-    "api-ref": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "clio apidoc"
-        ],
-        "args": [
-          "--name ui",
-          "--typedoc-json ./docs/ui-kit/ui-kit-api.json",
-          "-o ../../../documentation/source/api_ref/ui",
-          "--remove-old",
-          "--verbose"
-        ]
-      },
-      "dependsOn": [
-        "typedoc"
-      ]
     }
   }
 }

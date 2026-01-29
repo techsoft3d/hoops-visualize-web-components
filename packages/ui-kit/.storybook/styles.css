@@ -3,6 +3,7 @@
   --body-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
     'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     'Noto Color Emoji';
+  font-family: var(--body-font);
 }
 
 @media (prefers-color-scheme: light) {
@@ -14,7 +15,7 @@
     --hoops-background: #fafafa; /* dom background */
     --hoops-foreground: #303030; /* panel background */
 
-    --hoops-neutral-foreground: var(--hoops-foreground); /* text color */
+    --hoops-neutral-foreground: var(--hoops-foreground, #303030); /* text color */
     --hoops-neutral-foreground-20: color-mix(
       in srgb,
       var(--hoops-neutral-foreground),
@@ -25,10 +26,12 @@
       var(--hoops-neutral-background),
       #000000 90%
     );
+    --hoops-neutral-foreground-rest: var(--hoops-neutral-foreground-20);
 
     --hoops-neutral-background: var(--hoops-background); /* buton, context-menu background */
     --hoops-neutral-background-20: #fafafa;
     --hoops-neutral-background-50: #f0f0f0;
+    --hoops-neutral-foreground-active: #f0f0f0;
     --hoops-neutral-background-hover: #dddddddd; /* button hovering */
 
     --hoops-accent-foreground: var(--blue);
@@ -65,6 +68,7 @@
       var(--hoops-neutral-background),
       #ffffff 90%
     );
+    --hoops-neutral-foreground-rest: var(--hoops-neutral-foreground-20);
 
     --hoops-neutral-background: var(--black);
     --hoops-neutral-background-20: color-mix(in srgb, var(--hoops-neutral-background), #000000 20%);

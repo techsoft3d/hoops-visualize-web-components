@@ -69,7 +69,7 @@ export class HoopsCuttingSectionElement extends LitElement {
 
       .content {
         min-height: 2rem;
-        background-color: var(--hoops-neutral-background-20);
+        background-color: var(--hoops-neutral-background-20, #fafafa);
         padding: 0.25rem;
       }
     `,

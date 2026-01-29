@@ -33,13 +33,13 @@ export default class ListElement extends LitElement {
       }
 
       .element {
-        color: var(--hoops-neutral-foreground-rest);
-        stroke: var(--hoops-neutral-foreground-rest);
+        color: var(--hoops-neutral-foreground-rest, color-mix(in srgb, #303030, #000000 20%));
+        stroke: var(--hoops-neutral-foreground-rest, color-mix(in srgb, #303030, #000000 20%));
       }
 
       .element.selected {
-        color: var(--hoops-accent-foreground-active);
-        stroke: var(--hoops-accent-foreground-active);
+        color: var(--hoops-accent-foreground-active, var(--blue, #0078d4));
+        stroke: var(--hoops-accent-foreground-active, var(--blue, #0078d4));
       }
     `,
   ];

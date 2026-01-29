@@ -60,17 +60,17 @@ export class Separator extends LitElement {
       }
       .separator {
         border: none;
-        border-left: 1px solid var(--hoops-separator-color);
+        border-left: 1px solid var(--hoops-separator-color, #f0f0f0);
       }
       .separator.separator-vertical {
         height: 80%;
         margin: 0px 4px;
-        border-left: 1px solid var(--hoops-separator-color);
+        border-left: 1px solid var(--hoops-separator-color, #f0f0f0);
       }
       .separator.separator-horizontal {
         width: 80%;
         margin: 4px 0px;
-        border-top: 1px solid var(--hoops-separator-color);
+        border-top: 1px solid var(--hoops-separator-color, #f0f0f0);
       }
     `,
   ];

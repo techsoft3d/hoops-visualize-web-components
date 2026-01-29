@@ -140,24 +140,6 @@
           ]
         }
       }
-    },
-    "api-ref": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "clio apidoc"
-        ],
-        "args": [
-          "--name wvc",
-          "--typedoc-json ./docs/web-viewer-components/web-viewer-components-api.json",
-          "-o ../../../documentation/source/api_ref/wvc",
-          "--remove-old",
-          "--verbose"
-        ]
-      },
-      "dependsOn": [
-        "typedoc"
-      ]
     }
   }
 }

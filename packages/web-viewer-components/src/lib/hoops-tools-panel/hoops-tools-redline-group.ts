@@ -38,8 +38,8 @@ export class HoopsToolsRedlineGroupElement extends LitElement {
       padding: 0.5rem;
 
       border-radius: 0.25rem;
-      border: 1px solid var(--hoops-foreground);
-      background-color: var(--hoops-neutral-background-20);
+      border: 1px solid var(--hoops-foreground, #303030);
+      background-color: var(--hoops-neutral-background-20, #fafafa);
       max-height: 10rem;
       overflow-y: auto;
     }
@@ -51,14 +51,14 @@ export class HoopsToolsRedlineGroupElement extends LitElement {
       gap: 0.5rem;
       padding: 0.5rem;
       cursor: pointer;
-      border-bottom: 1px dashed var(--hoops-foreground);
+      border-bottom: 1px dashed var(--hoops-foreground, #303030);
     }
 
     .markup.selected {
       background-color: color-mix(
         in srgb,
-        var(--hoops-neutral-background-20),
-        var(--hoops-accent-foreground-active) 10%
+        var(--hoops-neutral-background-20, #fafafa),
+        var(--hoops-accent-foreground-active, var(--blue, #0078d4)) 10%
       );
     }
 
@@ -79,13 +79,13 @@ export class HoopsToolsRedlineGroupElement extends LitElement {
 
     .markup:hover,
     .markup:hover .markupIcon {
-      color: var(--hoops-accent-foreground);
-      stroke: var(--hoops-accent-foreground);
-      fill: var(--hoops-accent-foreground);
+      color: var(--hoops-accent-foreground, var(--blue, #0078d4));
+      stroke: var(--hoops-accent-foreground, var(--blue, #0078d4));
+      fill: var(--hoops-accent-foreground, var(--blue, #0078d4));
       background-color: color-mix(
         in srgb,
-        var(--hoops-neutral-background-20),
-        var(--hoops-foreground) 5%
+        var(--hoops-neutral-background-20, #fafafa),
+        var(--hoops-foreground, #303030) 5%
       );
     }
 
@@ -95,16 +95,16 @@ export class HoopsToolsRedlineGroupElement extends LitElement {
 
     .markup.selected .markupIcon,
     .markup.selected .remove svg {
-      color: var(--hoops-accent-foreground);
-      stroke: var(--hoops-accent-foreground);
-      fill: var(--hoops-accent-foreground);
+      color: var(--hoops-accent-foreground, var(--blue, #0078d4));
+      stroke: var(--hoops-accent-foreground, var(--blue, #0078d4));
+      fill: var(--hoops-accent-foreground, var(--blue, #0078d4));
     }
 
     .placeholder {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--hoops-foreground);
+      color: var(--hoops-foreground, #303030);
       opacity: 0.5;
       font-size: 0.875rem;
       font-weight: 500;

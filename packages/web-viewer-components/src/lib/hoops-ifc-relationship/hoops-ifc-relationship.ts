@@ -41,8 +41,8 @@ export class HoopsIFCRelationshipElement extends LitElement {
         display: block;
         padding: 0.4rem;
         padding-top: 0.8rem;
-        border-top: 1px solid var(--hoops-separator-color);
-        --hoops-svg-fill-color: var(--hoops-foreground);
+        border-top: 1px solid var(--hoops-separator-color, #f0f0f0);
+        --hoops-svg-fill-color: var(--hoops-foreground, #303030);
         min-height: 16rem;
       }
       .section-title {
@@ -74,15 +74,15 @@ export class HoopsIFCRelationshipElement extends LitElement {
         display: flex;
         cursor: pointer;
         padding: 0.3rem 0;
-        border-bottom: 1px solid var(--hoops-separator-color);
-        stroke: var(--hoops-foreground);
+        border-bottom: 1px solid var(--hoops-separator-color, #f0f0f0);
+        stroke: var(--hoops-foreground, #303030);
         user-select: none;
       }
       .relationship-header:hover {
         background-color: color-mix(
           in srgb,
-          var(--hoops-neutral-background-20),
-          var(--hoops-foreground) 5%
+          var(--hoops-neutral-background-20, #fafafa),
+          var(--hoops-foreground, #303030) 5%
         );
       }
       .relationship-toggle {

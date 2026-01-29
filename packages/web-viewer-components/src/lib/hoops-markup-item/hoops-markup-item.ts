@@ -15,7 +15,7 @@ export class HoopsMarkupItemElement extends LitElement {
       gap: 0.5rem;
       padding: 0.5rem;
       cursor: pointer;
-      border-bottom: 1px dashed var(--hoops-foreground);
+      border-bottom: 1px dashed var(--hoops-foreground, #303030);
     }
 
     .icon {
@@ -34,30 +34,30 @@ export class HoopsMarkupItemElement extends LitElement {
 
     .markup:hover,
     .markup:hover .icon {
-      color: var(--hoops-accent-foreground);
-      stroke: var(--hoops-accent-foreground);
-      fill: var(--hoops-accent-foreground);
+      color: var(--hoops-accent-foreground, var(--blue, #0078d4));
+      stroke: var(--hoops-accent-foreground, var(--blue, #0078d4));
+      fill: var(--hoops-accent-foreground, var(--blue, #0078d4));
       background-color: color-mix(
         in srgb,
-        var(--hoops-neutral-background-20),
-        var(--hoops-foreground) 5%
+        var(--hoops-neutral-background-20, #fafafa),
+        var(--hoops-foreground, #303030) 5%
       );
     }
 
     .markup.selected {
       background-color: color-mix(
         in srgb,
-        var(--hoops-neutral-background-20),
-        var(--hoops-accent-foreground-active) 10%
+        var(--hoops-neutral-background-20, #fafafa),
+        var(--hoops-accent-foreground-active, var(--blue, #0078d4)) 10%
       );
     }
 
     .markup.selected,
     .markup.selected .icon,
     .markup.selected .toolbar {
-      color: var(--hoops-accent-foreground);
-      stroke: var(--hoops-accent-foreground);
-      fill: var(--hoops-accent-foreground);
+      color: var(--hoops-accent-foreground, var(--blue, #0078d4));
+      stroke: var(--hoops-accent-foreground, var(--blue, #0078d4));
+      fill: var(--hoops-accent-foreground, var(--blue, #0078d4));
     }
   `;
 

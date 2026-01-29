@@ -91,10 +91,10 @@ export default defineConfig({
       reportsDirectory: '../../coverage/packages/web-viewer-components',
       reporter: ['text', 'html'],
       thresholds: {
-        lines: 55,
-        functions: 77,
+        lines: 57,
+        functions: 78,
         branches: 85,
-        statements: 55,
+        statements: 57,
         autoUpdate: true,
       },
     },

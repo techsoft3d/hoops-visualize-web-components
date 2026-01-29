@@ -9,7 +9,7 @@ exports[`model-tree @UI.1 > Each node has an icon corresponding to its type: pro
 >
   <g
     fill-opacity="0"
-    stroke="var(--hoops-svg-stroke-color)"
+    stroke="var(--hoops-svg-stroke-color, #303030)"
     stroke-linecap="round"
     stroke-linejoin="round"
     stroke-width="3.8"
@@ -33,7 +33,7 @@ exports[`model-tree @UI.1 > Each node has an icon corresponding to its type: pro
 >
   <g
     fill-opacity="0"
-    stroke="var(--hoops-svg-stroke-color)"
+    stroke="var(--hoops-svg-stroke-color, #303030)"
     stroke-linecap="round"
     stroke-linejoin="round"
   >
@@ -59,7 +59,7 @@ exports[`model-tree @UI.1 > Each node has an icon corresponding to its type: pro
   <g
     fill-opacity="0"
     fill-rule="evenodd"
-    stroke="var(--hoops-svg-stroke-color)"
+    stroke="var(--hoops-svg-stroke-color, #303030)"
     stroke-linecap="round"
     stroke-linejoin="round"
     stroke-width="3.8"
@@ -84,7 +84,7 @@ exports[`model-tree @UI.1 > Each node has an icon corresponding to its type: pro
 >
   <g
     fill-opacity="0"
-    stroke="var(--hoops-svg-stroke-color)"
+    stroke="var(--hoops-svg-stroke-color, #303030)"
     stroke-linecap="round"
     stroke-linejoin="round"
   >

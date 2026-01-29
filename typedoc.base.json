@@ -3,7 +3,7 @@
   "includeVersion": true,
   "cleanOutputDir": true,
   "exclude": ["**/*.spec.ts", "**/*.test.ts", "**/*.test-d.ts", "**/lib/specs/**/*"],
-  "excludeExternals": false,
+  "excludeExternals": true,
   "excludeInternal": true,
   "excludePrivate": true,
   "excludeProtected": false,

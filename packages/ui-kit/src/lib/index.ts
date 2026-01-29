@@ -5,6 +5,7 @@ import './tree';
 import './common';
 import './list';
 import './switch';
+import './tabs';
 import './tree-item';
 
 import '../@types/custom-events.d.ts';
@@ -19,6 +20,7 @@ export * as hoopsSwitch from './switch';
 export * as layout from './layout';
 export * as list from './list';
 export * as nodeProperties from './node-properties';
+export * as tabs from './tabs';
 export * as toolbar from './toolbar';
 export * as tree from './tree';
 export * as treeItem from './tree-item';

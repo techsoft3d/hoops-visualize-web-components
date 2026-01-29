@@ -76,7 +76,7 @@ class HoopsContextMenuElement extends LitElement {
 
   static styles = css`
     :host {
-      background-color: var(--hoops-neutral-background-20);
+      background-color: var(--hoops-neutral-background-20, #fafafa);
       position: fixed;
       z-index: 1000;
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
@@ -94,11 +94,14 @@ class HoopsContextMenuElement extends LitElement {
     }
 
     .context-menu-item:not(.disabled):hover {
-      color: var(--hoops-accent-foreground-hover);
+      color: var(--hoops-accent-foreground-hover, var(--blue, #0078d4));
     }
 
     .context-menu-item.disabled {
-      color: var(--hoops-accent-foreground-disabled);
+      color: var(
+        --hoops-accent-foreground-disabled,
+        color-mix(in srgb, var(--hoops-neutral-background, #fafafa), #0078d4 50%)
+      );
       cursor: default;
     }
 
