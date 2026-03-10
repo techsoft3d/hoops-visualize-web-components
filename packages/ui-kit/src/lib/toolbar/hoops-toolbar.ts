@@ -32,6 +32,7 @@ import { customElement } from 'lit/decorators.js';
  */
 @customElement('hoops-toolbar')
 export class Toolbar extends LitElement {
+  /** @internal */
   static styles = [
     css`
       .toolbar {
@@ -49,12 +50,7 @@ export class Toolbar extends LitElement {
     `,
   ];
 
-  /**
-   * Renders the toolbar container with default slot for child elements.
-   *
-   * @returns The toolbar template with a flex column layout and default slot
-   * @internal
-   */
+  /** @internal */
   protected override render(): unknown {
     return html`<div class="toolbar">
       <slot></slot>

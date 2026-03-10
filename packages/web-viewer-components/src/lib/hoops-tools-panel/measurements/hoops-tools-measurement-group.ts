@@ -31,6 +31,7 @@ import { getService } from '../../services';
  */
 @customElement('hoops-tools-measurement-group')
 export class HoopsToolsMeasurementGroupElement extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -128,7 +129,8 @@ export class HoopsToolsMeasurementGroupElement extends LitElement {
     this.service.removeMeasurement(measurement);
   }
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     const hasMeasurements = this.service.measurements.length > 0;
     return html`
       <hoops-tools-group label="Measurement">

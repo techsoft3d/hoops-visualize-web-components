@@ -6,24 +6,26 @@ import type { BranchVisibility } from '../hoops-model-tree/types';
 import { formatNodeVisibilityIcon } from '../hoops-model-tree/utils';
 
 /**
- * The TypeTreeNode class implements a custom elements register with the tag
- * `hoops-types-tree-node`.
- * This component represent a node in the `hoops-types-tree` component. It
- * contains properties to display to the user.
+ * A custom element representing a node in the types tree.
  *
- * The TypeTreeNode does not have any dependency to the @ts3d-hoops/web-viewer Model
- * class.
+ * This component displays a type tree node with its properties and interactive controls.
+ * It does not have any dependency on the @ts3d-hoops/web-viewer Model class.
  *
- * @prop {number} nodeId The id of the node in the model
- * @prop {string} nodeName The name of the node
+ * @element hoops-types-tree-node
  *
- * @export
- * @class TypeTreeNode
- * @typedef {TypeTreeNodeElement}
- * @extends {LitElement}
+ * @attribute {number} nodeId - The id of the node in the model
+ * @attribute {string} nodeName - The name of the node
+ *
+ * @example
+ * ```html
+ * <hoops-types-tree-node nodeId="1" nodeName="Type A"></hoops-types-tree-node>
+ * ```
+ *
+ * @since 2025.8.0
  */
 @customElement('hoops-types-tree-node')
 export class TypeTreeNodeElement extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -127,19 +129,8 @@ export class TypeTreeNodeElement extends LitElement {
   @property({ type: String })
   visibility: BranchVisibility = 'Shown';
 
-  /**
-   * Render the `types-tree-node` element into the DOM
-   * if the nodeId is NaN it will return `nothing`, a value from Lit to let it
-   * know not to add anything to the DOM.
-   *
-   * When the node visibility icon is clicked the
-   * 'hoops-types-tree-node-visibility-change' event is emitted.
-   *
-   * If the hidden property change on the node the icon will change.
-   *
-   * @returns {The `<types-tree-node></types-tree-node>` content or nothing}
-   */
-  protected override render() {
+  /** @internal */
+  protected override render(): unknown {
     const handleClick = (event: MouseEvent) => {
       if (!Number.isNaN(this.modelNodeId)) {
         // Individual model node click

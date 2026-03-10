@@ -2,7 +2,6 @@
  * The event emitted by a hoops-layer-tree-element when the layer visibility button is
  * clicked.
  *
- * @export
  * @typedef {LayerVisibilityClickEvent}
  */
 export type LayerVisibilityClickEvent = CustomEvent<
@@ -13,7 +12,6 @@ export type LayerVisibilityClickEvent = CustomEvent<
  * The event emitted by a hoops-layer-tree-element when a node's visibility button is
  * clicked.
  *
- * @export
  * @typedef {LayerNodeVisibilityClickEvent}
  */
 export type LayerNodeVisibilityClickEvent = CustomEvent<
@@ -24,7 +22,6 @@ export type LayerNodeVisibilityClickEvent = CustomEvent<
  * The event emitted by a hoops-layer-tree-element when one of its associated
  * node UI element is clicked
  *
- * @export
  * @typedef {LayerTreeNodeClicked}
  */
 export type LayerTreeNodeClicked = CustomEvent<
@@ -35,7 +32,6 @@ export type LayerTreeNodeClicked = CustomEvent<
  * The event emitted by a hoops-layer-tree-element its layer UI element
  * aka the header is clicked
  *
- * @export
  * @typedef {LayerClicked}
  */
 export type LayerClicked = CustomEvent<{ layerId: number; source: HTMLElement } & BaseMouseEvent>;

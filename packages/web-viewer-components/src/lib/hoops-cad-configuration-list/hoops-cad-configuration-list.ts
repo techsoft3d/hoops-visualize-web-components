@@ -33,6 +33,7 @@ export type * from './custom-events.d.ts';
  */
 @customElement('hoops-cad-configuration-list')
 export class HoopsCadConfigurationListElement extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -189,13 +190,7 @@ export class HoopsCadConfigurationListElement extends LitElement {
     );
   }
 
-  /**
-   * Renders the CAD configuration list component.
-   * Creates a titled list with clickable configuration items generated from the model data.
-   *
-   * @internal
-   * @returns {unknown} HTML template for the configuration list
-   */
+  /** @internal */
   protected override render(): unknown {
     const cadConfigurationHtmlElements = this.getCadConfigurationHtmlElements();
     return html`<div>

@@ -1,4 +1,11 @@
-import { BimId, CallbackMap, NodeId, RelationshipType, Event, Selection } from '@ts3d-hoops/web-viewer';
+import {
+  BimId,
+  CallbackMap,
+  NodeId,
+  RelationshipType,
+  Event,
+  Selection,
+} from '@ts3d-hoops/web-viewer';
 import { BimElementInfo, IIFCRelationshipsService, RelationshipData } from './types';
 
 /**
@@ -54,7 +61,7 @@ export default class IFCRelationshipsService
 
   /**
    * Handles selection changes and emits relationship data
-   * @emits hoops-selection-ifc-relationships-changed
+   * @fires hoops-selection-ifc-relationships-changed
    */
   private handleSelectionArray(selections: Event.NodeSelectionEvent[]) {
     this.selectionRelationships = selections

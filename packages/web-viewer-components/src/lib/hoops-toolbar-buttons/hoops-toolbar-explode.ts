@@ -5,6 +5,28 @@ import { icons } from '@ts3d-hoops/ui-kit';
 import { WebViewer } from '@ts3d-hoops/web-viewer';
 import { getService, IExplodeService } from '../services';
 
+/**
+ * Provides a toolbar button with a slider to control model explode magnitude.
+ * Need to connect to a web viewer instance through the `webViewer` property to query model bounds before starting explode.
+ *
+ * @element hoops-toolbar-explode
+ *
+ * @attribute {'bottom' | 'top' | 'right' | 'left'} dropDownPosition - Defines where the explode dropdown is rendered relative to the button.
+ *
+ * @service {IExplodeService} ExplodeService - Service used to initialize, read, and update explode state.
+ *
+ * @example
+ * ```html
+ * <hoops-toolbar-explode dropDownPosition="right"></hoops-toolbar-explode>
+ *
+ * <script>
+ *   const explodeButton = document.getElementsByTagName("hoops-toolbar-explode")[0];
+ *   explodeButton.webViewer = webViewerInstance;
+ * </script>
+ * ```
+ *
+ * @since 2026.2.0
+ */
 @customElement('hoops-toolbar-explode')
 export class HoopsExplodeButtonElement extends LitElement {
   /**
@@ -15,13 +37,17 @@ export class HoopsExplodeButtonElement extends LitElement {
   @property()
   dropDownPosition: 'bottom' | 'top' | 'right' | 'left' = 'right';
 
+  /**
+   * Connected web viewer instance used to query model bounds before starting explode.
+   */
   @property({ type: Object })
   webViewer: WebViewer | null = null;
 
   private explodeService!: IExplodeService;
 
-  handleServiceUpdate = (): void => this.requestUpdate();
+  private handleServiceUpdate = (): void => this.requestUpdate();
 
+  /** @internal */
   connectedCallback(): void {
     super.connectedCallback();
     this.explodeService = getService<IExplodeService>('ExplodeService');
@@ -32,6 +58,7 @@ export class HoopsExplodeButtonElement extends LitElement {
     );
   }
 
+  /** @internal */
   disconnectedCallback(): void {
     if (this.explodeService) {
       this.explodeService.removeEventListener(
@@ -45,11 +72,7 @@ export class HoopsExplodeButtonElement extends LitElement {
     }
   }
 
-  /**
-   * Handles explode value changes from the slider
-   * @param e Input event from the range slider
-   */
-  async handleExplodeChange(e: Event): Promise<void> {
+  private async handleExplodeChange(e: Event): Promise<void> {
     if (!this.webViewer) {
       return;
     }
@@ -68,6 +91,7 @@ export class HoopsExplodeButtonElement extends LitElement {
     this.explodeService.setMagnitude(magnitude);
   }
 
+  /** @internal */
   protected override render(): unknown {
     return html` <hoops-dropdown position=${this.dropDownPosition} preventCloseOnClickInside>
       <hoops-icon-button size="sm" title="Explode">${icons.explode}</hoops-icon-button>

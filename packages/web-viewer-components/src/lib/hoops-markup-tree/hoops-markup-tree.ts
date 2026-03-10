@@ -5,8 +5,23 @@ import { type IRedlineService } from '../services';
 import '../hoops-markup-view';
 import { DeleteRedlineItemEvent } from './custom-events';
 
+/**
+ * Displays a tree of markup views from the redline service.
+ *
+ * @element hoops-markup-tree
+ *
+ * @service {IRedlineService} RedlineService - Service used to list and update markup views
+ *
+ * @example
+ * ```html
+ * <hoops-markup-tree></hoops-markup-tree>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-markup-tree')
 export class HoopsMarkupTreeElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -20,6 +35,9 @@ export class HoopsMarkupTreeElement extends LitElement {
 
   private onUpdate = () => this.requestUpdate();
 
+  /**
+   * @internal
+   */
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     this.redlineService?.addEventListener('hoops-redline-created', this.onUpdate);
@@ -28,6 +46,9 @@ export class HoopsMarkupTreeElement extends LitElement {
     this.redlineService?.addEventListener('hoops-redline-service-reset', this.onUpdate);
   }
 
+  /**
+   * @internal
+   */
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.redlineService?.removeEventListener('hoops-redline-created', this.onUpdate);
@@ -36,7 +57,8 @@ export class HoopsMarkupTreeElement extends LitElement {
     this.redlineService?.removeEventListener('hoops-redline-service-reset', this.onUpdate);
   }
 
-  protected render(): unknown {
+  /** @internal */
+  protected override render(): unknown {
     return html`${this.redlineService?.getRedlineViewKeys().map(
       (key) =>
         html`<hoops-markup-view

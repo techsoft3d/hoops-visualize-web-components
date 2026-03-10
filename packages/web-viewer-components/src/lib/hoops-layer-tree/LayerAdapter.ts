@@ -11,7 +11,6 @@ import { NodeId, NodeType, FileType } from '@ts3d-hoops/web-viewer';
  * Create a `layer-tree-element` to render in the layer list. If layerId is not set
  * or is NaN then nothing is displayed.
  *
- * @export
  * @param {ILayersContainer} layer The model that contains the layers
  * @param {number} layerId The id of the layer to render
  * @param {boolean} selected whether the layer is selected or not
@@ -94,10 +93,8 @@ export function getAdjustedNodeId(layersContainer: ILayersContainer, nodeId: num
  * This class serves as a proxy to the Model class. I is used by the LayerTree
  * to communicate with the Model.
  *
- * @export
  * @class LayerAdapter
  * @typedef {LayerAdapter}
- * @implements {ListContext}
  */
 export default class LayerAdapter implements ListContext {
   /**

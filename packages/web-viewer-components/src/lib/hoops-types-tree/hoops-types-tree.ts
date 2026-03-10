@@ -43,6 +43,7 @@ export type * from './custom-events.d.ts';
  */
 @customElement('hoops-types-tree')
 export class HoopsTypesTreeElement extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -334,11 +335,7 @@ export class HoopsTypesTreeElement extends LitElement {
     this.treeRef.value?.expandPath([TypesTreeNodeId.RootNode]);
   }
 
-  /**
-   * Renders the component template.
-   *
-   * @returns {unknown} The HTML template for the component
-   */
+  /** @internal */
   protected override render(): unknown {
     return html`<hoops-tree
       class="typestree"

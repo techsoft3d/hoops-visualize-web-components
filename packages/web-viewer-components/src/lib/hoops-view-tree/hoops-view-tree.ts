@@ -36,6 +36,7 @@ export type * from './custom-events.d.ts';
  */
 @customElement('hoops-view-tree')
 export class HoopsViewTreeElement extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -248,11 +249,7 @@ export class HoopsViewTreeElement extends LitElement {
     this.treeRef.value?.expandPath([ViewTreeNodeId.RootNode]);
   }
 
-  /**
-   * Renders the view tree component template.
-   * @internal
-   * @returns {TemplateResult} The component's HTML template
-   */
+  /** @internal */
   protected override render(): unknown {
     return html`<hoops-tree
       class="viewtree"

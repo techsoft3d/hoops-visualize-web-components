@@ -9,7 +9,6 @@ import { branchVisibilityFromComBranchVisibility, IModel, ModelTreeNodeFactory }
  * Create a `model-tree-node` to render in the model tree. If nodeId is not set
  * or is NaN then nothing is displayed.
  *
- * @export
  * @param {IModel} model The model that contains the node
  * @param {number} nodeId The id of the node to render
  * @param {?boolean} [selected] whether the node is selected or not
@@ -22,7 +21,9 @@ export function defaultNodeFactory(
   selected?: boolean,
   nodeData?: unknown,
 ): HTMLTemplateResult | typeof nothing {
-  const branchVisibility = branchVisibilityFromComBranchVisibility(model.getBranchVisibility(nodeId));
+  const branchVisibility = branchVisibilityFromComBranchVisibility(
+    model.getBranchVisibility(nodeId),
+  );
   const modelAdapter = treeContext as ModelAdapter;
   const data: any = nodeData ?? {
     visibility: branchVisibility,
@@ -48,10 +49,8 @@ export function defaultNodeFactory(
  * This class serves as a proxy to the Model class. I is used by the ModelTree
  * to communicate with the Model.
  *
- * @export
  * @class ModelAdapter
  * @typedef {ModelAdapter}
- * @implements {TreeContext}
  */
 export default class ModelAdapter implements TreeContext {
   /**

@@ -39,6 +39,7 @@ import NoteTextService from '../services/notetext';
 import MeasurementService from '../services/measurement/MeasurementService';
 import ViewService from '../services/view/ViewService';
 import FloorplanService from '../services/floorplan';
+import MaterialService from '../services/material';
 
 /**
  * Provides centralized context management for the Hoops Web Viewer ecosystem.
@@ -129,6 +130,8 @@ export default class WebViewerContextManager extends LitElement {
       this._webViewer.view.operatorManager.getOperator(
         OperatorId.SpaceMouse,
       ) as Operators.SpaceMouseOperator;
+
+    getService<MaterialService>('MaterialService').viewer = this._webViewer;
   }
 
   /**
@@ -301,7 +304,7 @@ export default class WebViewerContextManager extends LitElement {
 
   /**
    * Sets the active tool operator and updates the context state.
-   * Activates the specified operator in the web viewer's operator manager and 
+   * Activates the specified operator in the web viewer's operator manager and
    * synchronizes the context state to notify all consuming components.
    *
    * @param value - The operator ID to set as active, or undefined to clear
@@ -328,13 +331,7 @@ export default class WebViewerContextManager extends LitElement {
     return this;
   }
 
-  /**
-   * Renders an empty template since this component is purely functional.
-   * The component's purpose is context management, not visual rendering.
-   *
-   * @internal
-   * @returns {unknown} Empty HTML template
-   */
+  /** @internal */
   protected override render(): unknown {
     return html``;
   }

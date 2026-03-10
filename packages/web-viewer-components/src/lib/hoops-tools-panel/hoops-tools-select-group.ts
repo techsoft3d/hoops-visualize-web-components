@@ -13,8 +13,23 @@ import { icons } from '@ts3d-hoops/ui-kit';
 
 import './hoops-tools-group';
 
+/**
+ * Renders selection tool actions in the tools panel.
+ *
+ * @element hoops-tools-select-group
+ *
+ * @service {WebViewerContextManager} ContextManager - Context manager used to switch active tool operator
+ *
+ * @example
+ * ```html
+ * <hoops-tools-select-group></hoops-tools-select-group>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-tools-select-group')
 export class HoopsToolsSelectGroupElement extends LitElement {
+  /** @internal */
   static styles = css`
     :host {
       display: block;
@@ -41,7 +56,8 @@ export class HoopsToolsSelectGroupElement extends LitElement {
     }
   }
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     return html`
       <hoops-tools-group label="Selection">
         <div class="content">

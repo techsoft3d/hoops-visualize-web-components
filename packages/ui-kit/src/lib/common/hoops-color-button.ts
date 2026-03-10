@@ -14,7 +14,16 @@ import '../icons';
  * dynamically updated to reflect the selected color.
  *
  * @element hoops-color-button
+ *
  * @fires change - Dispatched when the color value changes through the color picker
+ *
+ * @attribute {string} title - The tooltip text displayed when hovering over the color button
+ * @attribute {string} value - The current selected color value in hexadecimal format (e.g., "#ff0000")
+ * @attribute {string} tabindex - The tab index for keyboard navigation accessibility
+ * @attribute {string} role - The ARIA role for accessibility
+ * @attribute {string} iconSize - The size of the icon displayed within the button
+ * @attribute {'default' | 'accent'} color - The visual style variant of the button
+ * @attribute {boolean} disabled - Whether the color button is disabled and non-interactive
  *
  * @example
  * ```html
@@ -22,24 +31,11 @@ import '../icons';
  *   title="Choose color"
  *   value="#ff0000"
  *   iconSize="lg"
- *   color="accent"
- *   @change=${this.handleColorChange}>
+ *   color="accent">
  *   <hoops-icon name="palette" slot="icon"></hoops-icon>
  *   Select Color
  * </hoops-color-button>
- * ```
  *
- * @example
- * ```typescript
- * // Listening to color changes
- * const colorButton = document.querySelector('hoops-color-button');
- * colorButton.addEventListener('change', (event) => {
- *   console.log('New color:', colorButton.value);
- * });
- * ```
- *
- * @example
- * ```html
  * <!-- Disabled color button -->
  * <hoops-color-button
  *   title="Color unavailable"
@@ -47,10 +43,20 @@ import '../icons';
  *   disabled>
  *   <hoops-icon name="palette" slot="icon"></hoops-icon>
  * </hoops-color-button>
+ *
+ * <script>
+ *   const colorButton = document.getElementsByTagName('hoops-color-button')[0];
+ *   colorButton.addEventListener('change', (event) => {
+ *     console.log('New color:', colorButton.value);
+ *   });
+ * </script>
  * ```
+ *
+ * @since 2025.7.0
  */
 @customElement('hoops-color-button')
 export class HoopsColorButtonElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -152,26 +158,8 @@ export class HoopsColorButtonElement extends LitElement {
     this.disabled = false;
   }
 
-  /**
-   * Renders the color button component template.
-   *
-   * Creates a button wrapper with a hidden color input element. The button
-   * uses a label to ensure proper accessibility and click behavior. The
-   * selected color value is applied as a CSS custom property to dynamically
-   * style any slotted icons.
-   *
-   * Key features:
-   * - Wraps content in a semantic label element
-   * - Hidden color input for native color picker functionality
-   * - CSS custom property for icon stroke color styling
-   * - Slot support for icon and text content
-   * - Proper attribute binding for accessibility and interaction states
-   *
-   * @returns TemplateResult containing the component's HTML structure
-   *
-   * @internal
-   */
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     return html`
       <label>
         <hoops-button

@@ -7,15 +7,28 @@ import { BaseMouseEvent } from './types';
 import { toBaseMouseEvent } from './utils';
 
 /**
- * This class represent a element in a `hoops-list`.
+ * Renders a selectable element row inside `hoops-list`.
  *
- * @export
- * @class ListElement
- * @typedef {ListElement}
- * @extends {LitElement}
+ * @element hoops-list-element
+ *
+ * @slot - Slot for custom trailing row content
+ *
+ * @fires hoops-list-element-click - Emitted when the list element is clicked
+ *
+ * @attribute {number} key - Unique identifier for the list element
+ * @attribute {string} name - Displayed element name
+ * @attribute {boolean} selected - Indicates whether the row is selected
+ *
+ * @example
+ * ```html
+ * <hoops-list-element key="12" name="Part 12" selected></hoops-list-element>
+ * ```
+ *
+ * @since 2025.7.0
  */
 @customElement('hoops-list-element')
 export default class ListElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -76,7 +89,8 @@ export default class ListElement extends LitElement {
   @property({ type: Boolean })
   public selected = false;
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     const classNames = ['element'];
     if (this.selected) {
       classNames.push('selected');
@@ -95,9 +109,10 @@ export default class ListElement extends LitElement {
    * This will stop the propagation of the click and propagate a
    * hoops-list-element-click with information about the clicked element.
    *
-   * @emits ListElement#hoops-list-element-click
+   * @fires hoops-list-element-click - Emitted with click metadata for the selected element
    *
    * @param {MouseEvent} event The event that triggered the listener.
+   * @returns {void}
    */
   private handleElementClick(event: MouseEvent) {
     event.stopPropagation();

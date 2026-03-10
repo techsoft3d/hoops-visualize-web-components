@@ -29,6 +29,7 @@ import '../hoops-cutting-section/hoops-cutting-section';
  */
 @customElement('hoops-cutting-plane-panel')
 export class HoopsCuttingPlanePanelElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -94,15 +95,8 @@ export class HoopsCuttingPlanePanelElement extends LitElement {
     });
   }
 
-  /**
-   * Renders the cutting plane panel component.
-   *
-   * Creates a panel with header and dynamic list of cutting section components.
-   *
-   * @returns TemplateResult - The panel interface with cutting sections
-   * @internal
-   */
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     const cuttingSectionCount = this.service.getCuttingSectionCount();
 
     return html`<div class="container">

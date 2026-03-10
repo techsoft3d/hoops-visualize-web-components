@@ -13,8 +13,27 @@ import { icons } from '@ts3d-hoops/ui-kit';
 import { getService } from '../services';
 import { formatNoteTextIcon, INoteTextService } from '../services/notetext';
 
+/**
+ * Renders markup note tools and the note text list in the tools panel.
+ *
+ * @element hoops-tools-markup-group
+ *
+ * @service {INoteTextService} NoteTextService - Service used to manage note text markups
+ * @service {WebViewerContextManager} ContextManager - Context manager used to switch active operator
+ *
+ * @cssprop --hoops-foreground - Foreground color used for list rows and borders
+ * @cssprop --hoops-accent-foreground - Accent color used for selected and hover states
+ *
+ * @example
+ * ```html
+ * <hoops-tools-markup-group></hoops-tools-markup-group>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-tools-markup-group')
 export class HoopsToolsGroupMarkupElement extends LitElement {
+  /** @internal */
   static styles = css`
     :host {
       display: block;
@@ -131,6 +150,9 @@ export class HoopsToolsGroupMarkupElement extends LitElement {
     this.requestUpdate();
   };
 
+  /**
+   * @internal
+   */
   firstUpdated() {
     if (!this.contextManager) {
       console.error('Cannot initialize redline tools: WebViewer not initialized');
@@ -150,6 +172,9 @@ export class HoopsToolsGroupMarkupElement extends LitElement {
     this.service.addEventListener('hoops-note-text-manager-reset', this.onMarkupsUpdated);
   }
 
+  /**
+   * @internal
+   */
   disconnectedCallback() {
     super.disconnectedCallback();
     if (!this.service) {
@@ -173,7 +198,8 @@ export class HoopsToolsGroupMarkupElement extends LitElement {
     this.service.setActiveNoteText(id);
   }
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     const service = getService<INoteTextService>('NoteTextService');
     const markups = service?.getNoteTexts() || [];
     const selectedMarkupId = service?.getActiveNoteTextKey();

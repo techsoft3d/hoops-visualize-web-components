@@ -3,7 +3,6 @@ import { BaseMouseEvent } from './types';
 /**
  * A helper function to create a BaseMouseEvent from a MouseEvent
  *
- * @export
  * @param {MouseEvent} event
  * @returns {BaseMouseEvent}
  */

@@ -21,8 +21,26 @@ import WebViewerContextManager, {
 } from '../context-manager';
 import { getService, ICameraService, Projection } from '../services';
 
+/**
+ * Displays the toolbar camera dropdown for projection and orientation actions.
+ *
+ * @element hoops-toolbar-camera
+ *
+ * @attribute {'bottom' | 'top' | 'right' | 'left'} dropDownPosition - Dropdown placement relative to the button
+ *
+ * @service {ICameraService} CameraService - Service used to configure projection mode
+ * @service {WebViewerContextManager} ContextManager - Context manager used to apply view orientation
+ *
+ * @example
+ * ```html
+ * <hoops-toolbar-camera dropDownPosition="right"></hoops-toolbar-camera>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-toolbar-camera')
 export class HoopsCameraButtonElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       .dropdown-content {
@@ -132,6 +150,9 @@ export class HoopsCameraButtonElement extends LitElement {
 
   handleServiceUpdate = (): void => this.requestUpdate();
 
+  /**
+   * @internal
+   */
   connectedCallback(): void {
     super.connectedCallback();
     this.cameraService = getService<ICameraService>('CameraService');
@@ -139,6 +160,9 @@ export class HoopsCameraButtonElement extends LitElement {
     this.cameraService.addEventListener('hoops-camera-service-reset', this.handleServiceUpdate);
   }
 
+  /**
+   * @internal
+   */
   disconnectedCallback(): void {
     if (this.cameraService) {
       this.cameraService.removeEventListener(
@@ -152,6 +176,7 @@ export class HoopsCameraButtonElement extends LitElement {
     }
   }
 
+  /** @internal */
   protected override render(): unknown {
     return html`<hoops-dropdown position=${this.dropDownPosition}>
       <hoops-icon-button size="sm" title="Camera">${icons.camera}</hoops-icon-button>

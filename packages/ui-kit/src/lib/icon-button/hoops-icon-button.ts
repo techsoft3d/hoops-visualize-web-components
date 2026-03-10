@@ -41,6 +41,7 @@ import { customElement, property } from 'lit/decorators.js';
  */
 @customElement('hoops-icon-button')
 export default class HoopsIconButton extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -170,13 +171,7 @@ export default class HoopsIconButton extends LitElement {
   @property({ type: Boolean })
   disabled = false;
 
-  /**
-   * Renders the icon button component template.
-   *
-   * @returns HTML template for the icon button
-   *
-   * @internal
-   */
+  /** @internal */
   protected override render(): unknown {
     return html`
       <div

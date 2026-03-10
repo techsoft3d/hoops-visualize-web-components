@@ -28,8 +28,26 @@ const drawModeButtons = new Map([
   [DrawMode.Gooch, { title: 'Gooch', icon: goochShader }],
   [DrawMode.Toon, { title: 'Toon', icon: toonShader }],
 ]);
+
+/**
+ * Displays the toolbar dropdown for selecting draw modes.
+ *
+ * @element hoops-toolbar-drawmode
+ *
+ * @attribute {'bottom' | 'top' | 'right' | 'left'} dropDownPosition - Dropdown placement relative to the button
+ *
+ * @service {WebViewerContextManager} ContextManager - Context manager used to set draw mode
+ *
+ * @example
+ * ```html
+ * <hoops-toolbar-drawmode dropDownPosition="right"></hoops-toolbar-drawmode>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-toolbar-drawmode')
 export class HoopsDrawmodeButtonElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       .dropdown-content {
@@ -61,6 +79,7 @@ export class HoopsDrawmodeButtonElement extends LitElement {
     }
   }
 
+  /** @internal */
   protected override render(): unknown {
     const currentDrawMode =
       this.webViewerState && drawModeButtons.has(this.webViewerState.drawMode)

@@ -36,6 +36,7 @@ export type * from './custom-events.d.ts';
  */
 @customElement('hoops-model-tree')
 export class HoopsModelTreeElement extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -325,11 +326,7 @@ export class HoopsModelTreeElement extends LitElement {
     );
   }
 
-  /**
-   * Renders the tree component template.
-   * @internal
-   * @returns {unknown} The Lit HTML template
-   */
+  /** @internal */
   protected override render(): unknown {
     return html`<hoops-tree
       data-html2canvas-ignore

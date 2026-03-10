@@ -5,7 +5,7 @@ import { IService } from '../types';
  * @interface IExplodeService
  * @extends IService
  *
- * @brief Service interface for managing explode feature of the web viewer.
+ * Service interface for managing explode feature of the web viewer.
  *
  * Provides methods to interface with the explode manager for controlling part explosion effects.
  */

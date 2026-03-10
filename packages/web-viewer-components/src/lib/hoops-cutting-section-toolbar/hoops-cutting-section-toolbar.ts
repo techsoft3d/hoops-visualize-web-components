@@ -56,6 +56,7 @@ type HoopsDropDownMenuElement = dropdown.DropdownMenu;
  */
 @customElement('hoops-cutting-section-toolbar')
 export class HoopsCuttingSectionToolbarElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -196,29 +197,8 @@ export class HoopsCuttingSectionToolbarElement extends LitElement {
     }
   }
 
-  /**
-   * Renders the cutting section toolbar component.
-   *
-   * Creates a comprehensive toolbar with:
-   * - Dropdown menu for plane creation with 5 preset options:
-   *   - X-axis aligned plane
-   *   - Y-axis aligned plane
-   *   - Z-axis aligned plane
-   *   - Face-based plane (using selected geometry)
-   *   - Custom plane with arbitrary orientation
-   * - Reference geometry visibility toggle button
-   * - Clear section button to remove all planes
-   * - Active/inactive state switch for the entire section
-   *
-   * The toolbar provides visual feedback for:
-   * - Section capacity limits (max 3 planes)
-   * - Face selection availability
-   * - Section active/inactive state
-   * - Reference geometry visibility state
-   *
-   * @returns TemplateResult containing the toolbar interface, or nothing if no service exists
-   */
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     if (!this.service) {
       return nothing;
     }

@@ -3,25 +3,28 @@ import { customElement, property } from 'lit/decorators.js';
 import { componentBaseStyle, icons } from '@ts3d-hoops/ui-kit';
 
 /**
- * The CadConfigurationListItemElement class implements a custom elements register with the tag
- * `hoops-cad-configuration-list-item`.
- * This component represent an item in the `hoops-cad-configuration-list` component. It
- * contains properties to display to the user.
+ * A custom element representing an item in the CAD configuration list.
  *
- * The CadConfigurationListItemElement does not have any dependency to the @ts3d-hoops/web-viewer Model
- * class.
+ * This component displays a CAD configuration with its active state and interactive controls.
+ * It does not have any dependency on the @ts3d-hoops/web-viewer Model class.
  *
- * @prop {number} cadConfigurationId The id of CAD configuration in the model
- * @prop {string} cadConfigurationName The name of the CAD configuration
- * @prop {boolean} active Whether the CAD configuration is active or not
+ * @element hoops-cad-configuration-list-item
  *
- * @export
- * @class CadConfigurationListItemElement
- * @typedef {CadConfigurationListItemElement}
- * @extends {LitElement}
+ * @attribute {number} cadConfigurationId - The id of the CAD configuration in the model
+ * @attribute {string} cadConfigurationName - The name of the CAD configuration
+ * @attribute {boolean} active - Whether the CAD configuration is active or not
+ *
+ * @example
+ * ```html
+ * <hoops-cad-configuration-list-item cadConfigurationId="1" cadConfigurationName="Config A"></hoops-cad-configuration-list-item>
+ * <hoops-cad-configuration-list-item cadConfigurationId="2" cadConfigurationName="Config B" active></hoops-cad-configuration-list-item>
+ * ```
+ *
+ * @since 2025.8.0
  */
 @customElement('hoops-cad-configuration-list-item')
 export class CadConfigurationListItemElement extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -89,14 +92,8 @@ export class CadConfigurationListItemElement extends LitElement {
   @property({ type: Boolean })
   active = false;
 
-  /**
-   * Render the cad configuration item into the DOM
-   * if the cadConfigurationId is NaN it will return `nothing`, a value from Lit to let it
-   * know not to add anything to the DOM.
-   *
-   * @returns {The html content or nothing}
-   */
-  protected override render() {
+  /** @internal */
+  protected override render(): unknown {
     /**
      * If the cadConfigurationId is NaN there is nothing to display so we return nothing to
      * lit.

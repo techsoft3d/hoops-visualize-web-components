@@ -35,6 +35,7 @@ import {
  */
 @customElement('hoops-ifc-relationship')
 export class HoopsIFCRelationshipElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -312,15 +313,8 @@ export class HoopsIFCRelationshipElement extends LitElement {
     </div>`;
   };
 
-  /**
-   * Renders the IFC relationships component template.
-   *
-   * Creates a hierarchical display of IFC relationships based on current selection,
-   * with expandable groups and interactive elements for navigation.
-   *
-   * @returns {unknown} The HTML template for the IFC relationships panel
-   */
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     const selectionRelationships = this.selectionRelationships ?? [];
     return html`
       <div data-testid="ifc-relationships-panel">

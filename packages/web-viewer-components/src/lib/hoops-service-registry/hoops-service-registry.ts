@@ -35,6 +35,7 @@ import { type IIFCRelationshipsService } from '../services/ifc-relationships/typ
 import { type IViewService } from '../services/view/types';
 import ViewService from '../services/view/ViewService';
 import FloorplanService, { type IFloorplanService } from '../services/floorplan';
+import MaterialService, { type IMaterialService } from '../services/material';
 
 /**
  * HoopsServiceRegistryElement is a LitElement-based web component that provides centralized
@@ -201,6 +202,14 @@ export class HoopsServiceRegistryElement extends LitElement {
   public spaceMouseService: ISpaceMouseService = new SpaceMouseService();
 
   /**
+   * Service for managing custom shaders.
+   * Provides support for custom shaders.
+   * @type {IMaterialService}
+   * @default new MaterialService()
+   */
+  @property({ type: Object, attribute: false })
+  public MaterialService: IMaterialService = new MaterialService();
+  /**
    * Lifecycle callback invoked when the element is connected to the DOM.
    * Automatically registers all configured services in the global service registry,
    * making them available throughout the application.
@@ -229,6 +238,7 @@ export class HoopsServiceRegistryElement extends LitElement {
     registerService(this.walkOperatorService);
     registerService(this.explodeService);
     registerService(this.spaceMouseService);
+    registerService(this.MaterialService);
   }
 
   /**
@@ -288,9 +298,6 @@ export class HoopsServiceRegistryElement extends LitElement {
    * The component's purpose is service registration, not visual rendering.
    *
    * @internal
-   * @protected
-   * @override
-   * @returns {TemplateResult} Empty HTML template
    */
   protected override render(): unknown {
     return html``;

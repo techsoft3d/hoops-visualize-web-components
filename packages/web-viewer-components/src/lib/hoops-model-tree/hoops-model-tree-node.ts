@@ -8,33 +8,31 @@ import { toBaseMouseEvent } from '@ts3d-hoops/ui-kit/tree';
 import type { BranchVisibility } from './types';
 
 /**
- * The ModelTreeNode class implements a custom elements register with the tag
- * `hoops-model-tree-node`.
- * This component represent a node in the `hoops-model-tree` component. It
- * contains properties to display to the user.
+ * A custom element representing a node in the model tree.
  *
- * The ModelTreeNode does not have any dependency to the @ts3d-hoops/web-viewer Model
- * class.
+ * This component displays a model tree node with its type, visibility state,
+ * and interactive controls. It does not have any dependency on the
+ * @ts3d-hoops/web-viewer Model class.
  *
- * @prop {number} nodeId The id of the node in the model
- * @prop {string} nodeName The name of the node
- * @prop {number} nodeType The type of the node (casted into a `NodeType`)
- * @prop {boolean} isRoot The node is a root
- * @prop {boolean} hidden The visibility state of the node. By default boolean
- * args are recommended to be false so you can use this notation:
+ * @element hoops-model-tree-node
+ *
+ * @attribute {number} nodeId - The id of the node in the model
+ * @attribute {string} nodeName - The name of the node
+ * @attribute {number} nodeType - The type of the node (casted into a NodeType)
+ * @attribute {boolean} isRoot - Whether the node is a root node
+ * @attribute {boolean} hidden - The visibility state of the node
+ *
+ * @example
  * ```html
- * <hoops-model-tree-node></hoops-model-tree-node> <!-- <-- This node is visible -->
- * <hoops-model-tree-node hidden> <!-- <-- This node is hidden -->
- * </hoops-model-tree-node>
+ * <hoops-model-tree-node nodeId="1" nodeName="Part1" nodeType="1"></hoops-model-tree-node>
+ * <hoops-model-tree-node nodeId="2" nodeName="Part2" nodeType="1" hidden></hoops-model-tree-node>
  * ```
  *
- * @export
- * @class ModelTreeNode
- * @typedef {ModelTreeNode}
- * @extends {LitElement}
+ * @since 2025.8.0
  */
 @customElement('hoops-model-tree-node')
 export class ModelTreeNode extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -146,23 +144,8 @@ export class ModelTreeNode extends LitElement {
   @property({ type: Boolean })
   selected = false;
 
-  /**
-   * Render the `model-tree-node` element into the DOM
-   * if the nodeId is NaN it will return `nothing`, a value from Lit to let it
-   * know not to add anything to the DOM.
-   *
-   * Otherwise, it returns an HTML Element that displays an icon based on the
-   * type of the node, the name of the node and a clickable icon for the
-   * visibility.
-   *
-   * When the node visibility icon is clicked the
-   * 'hoops-model-tree-node-visibility-change' event is emitted.
-   *
-   * If the hidden property change on the node the icon will change.
-   *
-   * @returns {The `<model-tree-node></model-tree-node>` content or nothing}
-   */
-  protected override render() {
+  /** @internal */
+  protected override render(): unknown {
     /**
      * If the nodeId is NaN there is nothing to display so e return nothing to
      * lit.

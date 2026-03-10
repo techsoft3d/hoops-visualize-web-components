@@ -38,6 +38,7 @@ import { TreeEntryData } from './types';
  */
 @customElement('hoops-tree')
 export default class Tree extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -236,7 +237,8 @@ export default class Tree extends LitElement {
     this.entries = {};
     this.selected = [];
   }
-
+  
+  /** @internal */
   protected override render(): unknown {
     const rootKey = this.tree?.context.getRoot() ?? Number.NaN;
     if (Number.isNaN(rootKey)) {

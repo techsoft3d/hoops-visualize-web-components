@@ -44,6 +44,7 @@ import { Debouncer } from '@ts3d-hoops/ui-kit';
  */
 @customElement('hoops-cutting-plane-editor')
 export class HoopsCuttingPlaneEditorElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -170,23 +171,8 @@ export class HoopsCuttingPlaneEditorElement extends LitElement {
     this.debouncer.clear();
   }
 
-  /**
-   * Renders the cutting plane editor component.
-   *
-   * Creates a comprehensive editing interface with:
-   * - Four coordinate inputs for plane normal vector (x, y, z) and distance (d)
-   * - Color pickers for border color and face color
-   * - Opacity slider for transparency control
-   * - Real-time value display for colors
-   * - Conditional enabling based on reference geometry existence
-   *
-   * The editor only renders if both a service and valid cutting plane exist.
-   * Normal vector inputs are constrained to [-1, 1] range, while distance
-   * is constrained by the model's bounding box size.
-   *
-   * @returns TemplateResult containing the editor interface, or nothing if no service/plane exists
-   */
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     if (!this.service) {
       return nothing;
     }

@@ -33,6 +33,7 @@ import './custom-events.d.ts';
  */
 @customElement('hoops-list')
 export default class List extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -86,7 +87,8 @@ export default class List extends LitElement {
   public updateSelected(): void {
     this.selected = [...this.selected];
   }
-
+  
+  /** @internal */
   protected override render(): unknown {
     if (this.list === undefined) {
       return html`<div class="list" />`;

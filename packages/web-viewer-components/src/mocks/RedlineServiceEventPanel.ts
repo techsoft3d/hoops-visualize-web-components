@@ -4,8 +4,14 @@ import { RedlineServiceMock } from './RedlineServiceMock';
 import { createUuid } from '@ts3d-hoops/web-viewer';
 import { RedlineItemData } from '../lib/services';
 
+/**
+ * A test component to trigger redline service events and display existing views and items.
+ *
+ * @internal
+ */
 @customElement('test-redline-service-event-panel')
 export class RedlineServiceEventPanel extends LitElement {
+  /** @internal */
   static styles = [];
 
   @property({ type: Object, attribute: false })

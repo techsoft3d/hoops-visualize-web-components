@@ -79,6 +79,7 @@ import { HoopsTabElement } from './hoops-tab';
  */
 @customElement('hoops-tabs')
 export class HoopsTabsElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {

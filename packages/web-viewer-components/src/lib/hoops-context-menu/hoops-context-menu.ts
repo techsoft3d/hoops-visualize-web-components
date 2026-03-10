@@ -74,6 +74,7 @@ class HoopsContextMenuElement extends LitElement {
 
   private explodeService!: IExplodeService;
 
+  /** @internal */
   static styles = css`
     :host {
       background-color: var(--hoops-neutral-background-20, #fafafa);
@@ -138,15 +139,8 @@ class HoopsContextMenuElement extends LitElement {
     }
   `;
 
-  /**
-   * Renders the context menu component template.
-   *
-   * Creates a menu with contextual actions based on current selection state and model properties.
-   * Menu items are dynamically enabled/disabled based on context and current state.
-   *
-   * @returns {unknown} The HTML template for the context menu
-   */
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     const contextualItemClass = this.isMenuItemExecutable()
       ? 'context-menu-item'
       : 'context-menu-item disabled';

@@ -17,6 +17,8 @@ import { customElement, property } from 'lit/decorators.js';
  *
  * @cssprop --hoops-separator-color - The color of the separator line (defaults to theme separator color)
  *
+ * @attribute {'horizontal' | 'vertical'} direction - The orientation of the separator line
+ *
  * @example
  * ```html
  * <!-- Vertical separator (default) -->
@@ -24,32 +26,20 @@ import { customElement, property } from 'lit/decorators.js';
  *
  * <!-- Horizontal separator -->
  * <hoops-separator direction="horizontal"></hoops-separator>
- * ```
  *
- * @example
- * ```html
  * <!-- In a toolbar with custom color -->
  * <div class="toolbar">
  *   <button>Item 1</button>
  *   <hoops-separator style="--hoops-separator-color: #ccc;"></hoops-separator>
  *   <button>Item 2</button>
- *   <hoops-separator></hoops-separator>
- *   <button>Item 3</button>
  * </div>
  * ```
  *
- * @example
- * ```html
- * <!-- Horizontal separator in a vertical layout -->
- * <div class="menu">
- *   <div class="menu-section">Section 1</div>
- *   <hoops-separator direction="horizontal"></hoops-separator>
- *   <div class="menu-section">Section 2</div>
- * </div>
- * ```
+ * @since 2025.7.0
  */
 @customElement('hoops-separator')
 export class Separator extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {

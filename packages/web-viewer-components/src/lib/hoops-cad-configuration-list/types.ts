@@ -9,7 +9,6 @@ export interface CadConfigurationData {
  * This interface is a subset of the Model API, it is meant to allow mocking and
  * proxying the Model without having to wrap the whole interface.
  *
- * @export
  * @interface IModel
  * @typedef {IModel}
  */

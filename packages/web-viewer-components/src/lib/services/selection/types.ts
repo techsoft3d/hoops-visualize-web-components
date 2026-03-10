@@ -27,7 +27,7 @@ export function isSelectionServiceConfiguration(
  * @interface ISelectionService
  * @extends IService
  *
- * @brief Service interface for managing selection feature of the web viewer.
+ * Service interface for managing selection feature of the web viewer.
  *
  * Provides methods to interface the selection manager.
  */

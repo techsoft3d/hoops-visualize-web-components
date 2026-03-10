@@ -1,6 +1,6 @@
 {
   "name": "@ts3d-hoops/visualize-web",
-  "version": "2026.1.0",
+  "version": "2026.2.0",
   "license": "Apache-2.0",
   "scripts": {
     "build": "nx run-many -t build,typedoc",
@@ -9,14 +9,21 @@
   },
   "private": true,
   "dependencies": {
+    "@codemirror/autocomplete": "^6.20.0",
+    "@codemirror/commands": "^6.10.1",
+    "@codemirror/lang-json": "^6.0.2",
+    "@codemirror/language": "^6.12.1",
+    "@codemirror/state": "^6.5.3",
+    "@codemirror/view": "^6.39.8",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@lezer/highlight": "^1.2.3",
     "@lit/context": "^1.1.2",
     "@lit/react": "^1.0.6",
     "@lit/task": "^1.0.1",
     "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
-    "@swc/helpers": "0.5.11",
+    "@swc/helpers": "0.5.18",
     "@types/three": "^0.167.1",
     "@xstate/react": "^5.0.2",
     "axios": "^1.0.0",
@@ -36,10 +43,10 @@
     "tslib": "^2.3.0",
     "xstate": "^5.19.2",
     "zero-md": "^3.1.7",
-    "@ts3d-hoops/common": "2026.1.0",
-    "@ts3d-hoops/sc-engine": "2026.1.0",
-    "@ts3d-hoops/streamcache": "2026.1.0",
-    "@ts3d-hoops/web-viewer": "2026.1.0"
+    "@ts3d-hoops/common": "2026.2.0",
+    "@ts3d-hoops/sc-engine": "2026.2.0",
+    "@ts3d-hoops/streamcache": "2026.2.0",
+    "@ts3d-hoops/web-viewer": "2026.2.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.6",

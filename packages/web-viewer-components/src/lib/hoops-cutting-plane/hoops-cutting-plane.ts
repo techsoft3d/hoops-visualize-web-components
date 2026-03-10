@@ -54,6 +54,7 @@ import type { ICuttingService } from '../services/cutting/types';
  */
 @customElement('hoops-cutting-plane')
 export class HoopsCuttingPlaneElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -187,22 +188,8 @@ export class HoopsCuttingPlaneElement extends LitElement {
     }
   }
 
-  /**
-   * Renders the cutting plane component.
-   *
-   * Creates an accordion-style interface with:
-   * - Header showing plane icon and index-based name ("Cutting Plane N")
-   * - Integrated toolbar in the accordion icon slot for quick actions
-   * - Collapsible content area containing the detailed editor
-   * - Automatic service discovery when no service is provided
-   * - Conditional rendering based on valid indices and service availability
-   *
-   * The accordion expansion state is controlled by the toolbar's customize button,
-   * allowing users to toggle between compact and detailed views.
-   *
-   * @returns TemplateResult containing the accordion interface, or nothing if invalid state
-   */
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     if (this.planeIndex === -1 || this.sectionIndex === -1) {
       return nothing;
     }

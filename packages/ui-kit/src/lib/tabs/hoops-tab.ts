@@ -27,6 +27,7 @@ import { customElement, property } from 'lit/decorators.js';
  */
 @customElement('hoops-tab')
 export class HoopsTabElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -74,13 +75,8 @@ export class HoopsTabElement extends LitElement {
   @property({ type: Boolean })
   disabled = false;
 
-  /**
-   * Renders the tab panel content.
-   *
-   * @returns The template result
-   * @internal
-   */
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     return html`
       <div class="panel" role="tabpanel">
         <slot></slot>

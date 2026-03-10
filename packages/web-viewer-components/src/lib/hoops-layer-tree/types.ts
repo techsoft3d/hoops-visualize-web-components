@@ -6,7 +6,6 @@ import { FileType, LayerId, LayerName, NodeId, NodeType } from '@ts3d-hoops/web-
  * This interface is a subset of the Layer API, it is meant to allow mocking and
  * proxying the Layer without having to wrap the whole interface.
  *
- * @export
  * @interface ILayersContainer
  * @typedef {ILayersContainer}
  */
@@ -26,7 +25,6 @@ export interface ILayersContainer {
  * The signature of the callback used by LayerAdapter to create layer for the
  * `hoops-layer-tree`
  *
- * @export
  * @typedef {LayerTreeElementFactory}
  */
 export type LayerTreeElementFactory = (

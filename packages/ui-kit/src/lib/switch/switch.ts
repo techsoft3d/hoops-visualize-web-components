@@ -6,14 +6,32 @@ import { customElement, property } from 'lit/decorators.js';
  *
  * @element hoops-switch
  *
- * @prop {boolean} checked - The switch state
- * @prop {boolean} disabled - Whether or not the switch is disabled
- * @prop {string} label - The switch label
+ * @fires change - Emitted when the switch state changes
+ *
+ * @attribute {boolean} checked - The switch state
+ * @attribute {boolean} disabled - Whether or not the switch is disabled
+ * @attribute {string} label - The switch label
  *
  * @cssprop {Color} --hoops-accent-foreground-active - The color of the switch when checked
+ *
+ * @example
+ * ```html
+ * <hoops-switch checked label="Enable feature"></hoops-switch>
+ * <hoops-switch disabled label="Disabled option"></hoops-switch>
+ *
+ * <script>
+ *   const switchElement = document.getElementsByTagName("hoops-switch")[0];
+ *   switchElement.addEventListener('change', (event) => {
+ *     console.log('Switch state:', switchElement.checked);
+ *   });
+ * </script>
+ * ```
+ *
+ * @since 2025.7.0
  */
 @customElement('hoops-switch')
 export class HoopsSwitchElement extends LitElement {
+  /** @internal */
   static styles = css`
     :host {
       display: flex;
@@ -98,7 +116,8 @@ export class HoopsSwitchElement extends LitElement {
   @property({ type: String })
   label = '';
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     return html`
       <label
         class="switch"

@@ -43,7 +43,8 @@ export class Decorator extends LitElement {
   @state()
   expanded = new Set<number>();
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     return html`<div
       @hoops-tree-node-expand=${(event: TreeNodeExpandEvent) => {
         const node = event.detail.source as TreeNode;

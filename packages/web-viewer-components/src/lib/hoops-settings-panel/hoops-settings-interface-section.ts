@@ -14,8 +14,24 @@ import {
 } from '../services/floorplan';
 import { panelStyles } from './panel-styles';
 
+/**
+ * Renders the interface settings section for axis and floorplan behavior.
+ *
+ * @element hoops-settings-interface-section
+ *
+ * @service {IViewService} ViewService - Axis triad and navigation cube visibility service
+ * @service {IFloorplanService} FloorplanService - Floorplan activation and appearance service
+ *
+ * @example
+ * ```html
+ * <hoops-settings-interface-section></hoops-settings-interface-section>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-settings-interface-section')
 export class HoopsSettingsInterfaceSectionElement extends LitElement {
+  /** @internal */
   static styles = [
     panelStyles,
     css`
@@ -31,6 +47,9 @@ export class HoopsSettingsInterfaceSectionElement extends LitElement {
 
   private updateCallback = () => this.requestUpdate();
 
+  /**
+   * @internal
+   */
   connectedCallback(): void {
     super.connectedCallback();
     this.viewService = getService<IViewService>('ViewService');
@@ -59,6 +78,9 @@ export class HoopsSettingsInterfaceSectionElement extends LitElement {
     ].map((event) => this.floorplanService.addEventListener(event, this.updateCallback));
   }
 
+  /**
+   * @internal
+   */
   disconnectedCallback(): void {
     super.disconnectedCallback();
     if (this.viewService) {
@@ -93,7 +115,8 @@ export class HoopsSettingsInterfaceSectionElement extends LitElement {
     }
   }
 
-  protected render(): unknown {
+  /** @internal */
+  protected override render(): unknown {
     const floorplanActive = this.floorplanService.isActive();
     const orientation = this.floorplanService.getOrientation();
     const autoActivationMode = this.floorplanService.getAutoActivationMode();

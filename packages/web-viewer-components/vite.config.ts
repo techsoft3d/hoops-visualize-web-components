@@ -50,7 +50,10 @@ export default defineConfig({
       // External packages that should not be bundled into your library.
       external: [
         /lit.*/,
+        /@codemirror\/.*/,
+        /@lezer\/.*/,
         '@ts3d-hoops/common',
+        '@ts3d-hoops/streamcache',
         '@ts3d-hoops/web-viewer',
         /@ts3d-hoops\/ui-kit.*/,
         '@lit/context',
@@ -73,7 +76,7 @@ export default defineConfig({
   },
   test: {
     reporters: ['verbose', 'junit'],
-    outputFile: '../../packages/web-viewer-components/web-viewer-components_unit.xml',
+    outputFile: '../../packages/web-viewer-components/unit_test_web-viewer-components.xml',
     environment: 'jsdom',
     setupFiles: ['./src/test-setup.ts'],
     coverage: {
@@ -91,10 +94,10 @@ export default defineConfig({
       reportsDirectory: '../../coverage/packages/web-viewer-components',
       reporter: ['text', 'html'],
       thresholds: {
-        lines: 57,
-        functions: 78,
-        branches: 85,
-        statements: 57,
+        lines: 57.66,
+        functions: 78.78,
+        branches: 86.67,
+        statements: 57.66,
         autoUpdate: true,
       },
     },

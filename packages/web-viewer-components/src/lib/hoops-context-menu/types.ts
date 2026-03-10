@@ -16,7 +16,6 @@ import {
  * This interface is a subset of the WebViewer API, it is meant to allow mocking and
  * proxying the WebViewer without having to wrap the whole interface.
  *
- * @export
  * @interface IContextMenuWebViewer
  * @typedef {IContextMenuWebViewer}
  */
@@ -32,7 +31,6 @@ export interface IContextMenuWebViewer {
  * This interface is a subset of the Model API, it is meant to allow mocking and
  * proxying the Model without having to wrap the whole interface.
  *
- * @export
  * @interface IContextMenuModel
  * @typedef {IContextMenuModel}
  */

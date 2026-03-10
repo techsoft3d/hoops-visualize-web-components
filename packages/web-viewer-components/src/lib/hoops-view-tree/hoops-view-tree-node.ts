@@ -3,24 +3,26 @@ import { customElement, property } from 'lit/decorators.js';
 import { componentBaseStyle } from '@ts3d-hoops/ui-kit';
 
 /**
- * The ViewTreeNode class implements a custom elements register with the tag
- * `hoops-view-tree-node`.
- * This component represent a node in the `hoops-view-tree` component. It
- * contains properties to display to the user.
+ * A custom element representing a node in the view tree.
  *
- * The ViewTreeNode does not have any dependency to the @ts3d-hoops/web-viewer Model
- * class.
+ * This component displays a view tree node with its properties and interactive controls.
+ * It does not have any dependency on the @ts3d-hoops/web-viewer Model class.
  *
- * @prop {number} nodeId The id of the node in the model
- * @prop {string} nodeName The name of the node
+ * @element hoops-view-tree-node
  *
- * @export
- * @class ViewTreeNode
- * @typedef {ViewTreeNode}
- * @extends {LitElement}
+ * @attribute {number} nodeId - The id of the node in the model
+ * @attribute {string} nodeName - The name of the node
+ *
+ * @example
+ * ```html
+ * <hoops-view-tree-node nodeId="1" nodeName="View 1"></hoops-view-tree-node>
+ * ```
+ *
+ * @since 2025.8.0
  */
 @customElement('hoops-view-tree-node')
 export class ViewTreeNode extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -79,19 +81,8 @@ export class ViewTreeNode extends LitElement {
   @property({ type: String })
   nodeName = '';
 
-  /**
-   * Render the `view-tree-node` element into the DOM
-   * if the nodeId is NaN it will return `nothing`, a value from Lit to let it
-   * know not to add anything to the DOM.
-   *
-   * When the node visibility icon is clicked the
-   * 'hoops-view-tree-node-visibility-change' event is emitted.
-   *
-   * If the hidden property change on the node the icon will change.
-   *
-   * @returns {The `<view-tree-node></view-tree-node>` content or nothing}
-   */
-  protected override render() {
+  /** @internal */
+  protected override render(): unknown {
     /**
      * If the nodeId is NaN there is nothing to display so e return nothing to
      * lit.

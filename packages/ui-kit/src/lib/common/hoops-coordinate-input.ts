@@ -14,7 +14,13 @@ import { customElement, property, queryAll } from 'lit/decorators.js';
  * values either by typing precise values or using the slider for approximate adjustments.
  *
  * @element hoops-coordinate-input
+ *
  * @fires hoops-coordinate-changed - Dispatched when the coordinate value changes
+ *
+ * @attribute {string} label - The display label for this coordinate input (e.g., "X", "Y", "Z")
+ * @attribute {number} value - The current numeric value of the coordinate
+ * @attribute {number} min - The minimum allowed value for the coordinate
+ * @attribute {number} max - The maximum allowed value for the coordinate
  *
  * @example
  * ```html
@@ -22,21 +28,22 @@ import { customElement, property, queryAll } from 'lit/decorators.js';
  *   label="X"
  *   value="10.5"
  *   min="0"
- *   max="100"
- *   @hoops-coordinate-changed=${this.handleCoordinateChange}>
+ *   max="100">
  * </hoops-coordinate-input>
+ *
+ * <script>
+ *   const element = document.getElementsByTagName('hoops-coordinate-input')[0];
+ *   element.addEventListener('hoops-coordinate-changed', (event) => {
+ *     console.log(`${event.detail.label}: ${event.detail.value}`);
+ *   });
+ * </script>
  * ```
  *
- * @example
- * ```typescript
- * // Listening to coordinate changes
- * element.addEventListener('hoops-coordinate-changed', (event) => {
- *   console.log(`${event.detail.label}: ${event.detail.value}`);
- * });
- * ```
+ * @since 2025.7.0
  */
 @customElement('hoops-coordinate-input')
 export class HoopsCoordinateInputElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -163,20 +170,8 @@ export class HoopsCoordinateInputElement extends LitElement {
     return this.value.toFixed(2);
   }
 
-  /**
-   * Renders the coordinate input component template.
-   *
-   * Creates a layout with three columns:
-   * 1. Label (1rem width)
-   * 2. Numeric input (4rem width)
-   * 3. Range slider (auto width)
-   *
-   * Both input controls share the same value, constraints, and change handler
-   * to ensure they remain synchronized.
-   *
-   * @returns TemplateResult containing the component's HTML structure
-   */
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     const value = this.formattedValue;
 
     return html`<div>

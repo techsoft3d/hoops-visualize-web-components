@@ -8,7 +8,12 @@ import WebViewerContextManager, {
   webViewerStateContext,
   type WebViewerState,
 } from '../context-manager';
-import { redlineCircle, redlineFreehand, redlineRectangle, redlineNote } from '@ts3d-hoops/ui-kit/icons';
+import {
+  redlineCircle,
+  redlineFreehand,
+  redlineRectangle,
+  redlineNote,
+} from '@ts3d-hoops/ui-kit/icons';
 
 const redlineButtons = new Map([
   [OperatorId.RedlineCircle, { title: 'Circle', icon: redlineCircle }],
@@ -17,8 +22,23 @@ const redlineButtons = new Map([
   [OperatorId.RedlinePolyline, { title: 'Free hand', icon: redlineFreehand }],
 ]);
 
+/**
+ * Displays the toolbar dropdown for redline markup tools.
+ *
+ * @element hoops-toolbar-redlines
+ *
+ * @service {WebViewerContextManager} ContextManager - Context manager used to set redline operator
+ *
+ * @example
+ * ```html
+ * <hoops-toolbar-redlines></hoops-toolbar-redlines>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-toolbar-redlines')
 export class HoopsRedlinesButtonElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       .dropdown-content {
@@ -41,14 +61,21 @@ export class HoopsRedlinesButtonElement extends LitElement {
   @consume({ context: webViewerStateContext, subscribe: true })
   private webViewerState?: WebViewerState;
 
+  /**
+   * @internal
+   */
   connectedCallback() {
     super.connectedCallback();
     window.addEventListener('keydown', this.handleKeyDown);
   }
+  /**
+   * @internal
+   */
   disconnectedCallback() {
     window.removeEventListener('keydown', this.handleKeyDown);
     super.disconnectedCallback();
   }
+
   private handleKeyDown = (event: KeyboardEvent) => {
     // End redline operation when escale is pressed
     if (event.key === 'Escape') {
@@ -64,6 +91,7 @@ export class HoopsRedlinesButtonElement extends LitElement {
     }
   }
 
+  /** @internal */
   protected override render(): unknown {
     let redlineMode =
       this.webViewerState && redlineButtons.has(this.webViewerState.toolOperator)

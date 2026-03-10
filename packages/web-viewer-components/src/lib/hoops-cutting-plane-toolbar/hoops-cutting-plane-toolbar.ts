@@ -36,6 +36,7 @@ import { type ICuttingService } from '../services';
  */
 @customElement('hoops-cutting-plane-toolbar')
 export class HoopsCuttingPlaneToolbarElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -154,23 +155,8 @@ export class HoopsCuttingPlaneToolbarElement extends LitElement {
     }
   }
 
-  /**
-   * Renders the cutting plane toolbar component.
-   *
-   * Creates a toolbar with four action buttons for cutting plane manipulation:
-   * - Customize: Opens customization options for the cutting plane
-   * - Invert: Reverses the cutting plane's orientation
-   * - Toggle Visibility: Shows/hides the plane's reference geometry
-   * - Remove: Deletes the cutting plane from the section
-   *
-   * The toolbar only renders if a valid cutting plane exists at the specified
-   * section and plane indices. The visibility button icon changes based on
-   * whether reference geometry is currently visible.
-   *
-   * @returns TemplateResult containing the toolbar buttons, or nothing if no plane exists
-   * @internal
-   */
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     const cuttingPlane = this.service?.getCuttingPlane(this.sectionIndex, this.planeIndex);
     if (!cuttingPlane) {
       return nothing;

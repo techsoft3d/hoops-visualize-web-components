@@ -4,7 +4,6 @@ import { layers, meshCubeIcon, rightIcon, downIcon } from '@ts3d-hoops/ui-kit/ic
 /**
  * Provide the layers icon.
  *
- * @export
  * @returns {(HTMLTemplateResult | typeof nothing)}
  */
 export function formatLayersIcon(): HTMLTemplateResult | typeof nothing {
@@ -14,7 +13,6 @@ export function formatLayersIcon(): HTMLTemplateResult | typeof nothing {
 /**
  * Provide the node icon.
  *
- * @export
  * @returns {(HTMLTemplateResult | typeof nothing)}
  */
 export function formatNodeIcon(): HTMLTemplateResult | typeof nothing {
@@ -24,7 +22,6 @@ export function formatNodeIcon(): HTMLTemplateResult | typeof nothing {
 /**
  * Provide the right arrow icon.
  *
- * @export
  * @returns {(HTMLTemplateResult | typeof nothing)}
  */
 export function rightArrowIcon(): HTMLTemplateResult | typeof nothing {
@@ -34,7 +31,6 @@ export function rightArrowIcon(): HTMLTemplateResult | typeof nothing {
 /**
  * Provide the down arrow icon.
  *
- * @export
  * @returns {(HTMLTemplateResult | typeof nothing)}
  */
 export function downArrowIcon(): HTMLTemplateResult | typeof nothing {

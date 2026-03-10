@@ -51,8 +51,10 @@ import '../icon-button';
  */
 @customElement('hoops-dropdown')
 export default class DropdownMenu extends LitElement {
+  /** @internal */
   static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -250,7 +252,7 @@ export default class DropdownMenu extends LitElement {
       this.focusFirstDropdownItem();
     }
   }
-
+  /** @internal */
   protected override render(): unknown {
     return html`
       <slot @click=${this.toggleDropdown}></slot>

@@ -6,8 +6,22 @@ import './hoops-settings-controls-section';
 import './hoops-settings-interface-section';
 import { getAllServices, isResettableConfigurationService } from '../services';
 
+/**
+ * Provides the settings panel container with graphics, interface, and controls sections.
+ * Will use the ServicesRegistry to reset all configurable services to their default values when the reset button is clicked.
+ *
+ * @element hoops-settings-panel
+ *
+ * @example
+ * ```html
+ * <hoops-settings-panel></hoops-settings-panel>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-settings-panel')
 export class HoopsSettingsPanelElement extends LitElement {
+  /** @internal */
   static styles = css`
     :host {
       height: 100%;
@@ -42,7 +56,8 @@ export class HoopsSettingsPanelElement extends LitElement {
     });
   }
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     return html`<div>
       <h2 class="title">Settings</h2>
       <hoops-accordion>

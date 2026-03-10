@@ -20,8 +20,27 @@ const cameraOperatorIcons = new Map([
   [OperatorId.Turntable, { title: 'Turntable', icon: icons.cameraTurntable }],
   [OperatorId.WalkMode, { title: 'Walk', icon: icons.walk }],
 ]);
+
+/**
+ * Displays the toolbar dropdown for selecting the active camera operator.
+ *
+ * @element hoops-toolbar-camera-operator
+ *
+ * @attribute {'bottom' | 'top' | 'right' | 'left'} dropDownPosition - Dropdown placement relative to the button
+ *
+ * @service {IFloorplanService} FloorplanService - Service reset when entering walk mode
+ * @service {WebViewerContextManager} ContextManager - Context manager used to set camera operator
+ *
+ * @example
+ * ```html
+ * <hoops-toolbar-camera-operator dropDownPosition="right"></hoops-toolbar-camera-operator>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-toolbar-camera-operator')
 export class HoopsCameraOperatorButtonElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       .dropdown-content {
@@ -62,6 +81,7 @@ export class HoopsCameraOperatorButtonElement extends LitElement {
     }
   }
 
+  /** @internal */
   protected override render(): unknown {
     const currentCameraOperatorIcon =
       this.webViewerState && cameraOperatorIcons.has(this.webViewerState.topCameraOperator)

@@ -4,7 +4,6 @@ import { HTMLTemplateResult, nothing } from 'lit';
  * A subset of the MouseEvent properties that we add to event triggered on the
  * tree.
  *
- * @export
  * @typedef {BaseMouseEvent}
  */
 export type BaseMouseEvent = Pick<
@@ -42,7 +41,6 @@ export type TreeEntryData = {
  * This interface represent the context of the tree. It contains all the
  * necessary data for the tree to display.
  *
- * @export
  * @interface TreeContext
  * @typedef {TreeContext}
  */

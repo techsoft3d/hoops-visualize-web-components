@@ -4,7 +4,6 @@ import type { BaseMouseEvent } from '@ts3d-hoops/ui-kit/tree';
  * The event emitted by a hoops-model-tree-node when the visibility button is
  * clicked.
  *
- * @export
  * @typedef {ModelTreeNodeVisibilityClickEvent}
  */
 

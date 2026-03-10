@@ -12,6 +12,7 @@ export * from './sheet';
 export * from './spacemouse';
 export * from './walk-operator';
 export * from './view';
+export * from './material';
 
 export { default as CuttingService } from './cutting';
 export { default as CameraService } from './camera';
@@ -24,5 +25,6 @@ export { default as SheetService } from './sheet';
 export { default as SpaceMouseService } from './spacemouse';
 export { default as WalkOperatorService } from './walk-operator';
 export { default as ViewService } from './view';
+export { default as MaterialService } from './material';
 
 export * from './serviceRegistry';

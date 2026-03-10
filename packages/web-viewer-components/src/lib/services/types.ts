@@ -27,6 +27,7 @@ export const ServiceNames = [
   'ViewService',
   'FloorplanService',
   'WalkOperatorService',
+  'MaterialService',
 ] as const; // Add other service names as needed
 
 export type ServiceName = (typeof ServiceNames)[number] | (string & {}); // Extend with other service names as needed (the `string & {}` trick allows for string literals while still being a valid type and supporting auto completion)

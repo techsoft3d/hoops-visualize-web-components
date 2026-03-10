@@ -11,13 +11,13 @@ export type * from './custom-events.d.ts';
 /**
  * This class represent a node in a `hoops-tree`.
  *
- * @export
  * @class TreeNode
  * @typedef {TreeNode}
  * @extends {LitElement}
  */
 @customElement('hoops-tree-node')
 export default class TreeNode extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -126,7 +126,8 @@ export default class TreeNode extends LitElement {
   @property({ type: Boolean })
   public leaf = false;
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     if (Number.isNaN(this.key) || !this.tree) {
       return nothing;
     }
@@ -164,7 +165,7 @@ export default class TreeNode extends LitElement {
    * This will stop the propagation of the click and propagate a
    * hoops-tree-node-expand with information about the clicked node.
    *
-   * @emits TreeNode#hoops-tree-node-expand
+   * @fires TreeNode#hoops-tree-node-expand
    *
    * @param {MouseEvent} event The event that triggered the listener.
    */
@@ -193,7 +194,7 @@ export default class TreeNode extends LitElement {
    * This will stop the propagation of the click and propagate a
    * hoops-tree-node-click with information about the clicked node.
    *
-   * @emits TreeNode#hoops-tree-node-click
+   * @fires TreeNode#hoops-tree-node-click
    *
    * @param {MouseEvent} event The event that triggered the listener.
    */
@@ -224,7 +225,7 @@ export default class TreeNode extends LitElement {
    * This will stop the propagation of the aux click and propagate a
    * hoops-tree-node-aux-click with information about the clicked node.
    *
-   * @emits TreeNode#hoops-tree-node-aux-click
+   * @fires TreeNode#hoops-tree-node-aux-click
    *
    * @param {MouseEvent} event The event that triggered the listener.
    */

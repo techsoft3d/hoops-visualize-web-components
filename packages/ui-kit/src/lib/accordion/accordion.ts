@@ -44,6 +44,7 @@ export class HoopsAccordion extends LitElement {
   @property({ type: Number })
   level?: number;
 
+  /** @internal */
   static styles = css`
     :host {
       display: block;
@@ -99,7 +100,8 @@ export class HoopsAccordion extends LitElement {
     }
   `;
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     return html`
       <div>
         <div role="heading" aria-level=${ifDefined(this.level)}>

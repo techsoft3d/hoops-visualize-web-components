@@ -19,8 +19,32 @@ import { IMeasurementService } from '../services/measurement';
 import { panelStyles } from './panel-styles';
 import { classMap } from 'lit-html/directives/class-map.js';
 
+/**
+ * Renders the graphics settings section for viewer rendering and selection options.
+ *
+ * @element hoops-settings-graphics-section
+ *
+ * @attribute {number} minimumFramerate - Minimum framerate target used by render options
+ * @attribute {boolean} eyeDomeLightingEnabled - Indicates whether eye dome lighting is enabled
+ *
+ * @service {ICameraService} CameraService - Camera projection and navigation configuration service
+ * @service {ICuttingService} CuttingService - Cutting and capping configuration service
+ * @service {IRenderOptionsService} RenderOptionsService - Rendering quality and effects service
+ * @service {ISelectionService} SelectionService - Selection display and behavior service
+ * @service {IMeasurementService} MeasurementService - Measurement style configuration service
+ * @service {IPmiService} PmiService - PMI style configuration service
+ * @service {ISheetService} SheetService - Sheet appearance configuration service
+ *
+ * @example
+ * ```html
+ * <hoops-settings-graphics-section></hoops-settings-graphics-section>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-settings-graphics-section')
 export class HoopsSettingsGraphicsSectionElement extends LitElement {
+  /** @internal */
   static styles = [
     panelStyles,
     css`
@@ -109,6 +133,9 @@ export class HoopsSettingsGraphicsSectionElement extends LitElement {
     'hoops-background-sheet-enabled-changed',
   ] as const;
 
+  /**
+   * @internal
+   */
   connectedCallback(): void {
     super.connectedCallback();
 
@@ -150,6 +177,9 @@ export class HoopsSettingsGraphicsSectionElement extends LitElement {
     this.updateCallback();
   }
 
+  /**
+   * @internal
+   */
   disconnectedCallback(): void {
     super.disconnectedCallback();
 
@@ -196,7 +226,8 @@ export class HoopsSettingsGraphicsSectionElement extends LitElement {
     }
   }
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     return html`
       <div class="settings-root">
         <fieldset>

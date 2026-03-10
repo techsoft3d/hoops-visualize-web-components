@@ -7,31 +7,29 @@ import { toBaseMouseEvent } from '@ts3d-hoops/ui-kit/tree';
 import { halfVisibleIcon, hiddenIcon, visibleIcon } from '@ts3d-hoops/ui-kit/icons';
 
 /**
- * The LayerTreeElement class implements a custom elements register with the tag
- * `hoops-layer-tree-element`.
- * This component represent a layer in the `hoops-layer-tree` component. It
- * contains properties to display to the user.
+ * A custom element representing a layer in the layer tree.
  *
- * The LayerTreeElement does not have any dependency to the @ts3d-hoops/web-viewer Model
- * class.
+ * This component displays a layer from the model with its visibility state,
+ * nodes, and interactive controls. It does not have any dependency on the
+ * @ts3d-hoops/web-viewer Model class.
  *
- * @prop {number} layerId The id of the layer in the model
- * @prop {string} layerName The name of the layer
- * @prop {boolean} hidden The visibility state of the layer. By default boolean
- * args are recommended to be false so you can use this notation:
+ * @element hoops-layer-tree-element
+ *
+ * @attribute {number} layerId - The id of the layer in the model
+ * @attribute {string} layerName - The name of the layer
+ * @attribute {boolean} hidden - The visibility state of the layer
+ *
+ * @example
  * ```html
- * <hoops-layer-tree-element></hoops-layer-tree-element> <!-- <-- This layer is visible -->
- * <hoops-layer-tree-element hidden> <!-- <-- This layer is hidden -->
- * </hoops-layer-tree-element>
+ * <hoops-layer-tree-element layerId="1" layerName="Layer 1"></hoops-layer-tree-element>
+ * <hoops-layer-tree-element layerId="2" layerName="Layer 2" hidden></hoops-layer-tree-element>
  * ```
  *
- * @export
- * @class LayerTreeElement
- * @typedef {LayerTreeElement}
- * @extends {LitElement}
+ * @since 2025.8.0
  */
 @customElement('hoops-layer-tree-element')
 export class LayerTreeElement extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -179,23 +177,8 @@ export class LayerTreeElement extends LitElement {
   @property({ type: Map<number, number[]> })
   nodesChildren: Map<number, number[]> = new Map<number, number[]>();
 
-  /**
-   * Render the `layer-tree-element` element into the DOM
-   * if the layerId is NaN it will return `nothing`, a value from Lit to let it
-   * know not to add anything to the DOM.
-   *
-   * Otherwise, it returns an HTML Element that displays an icon based on the
-   * type of the layer, the name of the layer and a clickable icon for the
-   * visibility.
-   *
-   * When the layer visibility icon is clicked the
-   * 'hoops-layer-visibility-change' event is emitted.
-   *
-   * If the hidden property change on the layer the icon will change.
-   *
-   * @returns {The `<layer-tree-element></layer-tree-element>` content or nothing}
-   */
-  protected override render() {
+  /** @internal */
+  protected override render(): unknown {
     /**
      * If the layerId is NaN there is nothing to display so e return nothing to
      * lit.

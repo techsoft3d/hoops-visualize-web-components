@@ -44,6 +44,7 @@ export type * from './custom-events.d.ts';
  */
 @customElement('hoops-layer-tree')
 export class HoopsLayerTreeElement extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -311,17 +312,13 @@ export class HoopsLayerTreeElement extends LitElement {
       if (affectedKeys) {
         lle.updateVisibility(
           Array.from(parentShownBodyIds).filter((id) => lle.layerNodes.has(id)),
-          Array.from(parentHiddenBodyIds).filter((id) => lle.layerNodes.has(id))
+          Array.from(parentHiddenBodyIds).filter((id) => lle.layerNodes.has(id)),
         );
       }
     });
   }
 
-  /**
-   * Renders the layer tree component template.
-   * @internal
-   * @returns {unknown} The Lit HTML template
-   */
+  /** @internal */
   protected override render(): unknown {
     return html`<hoops-list
       class="layertree"

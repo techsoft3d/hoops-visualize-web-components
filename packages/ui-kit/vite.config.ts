@@ -57,7 +57,7 @@ export default {
   },
   test: {
     reporters: ['verbose', 'junit'],
-    outputFile: '../../packages/ui-kit/ui-kit_unit.xml',
+    outputFile: '../../packages/ui-kit/unit_test_ui-kit.xml',
     environment: 'jsdom',
     coverage: {
       provider: 'v8',
@@ -66,10 +66,10 @@ export default {
       reportsDirectory: '../../coverage/packages/ui-kit',
       reporter: ['text', 'html'],
       thresholds: {
-        lines: 59,
-        functions: 68,
-        branches: 81,
-        statements: 59,
+        lines: 59.04,
+        functions: 68.1,
+        branches: 81.77,
+        statements: 59.04,
         autoUpdate: true,
       },
     },

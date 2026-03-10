@@ -12,7 +12,6 @@ import { branchVisibilityFromComBranchVisibility } from '../hoops-model-tree/typ
  * Create a `type-tree-node` to render in the types tree. If nodeId is not set
  * or is NaN then nothing is displayed.
  *
- * @export
  * @param {IModel} model The model that contains the node
  * @param {number} nodeId The id of the node to render
  * @param {?boolean} [selected] whether the node is selected or not
@@ -84,10 +83,8 @@ export function defaultNodeFactory(
  * This class serves as a proxy to the Model class. It is used by the TypesTree
  * to communicate with the Model.
  *
- * @export
  * @class TypesTreeAdapter
  * @typedef {TypesTreeAdapter}
- * @implements {TreeContext}
  */
 export class TypesTreeAdapter implements TreeContext {
   /**

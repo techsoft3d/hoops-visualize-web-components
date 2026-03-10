@@ -14,6 +14,38 @@ export type HoopsLayoutSlotName =
   | 'toolbar-bottom'
   | 'central-widget';
 
+/**
+ * Provides a slot-based page layout container for HOOPS web components.
+ *
+ * @element hoops-layout
+ *
+ * @slot menu-bar - Slot for the top menu bar
+ * @slot status-bar - Slot for the bottom status bar
+ * @slot panel-left - Slot for the left side panel
+ * @slot panel-right - Slot for the right side panel
+ * @slot panel-top - Slot for the top panel
+ * @slot panel-bottom - Slot for the bottom panel
+ * @slot toolbar-left - Slot for the left toolbar
+ * @slot toolbar-right - Slot for the right toolbar
+ * @slot toolbar-top - Slot for the top toolbar
+ * @slot toolbar-bottom - Slot for the bottom toolbar
+ * @slot central-widget - Slot for the central content
+ *
+ * @cssprop --hoops-layout-width - Width of the layout container
+ * @cssprop --hoops-layout-height - Height of the layout container
+ *
+ * @attribute {boolean} floatingPanels - Renders panel slots in floating mode when enabled
+ *
+ * @example
+ * ```html
+ * <hoops-layout floatingPanels>
+ *   <div slot="menu-bar">Menu</div>
+ *   <div slot="central-widget">Viewer</div>
+ * </hoops-layout>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-layout')
 export class HoopsLayout extends LitElement {
   private static buildFloatablePanelStyle(position: string) {
@@ -43,6 +75,7 @@ export class HoopsLayout extends LitElement {
     `;
   }
 
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -203,6 +236,7 @@ export class HoopsLayout extends LitElement {
     </div> `;
   }
 
+  /** @internal */
   protected override render(): unknown {
     return html`
       ${this.buildSlotElement('menu-bar')} ${this.buildSlotElement('toolbar-top')}

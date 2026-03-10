@@ -4,7 +4,6 @@ import { HTMLTemplateResult, nothing } from 'lit';
  * A subset of the MouseEvent properties that we add to event triggered on the
  * list.
  *
- * @export
  * @typedef {BaseMouseEvent}
  */
 export type BaseMouseEvent = Pick<
@@ -31,7 +30,6 @@ export type BaseMouseEvent = Pick<
  * This interface represent the context of the list. It contains all the
  * necessary data for the list to display.
  *
- * @export
  * @interface ListContext
  * @typedef {ListContext}
  */

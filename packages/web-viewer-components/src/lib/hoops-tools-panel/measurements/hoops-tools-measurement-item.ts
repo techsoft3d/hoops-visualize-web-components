@@ -7,8 +7,8 @@ import { componentBaseStyle, icons } from '@ts3d-hoops/ui-kit';
 import type { MeasurementRemoveCommand } from './custom-events.d.ts';
 
 /**
- * @element hoops-tools-measurement-item
- * @description Displays a single measurement item with its value, icon, and remove functionality.
+ * Displays a single measurement item with its value, icon, and remove functionality.
+ *
  * This component renders measurement data in a compact, user-friendly format within the measurement list.
  *
  * Features:
@@ -22,30 +22,30 @@ import type { MeasurementRemoveCommand } from './custom-events.d.ts';
  * The component uses a configuration map to determine the appropriate icon and labels
  * for each measurement type, making it easy to extend with new measurement types.
  *
+ * @element hoops-tools-measurement-item
+ *
  * @fires hoops-measurement-remove-command - Dispatched when the remove button is clicked
  *
- * @attr {MeasureMarkup} measurement - The measurement object to display.
- *   Should be an instance of one of the supported MeasureMarkup types.
+ * @attribute {MeasureMarkup} measurement - The measurement object to display
  *
  * @example
  * ```html
- * <hoops-tools-measurement-item
- *   .measurement=${measurementObject}
- *   @hoops-measurement-remove-command=${this.handleRemoval}>
- * </hoops-tools-measurement-item>
+ * <hoops-tools-measurement-item></hoops-tools-measurement-item>
+ *
+ * <script>
+ *   const item = document.getElementsByTagName('hoops-tools-measurement-item')[0];
+ *   item.measurement = measurementObject;
+ *   item.addEventListener('hoops-measurement-remove-command', (event) => {
+ *     console.log('Remove measurement:', event.detail.measurement);
+ *   });
+ * </script>
  * ```
  *
- * @example
- * ```typescript
- * // Handle measurement removal
- * handleRemoval(event: MeasurementRemoveCommand) {
- *   const { measurement } = event.detail;
- *   this.measureManager.removeMeasurement(measurement);
- * }
- * ```
+ * @since 2025.7.0
  */
 @customElement('hoops-tools-measurement-item')
 export class HoopsToolsMeasurementItemElement extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -142,7 +142,8 @@ export class HoopsToolsMeasurementItemElement extends LitElement {
     );
   }
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     if (!this.measurement) {
       return nothing;
     }

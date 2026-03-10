@@ -29,6 +29,7 @@ import NodePropertyAdapter from './NodePropertyAdapter';
  */
 @customElement('hoops-node-properties')
 export class NodeProperties extends LitElement {
+  /** @internal */
   static styles = [
     componentBaseStyle,
     css`
@@ -143,14 +144,8 @@ export class NodeProperties extends LitElement {
     `;
   }
 
-  /**
-   * Renders the component's template.
-   *
-   * @returns HTML template for the node properties display
-   *
-   * @internal
-   */
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     if (Number.isNaN(this.nodeId)) {
       return html`<div>No properties to display</div>`;
     }

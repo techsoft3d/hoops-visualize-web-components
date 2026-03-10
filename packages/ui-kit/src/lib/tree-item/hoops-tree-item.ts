@@ -6,7 +6,6 @@ import '../icons/hoops-icon';
 import type { TreeItemExpandEvent } from './custom-events.d.ts';
 
 /**
- * @hoops-tree-item
  * A custom element representing a tree item in a hierarchical structure.
  * It supports expansion and selection states, and can contain child elements.
  *
@@ -20,6 +19,8 @@ import type { TreeItemExpandEvent } from './custom-events.d.ts';
  * it is meant to be used as a building block for trees without having to figure out how it works
  * internally.
  *
+ * @element hoops-tree-item
+ *
  * @fires hoops-tree-item-expand - Fired when the item is expanded or collapsed.
  * @fires hoops-tree-item-select - Fired when the item is selected or deselected.
  *
@@ -32,12 +33,11 @@ import type { TreeItemExpandEvent } from './custom-events.d.ts';
  * @csspart children - The container for child elements, which can be expanded or collapsed.
  * @cssproperty --hoops-svg-accent-color - The accent color used for selected items.
  *
- * @todo integrate it in the HoopsTreeElement to create a unified tree system.
- * @todo move animations to a separate CSS file to share them and maintain them with ease.
- *
+ * @since 2025.8.0
  */
 @customElement('hoops-tree-item')
 export class HoopsTreeItemElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -215,7 +215,8 @@ export class HoopsTreeItemElement extends LitElement {
     }
   }
 
-  protected render(): unknown {
+  /** @internal */
+  protected override render(): unknown {
     return html`
       <div
         class=${classMap({

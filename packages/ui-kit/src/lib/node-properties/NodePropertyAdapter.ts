@@ -6,10 +6,8 @@ import { IModel, INodePropertyAdapter } from './types';
  * This class serves as a proxy to the Model class. It is used by the NodeProperties
  * to communicate with the Model.
  *
- * @export
  * @class ModelAdapter
  * @typedef {ModelAdapter}
- * @implements {TreeContext}
  */
 export class NodePropertyAdapter implements INodePropertyAdapter {
   /**

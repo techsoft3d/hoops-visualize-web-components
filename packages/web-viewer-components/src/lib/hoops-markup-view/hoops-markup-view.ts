@@ -6,8 +6,27 @@ import '../hoops-markup-item';
 import { Uuid } from '@ts3d-hoops/web-viewer';
 import { type IRedlineService, formatRedlineIcon, RedlineItemData } from '../services';
 
+/**
+ * Renders one redline markup view and its items.
+ *
+ * @element hoops-markup-view
+ *
+ * @fires hoops-delete-redline - Emitted when a markup item deletion is requested
+ *
+ * @attribute {string} uuid - Identifier of the markup view to render
+ *
+ * @service {IRedlineService} RedlineService - Service used to retrieve and mutate redlines
+ *
+ * @example
+ * ```html
+ * <hoops-markup-view uuid="view-1"></hoops-markup-view>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-markup-view')
 export class HoopsMarkupViewElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -52,6 +71,9 @@ export class HoopsMarkupViewElement extends LitElement {
     this.requestUpdate();
   };
 
+  /**
+   * @internal
+   */
   protected firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
 
@@ -65,6 +87,9 @@ export class HoopsMarkupViewElement extends LitElement {
     );
   }
 
+  /**
+   * @internal
+   */
   disconnectedCallback(): void {
     super.disconnectedCallback();
 
@@ -84,7 +109,8 @@ export class HoopsMarkupViewElement extends LitElement {
     );
   }
 
-  protected render(): unknown {
+  /** @internal */
+  protected override render(): unknown {
     const view = this.redlineService?.getRedlineView(this.uuid);
     if (!view) {
       return html`<div>No view found for UUID: "${this.uuid}"</div>`;

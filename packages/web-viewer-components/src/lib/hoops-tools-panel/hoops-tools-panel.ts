@@ -6,8 +6,23 @@ import './measurements/hoops-tools-measurement-group';
 import './hoops-tools-redline-group';
 import './hoops-tools-markup-group';
 
+/**
+ * Provides the tools panel container and renders built-in tool groups.
+ *
+ * @element hoops-tools-panel
+ *
+ * @slot - Slot for additional custom tool groups
+ *
+ * @example
+ * ```html
+ * <hoops-tools-panel></hoops-tools-panel>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-tools-panel')
 export class HoopsToolsPanelElement extends LitElement {
+  /** @internal */
   static styles = css`
     :host {
       display: block;
@@ -27,7 +42,8 @@ export class HoopsToolsPanelElement extends LitElement {
     }
   `;
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     return html`
       <div class="hoops-tools-panel">
         <hoops-tools-select-group></hoops-tools-select-group>

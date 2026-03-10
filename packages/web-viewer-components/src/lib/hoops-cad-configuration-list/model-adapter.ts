@@ -7,7 +7,6 @@ import { CadConfigurationData, IModel } from './types';
  * The signature of the callback used by ModelAdapter to create item for the
  * `hoops-cad-configuration-list`
  *
- * @export
  * @typedef {CadConfigurationListItemFactory}
  */
 export type CadConfigurationListItemFactory = (
@@ -20,7 +19,6 @@ export type CadConfigurationListItemFactory = (
  * Create a `hoops-cad-configuration-list-item` to render in the cad configuration list. If cadConfigurationId is not set
  * or is NaN then nothing is displayed.
  *
- * @export
  * @param {ModelAdapter} modelAdapter The model adapter
  * @param {number} cadConfigurationId The id of the cad configuration to render
  * @param {?boolean} [active] whether the cad configuration is active or not
@@ -51,7 +49,6 @@ export const CadConfigurationRootId = -1;
  * This class serves as a proxy to the Model class. I is used by the HoopsCadConfigurationListElement
  * to communicate with the Model.
  *
- * @export
  * @class ModelAdapter
  * @typedef {ModelAdapter}
  */

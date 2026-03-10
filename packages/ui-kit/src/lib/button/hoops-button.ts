@@ -40,6 +40,7 @@ import { customElement, property } from 'lit/decorators.js';
  */
 @customElement('hoops-button')
 export default class HoopsButton extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -165,13 +166,7 @@ export default class HoopsButton extends LitElement {
   @property({ type: Boolean })
   disabled = false;
 
-  /**
-   * Renders the button component template.
-   *
-   * @returns HTML template for the button
-   *
-   * @internal
-   */
+  /** @internal */
   protected override render(): unknown {
     return html`
       <div

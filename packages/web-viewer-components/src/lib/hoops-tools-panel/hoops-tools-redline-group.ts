@@ -14,8 +14,27 @@ import { icons } from '@ts3d-hoops/ui-kit';
 import '../hoops-markup-tree';
 import { getService, IRedlineService } from '../services';
 
+/**
+ * Renders redline tool actions and the redline tree in the tools panel.
+ *
+ * @element hoops-tools-redline-group
+ *
+ * @service {IRedlineService} RedlineService - Service used to manage redline markups
+ * @service {WebViewerContextManager} ContextManager - Context manager used to switch active operator
+ *
+ * @cssprop --hoops-foreground - Foreground color used for list rows and borders
+ * @cssprop --hoops-accent-foreground - Accent color used for selected and hover states
+ *
+ * @example
+ * ```html
+ * <hoops-tools-redline-group></hoops-tools-redline-group>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-tools-redline-group')
 export class HoopsToolsRedlineGroupElement extends LitElement {
+  /** @internal */
   static styles = css`
     :host {
       display: block;
@@ -136,6 +155,9 @@ export class HoopsToolsRedlineGroupElement extends LitElement {
     this.requestUpdate();
   };
 
+  /**
+   * @internal
+   */
   firstUpdated() {
     if (!this.contextManager) {
       console.error('Cannot initialize redline tools: WebViewer not initialized');
@@ -153,6 +175,9 @@ export class HoopsToolsRedlineGroupElement extends LitElement {
     this.service.addEventListener('hoops-markup-manager-reset', this.onMarkupsUpdated);
   }
 
+  /**
+   * @internal
+   */
   disconnectedCallback() {
     super.disconnectedCallback();
     if (!this.service) {
@@ -165,7 +190,8 @@ export class HoopsToolsRedlineGroupElement extends LitElement {
     this.service.removeEventListener('hoops-markup-manager-reset', this.onMarkupsUpdated);
   }
 
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     return html`
       <hoops-tools-group label="Redline">
         <div class="content">

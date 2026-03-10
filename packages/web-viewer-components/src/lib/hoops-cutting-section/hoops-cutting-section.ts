@@ -44,6 +44,7 @@ import '../hoops-cutting-section-toolbar';
  */
 @customElement('hoops-cutting-section')
 export class HoopsCuttingSectionElement extends LitElement {
+  /** @internal */
   static styles = [
     css`
       :host {
@@ -228,16 +229,8 @@ export class HoopsCuttingSectionElement extends LitElement {
     }
   }
 
-  /**
-   * Renders the cutting section component.
-   *
-   * Creates an accordion-style interface with header, toolbar, and content slots.
-   * The content area contains a dynamic list of cutting plane components.
-   *
-   * @returns TemplateResult - The accordion interface, or nothing if service is unavailable
-   * @internal
-   */
-  render() {
+  /** @internal */
+  protected override render(): unknown {
     if (!this.service) {
       return nothing;
     }

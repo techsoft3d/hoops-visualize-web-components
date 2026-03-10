@@ -9,6 +9,21 @@ import { IWalkOperatorService, WalkModeName } from '../services/walk-operator/ty
 import { panelStyles } from './panel-styles';
 import { ISpaceMouseService } from '../services';
 
+/**
+ * Renders the controls section for walk and space mouse settings.
+ *
+ * @element hoops-settings-controls-section
+ *
+ * @service {IWalkOperatorService} WalkOperatorService - Service used to configure walk controls
+ * @service {ISpaceMouseService} SpaceMouseService - Service used to connect and manage space mouse
+ *
+ * @example
+ * ```html
+ * <hoops-settings-controls-section></hoops-settings-controls-section>
+ * ```
+ *
+ * @since 2025.7.0
+ */
 @customElement('hoops-settings-controls-section')
 export class HoopsSettingsControlsSectionElement extends LitElement {
   static override styles = [
@@ -36,6 +51,9 @@ export class HoopsSettingsControlsSectionElement extends LitElement {
     this.walkSpeedUnitFactor = calculateWalkSpeedUnitFactor(walkSpeed);
   };
 
+  /**
+   * @internal
+   */
   connectedCallback(): void {
     super.connectedCallback();
     this.walkOperatorService = getService<IWalkOperatorService>('WalkOperatorService');
@@ -57,6 +75,9 @@ export class HoopsSettingsControlsSectionElement extends LitElement {
     this.spaceMouseService = getService<ISpaceMouseService>('SpaceMouseService');
   }
 
+  /**
+   * @internal
+   */
   disconnectedCallback(): void {
     super.disconnectedCallback();
     if (this.walkOperatorService) {
@@ -77,7 +98,8 @@ export class HoopsSettingsControlsSectionElement extends LitElement {
     }
   }
 
-  protected override render() {
+  /** @internal */
+  protected override render(): unknown {
     const walkMode = this.walkOperatorService.getWalkMode();
     const isInKeyboardMode = walkMode === 'Keyboard';
     if (this.walkSpeedUnitFactor < 1) {
