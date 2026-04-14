@@ -136,7 +136,7 @@ RefreshedData.play = async ({ canvasElement }) => {
     [10, [11, 12]],
   ]);
   dynamicData.contentMap.set(10, html`#10 :)`);
-  dynamicData.contentMap.set(11, html`#11 <:)`);
+  dynamicData.contentMap.set(11, html`#11 &lt;:)`);
   dynamicData.contentMap.set(12, html`#12 8-)`);
   tree.refreshNodeData(0);
 

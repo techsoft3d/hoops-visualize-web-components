@@ -193,8 +193,16 @@ export class LayerTreeElement extends LitElement {
     }
 
     const nodesHtml: HTMLTemplateResult[] = [];
+    // Collect all node IDs that are children of another node in this layer.
+    // These are filtered out from the top-level list when nodesChildren is populated.
+    const childNodeIds = new Set<number>();
+    this.nodesChildren.forEach((children) => {
+      children.forEach((childId) => childNodeIds.add(childId));
+    });
     this.layerNodes.forEach((v: string, k: number) => {
-      nodesHtml.push(this.getNodeHtml(k, v));
+      if (!childNodeIds.has(k)) {
+        nodesHtml.push(this.getNodeHtml(k, v));
+      }
     });
 
     const nodeListClassNames = ['layer-node-list'];

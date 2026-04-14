@@ -13,6 +13,7 @@ import './hoops-toolbar-explode';
 import './hoops-toolbar-redlines';
 import './hoops-toolbar-tools';
 import './hoops-toolbar-settings';
+import './hoops-toolbar-sheets';
 
 export * from './hoops-toolbar-cad-configuration';
 export * from './hoops-toolbar-camera';
@@ -29,3 +30,4 @@ export * from './hoops-toolbar-explode';
 export * from './hoops-toolbar-redlines';
 export * from './hoops-toolbar-tools';
 export * from './hoops-toolbar-settings';
+export * from './hoops-toolbar-sheets';

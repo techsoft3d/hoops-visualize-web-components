@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import LayerTreePanel from './LayerTreePanel';
+import SheetListPanel from './SheetListPanel';
 import ViewTreePanel from './ViewTreePanel';
 import CadConfigurationListPanel from './CadConfigurationListPanel';
 import PropertiesView from './properties-view';
@@ -28,6 +29,7 @@ export default function RightPanel() {
   return (
     <div slot="panel-right" data-testid="panel-right" hidden={!uiState.rightPanelShown}>
       <LayerTreePanel />
+      <SheetListPanel />
       <ViewTreePanel />
       <TypesTreePanel />
       <CadConfigurationListPanel />

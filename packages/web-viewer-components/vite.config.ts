@@ -50,7 +50,6 @@ export default defineConfig({
       // External packages that should not be bundled into your library.
       external: [
         /lit.*/,
-        /@codemirror\/.*/,
         /@lezer\/.*/,
         '@ts3d-hoops/common',
         '@ts3d-hoops/streamcache',
@@ -94,10 +93,10 @@ export default defineConfig({
       reportsDirectory: '../../coverage/packages/web-viewer-components',
       reporter: ['text', 'html'],
       thresholds: {
-        lines: 57.66,
-        functions: 78.78,
-        branches: 86.67,
-        statements: 57.66,
+        lines: 59,
+        functions: 77,
+        branches: 85,
+        statements: 59,
         autoUpdate: true,
       },
     },

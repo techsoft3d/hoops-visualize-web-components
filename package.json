@@ -1,6 +1,6 @@
 {
   "name": "@ts3d-hoops/visualize-web",
-  "version": "2026.2.0",
+  "version": "2026.3.0",
   "license": "Apache-2.0",
   "scripts": {
     "build": "nx run-many -t build,typedoc",
@@ -43,10 +43,10 @@
     "tslib": "^2.3.0",
     "xstate": "^5.19.2",
     "zero-md": "^3.1.7",
-    "@ts3d-hoops/common": "2026.2.0",
-    "@ts3d-hoops/sc-engine": "2026.2.0",
-    "@ts3d-hoops/streamcache": "2026.2.0",
-    "@ts3d-hoops/web-viewer": "2026.2.0"
+    "@ts3d-hoops/common": "2026.3.0",
+    "@ts3d-hoops/sc-engine": "2026.3.0",
+    "@ts3d-hoops/streamcache": "2026.3.0",
+    "@ts3d-hoops/web-viewer": "2026.3.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.6",
@@ -104,6 +104,7 @@
     "eslint-config-prettier": "10.1.5",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-jsx-a11y": "6.10.1",
+    "eslint-plugin-lit": "^2.2.1",
     "eslint-plugin-playwright": "^0.15.3",
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "5.0.0",

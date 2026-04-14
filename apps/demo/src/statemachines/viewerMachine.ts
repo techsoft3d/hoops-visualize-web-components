@@ -121,7 +121,7 @@ export const viewerMachine = setup({
     takeSnapshot: () => takeSnapshot(getRegisteredViewer('')!.hwv),
     openEmptyViewer: () => (window.location.href = '.'),
     openModel: ({ event }) =>
-      (window.location.href = `.?scs=${
+      (window.location.href = `.?model=${
         import.meta.env.VITE_MODEL_URL ? import.meta.env.VITE_MODEL_URL + '/' : ''
       }${(event as OpenModelEvent).modelName}`),
     importModel: ({ event }) => {

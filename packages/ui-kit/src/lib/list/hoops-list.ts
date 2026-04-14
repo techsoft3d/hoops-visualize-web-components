@@ -91,11 +91,11 @@ export default class List extends LitElement {
   /** @internal */
   protected override render(): unknown {
     if (this.list === undefined) {
-      return html`<div class="list" />`;
+      return html`<div class="list"></div>`;
     }
     let elements = this.list!.context!.elementsData;
     if (elements === undefined) {
-      return html`<div class="list" />`;
+      return html`<div class="list"></div>`;
     }
 
     if (this.list.context.sortedByValue === true) {

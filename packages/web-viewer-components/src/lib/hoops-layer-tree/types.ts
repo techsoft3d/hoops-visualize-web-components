@@ -5,14 +5,11 @@ import { FileType, LayerId, LayerName, NodeId, NodeType } from '@ts3d-hoops/web-
 /**
  * This interface is a subset of the Layer API, it is meant to allow mocking and
  * proxying the Layer without having to wrap the whole interface.
- *
- * @interface ILayersContainer
- * @typedef {ILayersContainer}
  */
 export interface ILayersContainer {
   getLayers: () => Map<LayerId, LayerName>;
   getLayerName(layerId: LayerId): LayerName | null;
-  getNodesFromLayerName: (layerName: LayerName, onlyTreeNodes?: boolean) => NodeId[] | null;
+  getNodesFromLayer: (layerId: number, onlyTreeNodes?: boolean) => NodeId[] | null;
   getNodeName: (nodeId: number) => string | null;
   getNodeType: (nodeId: number) => NodeType | null;
   getModelFileTypeFromNode: (nodeId: number) => FileType | null;

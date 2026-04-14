@@ -42,7 +42,6 @@ export class RedlineServiceEventPanel extends LitElement {
           <input
             type="text"
             name="markup-id"
-            id="markup-id"
             id="markup-creation-id"
             placeholder="optional"
           />

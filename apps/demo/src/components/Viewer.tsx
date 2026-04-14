@@ -36,7 +36,7 @@ export function Viewer(props: ViewerProps) {
   const centralWidgetRef = useRef<HTMLDivElement | null>(null);
 
   const [searchParams, _] = useSearchParams();
-  const scsModel = searchParams.get('scs');
+  const model = searchParams.get('model');
 
   const hwvReady = (e: Event) => {
     const webViewer = (e as CustomEvent<WebViewer>).detail;
@@ -105,7 +105,7 @@ export function Viewer(props: ViewerProps) {
         >
           <AppHeader
             versions={viewerState}
-            sessionName={props.sessionName ?? scsModel ?? 'untitled'}
+            sessionName={props.sessionName ?? model ?? 'untitled'}
             infoShown={uiState.infoShown}
             onInfoToggled={(shown) => uiActor.send({ type: 'setInfoShown', shown })}
             onOpenEmpty={() => viewerActor.send({ type: 'openEmptyViewer' })}
@@ -120,8 +120,8 @@ export function Viewer(props: ViewerProps) {
           <div slot="central-widget" ref={centralWidgetRef}>
             <WebViewerComponent
               className="viewer"
-              empty={!scsModel}
-              endpointUri={scsModel ? `${scsModel}` : undefined}
+              empty={!model}
+              endpointUri={model ? `${model}` : undefined}
               enginePath="."
               hwvReady={hwvReady}
               hwvFirstModelLoaded={hwvFirstModelLoaded}
@@ -151,7 +151,7 @@ export function Viewer(props: ViewerProps) {
                   const deltaX = Math.abs(e.clientX - rightClickPosition.current.x);
                   const deltaY = Math.abs(e.clientY - rightClickPosition.current.y);
                   const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-                  
+
                   // A right mouse click is considered a drag if moved more than DRAG_THRESHOLD pixels
                   if (distance > DRAG_THRESHOLD) {
                     lastRightClick.current = null; // Cancel context menu
@@ -174,7 +174,7 @@ export function Viewer(props: ViewerProps) {
                 } else {
                   uiActor.send({ type: 'setContextMenuShown', shown: false });
                 }
-                
+
                 // Reset right click tracking
                 lastRightClick.current = null;
                 rightClickPosition.current = null;

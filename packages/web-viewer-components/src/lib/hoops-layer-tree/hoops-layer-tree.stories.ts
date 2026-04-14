@@ -49,8 +49,8 @@ const data = {
 const layersContainer = {
   getLayers: () => data.namesMap,
   getLayerName: (layerId: LayerId) => data.namesMap.get(layerId) ?? null,
-  getNodesFromLayerName: (layerName: LayerName, _onlyTreeNodes?: boolean) =>
-    data.layerNamesToNodeLists.get(layerName) ?? [],
+  getNodesFromLayer: (layerId: number, _onlyTreeNodes?: boolean) =>
+    data.layerNamesToNodeLists.get(data.namesMap.get(layerId) ?? '') ?? [],
   getNodeName: (nodeId: number) => data.nodeNames.get(nodeId) ?? null,
   getNodeType: (_nodeId: number) => NodeType.Part,
   getModelFileTypeFromNode: (_nodeId: number) => FileType.Dwg,

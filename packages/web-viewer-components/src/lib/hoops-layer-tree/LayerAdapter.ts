@@ -33,31 +33,50 @@ export function defaultLayerElementFactory(
   }
   element.selected = selected ?? false;
   element.selectedNodes = selectedNodes ?? [];
-  const layerNodes = layersContainer.getNodesFromLayerName(element.layerName);
+  const layerNodeSet = new Set<NodeId>();
+  for (const [id, name] of layersContainer.getLayers()) {
+    const curedName = getSanitizedLayerName(name, id);
+    if (curedName === element.layerName) {
+      layersContainer.getNodesFromLayer(id)?.forEach((nodeId) => layerNodeSet.add(nodeId));
+    }
+  }
+  const layerNodes = Array.from(layerNodeSet);
+
   const nodeIdToName = new Map<number, string>();
   const nodesChildren = new Map<number, number[]>();
   if (!layerNodes || layerNodes?.length <= 0) {
     return nothing;
   }
+  const adapter = listContext as LayerAdapter;
   layerNodes?.forEach((nodeId) => {
-    nodeId = getAdjustedNodeId(layersContainer, nodeId);
+    // When alwaysShowLeafNodes is true, keep the raw leaf BodyInstance nodes
+    // instead of substituting them with their parents.
+    if (!adapter.alwaysShowLeafNodes) {
+      nodeId = getAdjustedNodeId(layersContainer, nodeId);
+    }
     nodeIdToName.set(nodeId, layersContainer.getNodeName(nodeId) ?? 'Unknown node');
   });
   element.layerNodes = nodeIdToName;
   // Second iteration to determine the nodes' children that are part of the layers
-  for (const nodeId of element.layerNodes.keys()) {
-    const nodeChildren = layersContainer.getNodeChildren(nodeId);
-    if (nodeChildren && nodeChildren.length > 0) {
-      const nodeChildrenPartOfLayer = nodeChildren.filter((nodeChild) =>
-        nodeIdToName.has(nodeChild),
-      );
-      if (nodeChildrenPartOfLayer.length > 0) {
-        nodesChildren.set(nodeId, nodeChildrenPartOfLayer);
+  if (!adapter.alwaysShowLeafNodes) {
+    for (const nodeId of element.layerNodes.keys()) {
+      const nodeChildren = layersContainer.getNodeChildren(nodeId);
+      if (nodeChildren && nodeChildren.length > 0) {
+        const nodeChildrenPartOfLayer = nodeChildren.filter((nodeChild) =>
+          nodeIdToName.has(nodeChild),
+        );
+        if (nodeChildrenPartOfLayer.length > 0) {
+          nodesChildren.set(nodeId, nodeChildrenPartOfLayer);
+        }
       }
     }
   }
   element.nodesChildren = nodesChildren;
   return html` ${element} `;
+}
+
+export function getSanitizedLayerName(layerName: string | null | undefined, layerId: number): string {
+  return layerName || `Unnamed layer ${layerId}`;
 }
 
 /**
@@ -103,6 +122,14 @@ export default class LayerAdapter implements ListContext {
    * @type {?ILayersContainer}
    */
   layersContainer?: ILayersContainer;
+
+  /**
+   * When true, the children hierarchy within layers is not computed.
+   * This effectively shows leaf body nodes directly in each layer.
+   *
+   * @type {boolean}
+   */
+  alwaysShowLeafNodes = false;
 
   /**
    * A map that holds the node names associated to their id's

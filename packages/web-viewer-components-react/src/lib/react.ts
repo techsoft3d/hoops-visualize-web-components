@@ -22,6 +22,8 @@ import {
   HoopsModelTreeElement,
   HoopsLayerTreeElement,
   HoopsViewTreeElement,
+  HoopsSheetsButtonElement,
+  HoopsSheetListElement,
   InfoButton,
   HoopsContextMenuElement,
   HoopsToolsButtonElement,
@@ -149,6 +151,12 @@ export const HoopsLayersButton = createComponent({
   react: React,
 });
 
+export const HoopsSheetsButton = createComponent({
+  tagName: 'hoops-toolbar-sheets',
+  elementClass: HoopsSheetsButtonElement,
+  react: React,
+});
+
 export const HoopsViewsButton = createComponent({
   tagName: 'hoops-toolbar-views',
   elementClass: HoopsViewsButtonElement,
@@ -272,6 +280,15 @@ export const HoopsViewTree = createComponent({
   react: React,
   events: {
     viewTreeNodeClick: 'hoops-view-tree-node-click',
+  },
+});
+
+export const HoopsSheetList = createComponent({
+  tagName: 'hoops-sheet-list',
+  elementClass: HoopsSheetListElement,
+  react: React,
+  events: {
+    sheetListNodeClick: 'hoops-sheet-list-node-click',
   },
 });
 

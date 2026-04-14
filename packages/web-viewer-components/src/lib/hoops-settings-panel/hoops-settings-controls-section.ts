@@ -225,7 +225,6 @@ export class HoopsSettingsControlsSectionElement extends LitElement {
               class=${classMap({ 'setting-label': true, disabled: !isInKeyboardMode })}
               data-testid="enable-mouse-look-row"
               style="display: flex; align-items: center; gap: 0.75rem"
-              data-testid="enable-mouse-look"
             >
               <span class="setting-label" title="Enable Mouse Look">Enable Mouse Look:</span>
               <hoops-switch

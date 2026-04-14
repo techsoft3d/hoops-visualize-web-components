@@ -7,6 +7,7 @@ export type UiMachineEvent =
         | 'setModelTreeShown'
         | 'setLayerTreeShown'
         | 'setViewTreeShown'
+        | 'setSheetListShown'
         | 'setCadConfigurationListShown'
         | 'setCuttingPlaneShown'
         | 'setPropertyPanelShown'
@@ -34,6 +35,7 @@ export const uiMachine = setup({
       modelTreeShown: boolean;
       layerTreeShown: boolean;
       viewTreeShown: boolean;
+      sheetListShown: boolean;
       cadConfigurationListShown: boolean;
       cuttingPlaneShown: boolean;
       propertyPanelShown: boolean;
@@ -55,6 +57,7 @@ export const uiMachine = setup({
     modelTreeShown: false,
     layerTreeShown: false,
     viewTreeShown: false,
+    sheetListShown: false,
     cadConfigurationListShown: false,
     cuttingPlaneShown: false,
     propertyPanelShown: false,
@@ -94,11 +97,30 @@ export const uiMachine = setup({
         layerTreeShown: ({ event }) => event.shown,
         viewTreeShown: ({ context, event }) => (event.shown ? false : context.viewTreeShown),
         typesTreeShown: ({ context, event }) => (event.shown ? false : context.typesTreeShown),
+        sheetListShown: ({ context, event }) => (event.shown ? false : context.sheetListShown),
         cadConfigurationListShown: ({ context, event }) =>
           event.shown ? false : context.cadConfigurationListShown,
         rightPanelShown: ({ context, event }) =>
           context.propertyPanelShown ||
           context.viewTreeShown ||
+          context.cadConfigurationListShown ||
+          context.typesTreeShown ||
+          context.sheetListShown ||
+          event.shown,
+      }),
+    },
+    setSheetListShown: {
+      actions: assign({
+        sheetListShown: ({ event }) => event.shown,
+        viewTreeShown: ({ context, event }) => (event.shown ? false : context.viewTreeShown),
+        layerTreeShown: ({ context, event }) => (event.shown ? false : context.layerTreeShown),
+        typesTreeShown: ({ context, event }) => (event.shown ? false : context.typesTreeShown),
+        cadConfigurationListShown: ({ context, event }) =>
+          event.shown ? false : context.cadConfigurationListShown,
+        rightPanelShown: ({ context, event }) =>
+          context.propertyPanelShown ||
+          context.viewTreeShown ||
+          context.layerTreeShown ||
           context.cadConfigurationListShown ||
           context.typesTreeShown ||
           event.shown,
@@ -109,6 +131,7 @@ export const uiMachine = setup({
         viewTreeShown: ({ event }) => event.shown,
         layerTreeShown: ({ context, event }) => (event.shown ? false : context.layerTreeShown),
         typesTreeShown: ({ context, event }) => (event.shown ? false : context.typesTreeShown),
+        sheetListShown: ({ context, event }) => (event.shown ? false : context.sheetListShown),
         cadConfigurationListShown: ({ context, event }) =>
           event.shown ? false : context.cadConfigurationListShown,
         rightPanelShown: ({ context, event }) =>
@@ -116,6 +139,7 @@ export const uiMachine = setup({
           context.layerTreeShown ||
           context.cadConfigurationListShown ||
           context.typesTreeShown ||
+          context.sheetListShown ||
           event.shown,
       }),
     },
@@ -125,11 +149,13 @@ export const uiMachine = setup({
         viewTreeShown: ({ context, event }) => (event.shown ? false : context.viewTreeShown),
         layerTreeShown: ({ context, event }) => (event.shown ? false : context.layerTreeShown),
         typesTreeShown: ({ context, event }) => (event.shown ? false : context.typesTreeShown),
+        sheetListShown: ({ context, event }) => (event.shown ? false : context.sheetListShown),
         rightPanelShown: ({ context, event }) =>
           context.propertyPanelShown ||
           context.layerTreeShown ||
           context.viewTreeShown ||
           context.typesTreeShown ||
+          context.sheetListShown ||
           event.shown,
       }),
     },
@@ -141,6 +167,7 @@ export const uiMachine = setup({
           context.layerTreeShown ||
           context.cadConfigurationListShown ||
           context.typesTreeShown ||
+          context.sheetListShown ||
           event.shown,
       }),
     },
@@ -224,6 +251,7 @@ export const uiMachine = setup({
         typesTreeShown: ({ event }) => event.shown,
         viewTreeShown: ({ context, event }) => (event.shown ? false : context.viewTreeShown),
         layerTreeShown: ({ context, event }) => (event.shown ? false : context.layerTreeShown),
+        sheetListShown: ({ context, event }) => (event.shown ? false : context.sheetListShown),
         cadConfigurationListShown: ({ context, event }) =>
           event.shown ? false : context.cadConfigurationListShown,
         rightPanelShown: ({ context, event }) =>
@@ -231,6 +259,7 @@ export const uiMachine = setup({
           context.viewTreeShown ||
           context.layerTreeShown ||
           context.cadConfigurationListShown ||
+          context.sheetListShown ||
           event.shown,
       }),
     },

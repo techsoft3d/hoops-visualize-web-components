@@ -3,7 +3,7 @@ import { customElement } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { BaseMouseEvent, List, ContextWrapper } from '@ts3d-hoops/ui-kit/list';
 
-import LayerAdapter, { getAdjustedNodeId } from './LayerAdapter';
+import LayerAdapter, { getAdjustedNodeId, getSanitizedLayerName } from './LayerAdapter';
 import { ILayersContainer } from './types';
 import { componentBaseStyle } from '@ts3d-hoops/ui-kit';
 import {
@@ -48,10 +48,32 @@ export class HoopsLayerTreeElement extends LitElement {
   static styles = [
     componentBaseStyle,
     css`
+      .layertree-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+      }
+
+      .layertree-options {
+        display: flex;
+        align-items: center;
+        padding: 0.4rem 0.6rem;
+        gap: 0.4rem;
+        font-size: 0.85rem;
+        border-bottom: 1px solid var(--hoops-neutral-stroke, #e0e0e0);
+        user-select: none;
+      }
+
+      .layertree-options label {
+        cursor: pointer;
+      }
+
       .layertree {
         height: 100%;
         overflow: auto;
         width: 100%;
+        flex: 1;
       }
 
       hoops-layer-tree-element {
@@ -122,8 +144,8 @@ export class HoopsLayerTreeElement extends LitElement {
     const rawLayersData = newLayerAdapter.layersContainer?.getLayers();
 
     rawLayersData?.forEach((layerName, _layerId) => {
-      const newNodes =
-        newLayerAdapter.layersContainer?.getNodesFromLayerName(layerName) ?? new Set<number>();
+      layerName = getSanitizedLayerName(layerName, _layerId);
+      const newNodes = newLayerAdapter.layersContainer?.getNodesFromLayer(_layerId, false) ?? new Set<number>();
       if (newLayerAdapter.layerNamesToNodeIds.has(layerName)) {
         const existingNodes =
           newLayerAdapter.layerNamesToNodeIds.get(layerName) ?? new Set<number>();
@@ -320,15 +342,17 @@ export class HoopsLayerTreeElement extends LitElement {
 
   /** @internal */
   protected override render(): unknown {
-    return html`<hoops-list
-      class="layertree"
-      .list=${{ context: new LayerAdapter() } as ContextWrapper}
-      ${ref(this.listRef)}
-      @hoops-layer-clicked=${this.onLayerClicked}
-      @hoops-layer-tree-node-clicked=${this.onLayerNodeClicked}
-      @hoops-layer-visibility-change=${this.onLayerVisibilityClicked}
-      @hoops-layer-node-visibility-change=${this.onLayerNodeVisibilityClicked}
-    ></hoops-list>`;
+    return html`<div class="layertree-container">
+      <hoops-list
+        class="layertree"
+        .list=${{ context: new LayerAdapter() } as ContextWrapper}
+        ${ref(this.listRef)}
+        @hoops-layer-clicked=${this.onLayerClicked}
+        @hoops-layer-tree-node-clicked=${this.onLayerNodeClicked}
+        @hoops-layer-visibility-change=${this.onLayerVisibilityClicked}
+        @hoops-layer-node-visibility-change=${this.onLayerNodeVisibilityClicked}
+      ></hoops-list>
+    </div>`;
   }
 
   /**

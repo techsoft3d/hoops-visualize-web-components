@@ -14,6 +14,8 @@ import './hoops-toolbar-camera-operator';
 import './hoops-toolbar-drawmode';
 import './hoops-toolbar-model-tree';
 import ModelTreeButton from './hoops-toolbar-model-tree';
+import './hoops-toolbar-sheets';
+import { HoopsSheetsButtonElement } from './hoops-toolbar-sheets';
 
 describe('hoops-toolbar-model-tree', () => {
   it('Renders', async () => {
@@ -130,5 +132,14 @@ describe('hoops-toolbar-camera-operator', () => {
     await waitFor(() =>
       expect(dropdownButton.getAttribute('title')).toEqual('Camera operator - Walk'),
     );
+  });
+});
+
+describe('hoops-toolbar-sheets', () => {
+  it('Renders', async () => {
+    await renderTemplate(html`<hoops-toolbar-sheets></hoops-toolbar-sheets>`);
+    const sheetsButton = document.querySelector('hoops-toolbar-sheets') as HoopsSheetsButtonElement;
+    await sheetsButton.updateComplete;
+    expect(sheetsButton).toBeTruthy();
   });
 });

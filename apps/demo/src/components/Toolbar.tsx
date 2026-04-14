@@ -6,6 +6,7 @@ import {
   HoopsHomeButton,
   HoopsLayersButton,
   HoopsModelTreeButton,
+  HoopsSheetsButton,
   HoopsCadConfigurationButton,
   HoopsPropertiesButton,
   HoopsSnapshotButton,
@@ -79,6 +80,15 @@ export default function Toolbar({ children }: Props) {
             uiActor.send({
               type: 'setLayerTreeShown',
               shown: !uiState.layerTreeShown,
+            })
+          }
+        />
+        <HoopsSheetsButton
+          color={uiState.sheetListShown ? 'accent' : 'default'}
+          onClick={() =>
+            uiActor.send({
+              type: 'setSheetListShown',
+              shown: !uiState.sheetListShown,
             })
           }
         />
