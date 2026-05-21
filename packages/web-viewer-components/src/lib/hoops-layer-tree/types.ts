@@ -9,6 +9,7 @@ import { FileType, LayerId, LayerName, NodeId, NodeType } from '@ts3d-hoops/web-
 export interface ILayersContainer {
   getLayers: () => Map<LayerId, LayerName>;
   getLayerName(layerId: LayerId): LayerName | null;
+  getLayerAuthoredId?: (layerId: LayerId) => number | null;
   getNodesFromLayer: (layerId: number, onlyTreeNodes?: boolean) => NodeId[] | null;
   getNodeName: (nodeId: number) => string | null;
   getNodeType: (nodeId: number) => NodeType | null;

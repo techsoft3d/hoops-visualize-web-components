@@ -1,7 +1,7 @@
 import '@ts3d-hoops/ui-kit';
 import '@ts3d-hoops/web-viewer-components';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { HoopsLayout } from '@ts3d-hoops/ui-kit-react';
 import {
@@ -21,6 +21,8 @@ import WebViewerCE from '@ts3d-hoops/web-viewer-components/hoops-web-viewer';
 import LeftPanel from './LeftPanel';
 import RightPanel from './RightPanel';
 import ContextMenu from './ContextMenu';
+import { parseViewerConfigFromParams } from '../utils/viewerConfig';
+import { useSsrBackground } from '../utils/useSsrBackground';
 
 export type ViewerProps = {
   sessionName?: string;
@@ -32,26 +34,43 @@ export function Viewer(props: ViewerProps) {
   const uiState = useSelector(uiActor, (snapshot) => snapshot.context);
   const viewerState = useSelector(viewerActor, (snapshot) => snapshot.context);
 
-  const hwvRef = useRef<WebViewer | null>(null);
   const centralWidgetRef = useRef<HTMLDivElement | null>(null);
+  const [webViewer, setWebViewer] = useState<WebViewer | null>(null);
 
   const [searchParams, _] = useSearchParams();
-  const model = searchParams.get('model');
+  const viewerConfig = parseViewerConfigFromParams(searchParams);
+
+  useSsrBackground(viewerConfig.rendererType === 'server', webViewer, viewerState.sceneReady);
+
+  const modelFormatter = (viewerType?: string, model?: string): string | undefined => {
+    if (viewerType === 'scs') {
+      return undefined;
+    }
+
+    if (!model) {
+      return undefined;
+    }
+
+    return model;
+  };
 
   const hwvReady = (e: Event) => {
-    const webViewer = (e as CustomEvent<WebViewer>).detail;
+    const hwv = (e as CustomEvent<WebViewer>).detail;
 
-    hwvRef.current = webViewer;
+    setWebViewer(hwv);
 
-    viewerActor.send({ type: 'viewerReady', viewer: webViewer, elm: e.target as WebViewerCE });
+    viewerActor.send({ type: 'viewerReady', viewer: hwv, elm: e.target as WebViewerCE });
   };
 
   const hwvModelStructureReady = () => {
     viewerActor.send({ type: 'modelReady' });
   };
 
-  const hwvFirstModelLoaded = () => {
-    const hwv = hwvRef.current;
+  const hwvFirstModelLoaded = (e: Event) => {
+    const event = e as CustomEvent<{
+      hwv: WebViewer;
+    }>;
+    const { hwv } = event.detail;
     const isIfc =
       hwv?.model.getModelFileTypeFromNode(
         hwv?.model.getNodeChildren(hwv?.model.getAbsoluteRootNode())[0],
@@ -84,8 +103,8 @@ export function Viewer(props: ViewerProps) {
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver(() => {
-      if (hwvRef.current && hwvRef.current.getSceneReady()) {
-        hwvRef.current.resizeCanvas();
+      if (webViewer && webViewer.getSceneReady()) {
+        webViewer.resizeCanvas();
       }
     });
 
@@ -105,7 +124,7 @@ export function Viewer(props: ViewerProps) {
         >
           <AppHeader
             versions={viewerState}
-            sessionName={props.sessionName ?? model ?? 'untitled'}
+            sessionName={props.sessionName ?? viewerConfig.model ?? 'untitled'}
             infoShown={uiState.infoShown}
             onInfoToggled={(shown) => uiActor.send({ type: 'setInfoShown', shown })}
             onOpenEmpty={() => viewerActor.send({ type: 'openEmptyViewer' })}
@@ -120,8 +139,11 @@ export function Viewer(props: ViewerProps) {
           <div slot="central-widget" ref={centralWidgetRef}>
             <WebViewerComponent
               className="viewer"
-              empty={!model}
-              endpointUri={model ? `${model}` : undefined}
+              empty={viewerConfig.empty}
+              endpointUri={viewerConfig.endpointUri}
+              model={modelFormatter(viewerConfig.viewerType, viewerConfig.model)}
+              rendererType={viewerConfig.rendererType}
+              streamingMode={viewerConfig.streamingMode}
               enginePath="."
               hwvReady={hwvReady}
               hwvFirstModelLoaded={hwvFirstModelLoaded}
@@ -134,7 +156,7 @@ export function Viewer(props: ViewerProps) {
                   type: 'setContextMenuShown',
                   shown: false,
                 });
-                hwvRef.current?.getViewElement()?.focus();
+                webViewer?.getViewElement()?.focus();
               }}
               onMouseDown={(e) => {
                 if (e.button === Button.Right) {

@@ -35,7 +35,8 @@ export function defaultLayerElementFactory(
   element.selectedNodes = selectedNodes ?? [];
   const layerNodeSet = new Set<NodeId>();
   for (const [id, name] of layersContainer.getLayers()) {
-    const curedName = getSanitizedLayerName(name, id);
+    const authoredId = layersContainer.getLayerAuthoredId?.(id) ?? null;
+    const curedName = getSanitizedLayerName(name, id, authoredId);
     if (curedName === element.layerName) {
       layersContainer.getNodesFromLayer(id)?.forEach((nodeId) => layerNodeSet.add(nodeId));
     }
@@ -75,8 +76,18 @@ export function defaultLayerElementFactory(
   return html` ${element} `;
 }
 
-export function getSanitizedLayerName(layerName: string | null | undefined, layerId: number): string {
-  return layerName || `Unnamed layer ${layerId}`;
+export function getSanitizedLayerName(
+  layerName: string | null | undefined,
+  layerId: number,
+  authoredId?: number | null,
+): string {
+  if (layerName) {
+    return layerName;
+  }
+  if (authoredId !== null && authoredId !== undefined) {
+    return `Unnamed layer (${authoredId})`;
+  }
+  return `Unnamed layer ${layerId}`;
 }
 
 /**

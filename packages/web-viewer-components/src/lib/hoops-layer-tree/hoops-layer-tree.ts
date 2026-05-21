@@ -144,8 +144,9 @@ export class HoopsLayerTreeElement extends LitElement {
     const rawLayersData = newLayerAdapter.layersContainer?.getLayers();
 
     rawLayersData?.forEach((layerName, _layerId) => {
-      layerName = getSanitizedLayerName(layerName, _layerId);
-      const newNodes = newLayerAdapter.layersContainer?.getNodesFromLayer(_layerId, false) ?? new Set<number>();
+      const authoredId = newLayerAdapter.layersContainer?.getLayerAuthoredId?.(_layerId) ?? null;
+      layerName = getSanitizedLayerName(layerName, _layerId, authoredId);
+      const newNodes = new Set<number>(newLayerAdapter.layersContainer?.getNodesFromLayer(_layerId, false) ?? []);
       if (newLayerAdapter.layerNamesToNodeIds.has(layerName)) {
         const existingNodes =
           newLayerAdapter.layerNamesToNodeIds.get(layerName) ?? new Set<number>();
@@ -154,7 +155,7 @@ export class HoopsLayerTreeElement extends LitElement {
           new Set<number>([...existingNodes, ...newNodes]),
         );
       } else {
-        newLayerAdapter.layerNamesToNodeIds.set(layerName, new Set<number>([...newNodes]));
+        newLayerAdapter.layerNamesToNodeIds.set(layerName, newNodes);
       }
     });
     const htmlIdsToLayerNames = new Map<number, string>();

@@ -76,7 +76,7 @@ describe('hoops-toolbar-drawmode', () => {
             return null;
           },
         },
-        getDrawMode: () => 1,
+        getDrawModeName: () => 'Shaded',
         getProjectionMode: () => 0,
       },
       setCallbacks: (_) => undefined,
@@ -115,7 +115,7 @@ describe('hoops-toolbar-camera-operator', () => {
             return null;
           },
         },
-        getDrawMode: () => 1,
+        getDrawModeName: () => 'Shaded',
         getProjectionMode: () => 0,
       },
       setCallbacks: (_) => undefined,

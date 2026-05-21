@@ -2,7 +2,7 @@ import { nothing } from 'lit';
 import { describe, expect, it, vi } from 'vitest';
 import { FileType, NodeType } from '@ts3d-hoops/web-viewer';
 
-import LayerAdapter, { defaultLayerElementFactory, getAdjustedNodeId } from './LayerAdapter';
+import LayerAdapter, { defaultLayerElementFactory, getAdjustedNodeId, getSanitizedLayerName } from './LayerAdapter';
 import { ILayersContainer } from './types';
 
 /**
@@ -31,6 +31,7 @@ function createMockLayersContainer(
   return {
     getLayers: vi.fn(() => layers),
     getLayerName: vi.fn((layerId: number) => layers.get(layerId) ?? null),
+    getLayerAuthoredId: vi.fn((_layerId: number) => null),
     getNodesFromLayer: vi.fn((layerId: number) => nodesPerLayer.get(layerId) ?? null),
     getNodeName: vi.fn((nodeId: number) => nodeNames.get(nodeId) ?? null),
     getNodeType: vi.fn((nodeId: number) => nodeTypes.get(nodeId) ?? null),
@@ -349,5 +350,31 @@ describe('defaultLayerElementFactory', () => {
 
     // getNodeName is called once per unique node (10, 20, 30), not 4 times.
     expect(container.getNodeName).toHaveBeenCalledTimes(3);
+  });
+});
+
+describe('getSanitizedLayerName', () => {
+  it('should return the layer name when it is provided', () => {
+    expect(getSanitizedLayerName('My Layer', 1, 42)).toBe('My Layer');
+  });
+
+  it('should return "Unnamed layer (authoredId)" when name is null and authoredId is provided', () => {
+    expect(getSanitizedLayerName(null, 1, 42)).toBe('Unnamed layer (42)');
+  });
+
+  it('should return "Unnamed layer (authoredId)" when name is undefined and authoredId is provided', () => {
+    expect(getSanitizedLayerName(undefined, 1, 42)).toBe('Unnamed layer (42)');
+  });
+
+  it('should return "Unnamed layer (authoredId)" when name is empty string and authoredId is provided', () => {
+    expect(getSanitizedLayerName('', 1, 42)).toBe('Unnamed layer (42)');
+  });
+
+  it('should return "Unnamed layer layerId" when name is null and authoredId is null', () => {
+    expect(getSanitizedLayerName(null, 7, null)).toBe('Unnamed layer 7');
+  });
+
+  it('should return "Unnamed layer layerId" when name is null and authoredId is undefined', () => {
+    expect(getSanitizedLayerName(null, 7, undefined)).toBe('Unnamed layer 7');
   });
 });

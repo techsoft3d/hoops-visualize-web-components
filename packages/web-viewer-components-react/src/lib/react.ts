@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { createComponent } from '@lit/react';
+import { RendererType, StreamingMode } from '@ts3d-hoops/web-viewer';
 
 import {
   WebViewerComponent as LitWebViewerComponent,
@@ -41,7 +42,10 @@ import {
   HoopsCuttingSectionToolbarElement,
 } from '@ts3d-hoops/web-viewer-components';
 
-export const WebViewerComponent = createComponent({
+// Base component that wrap LitWebViewerComponent
+// This is an internal component that wont properly handle properties with converters (like rendererType or streamingMode).
+// See WebViewerComponent that supercedes this and handles the conversion logic to maintain API consistency.
+const BaseWebViewerComponent = createComponent({
   tagName: 'hoops-web-viewer',
   elementClass: LitWebViewerComponent,
   react: React,
@@ -126,6 +130,64 @@ export const WebViewerComponent = createComponent({
     hwvXHRonloadend: 'hwvXHRonloadend',
   },
 });
+
+type BaseWebViewerComponentProps = React.ComponentProps<typeof BaseWebViewerComponent>;
+
+type WebViewerComponentProps = Omit<
+  BaseWebViewerComponentProps,
+  'rendererType' | 'streamingMode'
+> & {
+  rendererType?: RendererType | 'client' | 'server';
+  streamingMode?: StreamingMode | 'interactive' | 'all' | 'ondemand' | 'default';
+};
+
+/**
+ * React wrapper for the hoops-web-viewer web component.
+ *
+ * See WebViewerComponent from @ts3d-hoops/web-viewer-components for complete documentation and examples.
+ */
+export const WebViewerComponent = React.forwardRef<
+  React.ElementRef<typeof BaseWebViewerComponent>,
+  WebViewerComponentProps
+>((props, ref) => {
+  const { rendererType, streamingMode, ...rest } = props;
+
+  // Convert string to enum if needed, matching Lit component's converter logic
+  const convertedRendererType =
+    typeof rendererType === 'string'
+      ? rendererType.toLowerCase() === 'server'
+        ? RendererType.Server
+        : RendererType.Client
+      : rendererType;
+
+  // Convert streamingMode string to enum if needed
+  const convertedStreamingMode =
+    typeof streamingMode === 'string'
+      ? (() => {
+          switch (streamingMode.toLowerCase()) {
+            case 'all':
+              return StreamingMode.All;
+            case 'ondemand':
+              return StreamingMode.OnDemand;
+            case 'interactive':
+              return StreamingMode.Interactive;
+            case 'default':
+              return StreamingMode.Default;
+            default:
+              return StreamingMode.Default;
+          }
+        })()
+      : streamingMode;
+
+  return React.createElement(BaseWebViewerComponent, {
+    ref,
+    rendererType: convertedRendererType,
+    streamingMode: convertedStreamingMode,
+    ...rest,
+  });
+});
+
+WebViewerComponent.displayName = 'WebViewerComponent';
 
 export const HoopsWebviewerContextManager = createComponent({
   tagName: 'hoops-web-viewer-context-manager',

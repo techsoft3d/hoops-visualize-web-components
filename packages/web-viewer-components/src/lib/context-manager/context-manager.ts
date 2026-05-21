@@ -2,7 +2,7 @@ import { createContext, provide } from '@lit/context';
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-import { DrawMode, OperatorId, Operators, WebViewer } from '@ts3d-hoops/web-viewer';
+import { DrawModeName, OperatorId, Operators, WebViewer } from '@ts3d-hoops/web-viewer';
 
 import {
   ActiveToolOperatorPosition,
@@ -65,7 +65,7 @@ import MaterialService from '../services/material';
 export default class WebViewerContextManager extends LitElement {
   @provide({ context: webViewerStateContext })
   webviewerState: WebViewerState = {
-    drawMode: DrawMode.Wireframe,
+    drawMode: 'Wireframe',
     topCameraOperator: OperatorId.Navigate,
     toolOperator: OperatorId.None,
   };
@@ -99,7 +99,7 @@ export default class WebViewerContextManager extends LitElement {
       return;
     }
 
-    const currentDrawMode = this._webViewer.view.getDrawMode();
+    const currentDrawMode = this._webViewer.view.getDrawModeName();
     this.dispatchDrawMode(currentDrawMode);
 
     this.refreshCameraOperator();
@@ -142,7 +142,7 @@ export default class WebViewerContextManager extends LitElement {
    * @param drawMode - The new draw mode to set in the state
    * @returns {void}
    */
-  private dispatchDrawMode(drawMode: DrawMode) {
+  private dispatchDrawMode(drawMode: DrawModeName) {
     this.webviewerState = {
       ...this.webviewerState,
       drawMode,
@@ -156,7 +156,7 @@ export default class WebViewerContextManager extends LitElement {
    * @param drawMode - The draw mode to apply to the web viewer
    * @returns {void}
    */
-  setDrawMode(drawMode: DrawMode) {
+  setDrawMode(drawMode: DrawModeName) {
     if (this._webViewer) {
       this._webViewer.view.setDrawMode(drawMode);
       this.dispatchDrawMode(drawMode);

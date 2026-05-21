@@ -1,7 +1,7 @@
-import { DrawMode, OperatorId } from '@ts3d-hoops/web-viewer';
+import { DrawModeName, OperatorId } from '@ts3d-hoops/web-viewer';
 
 export interface WebViewerState {
-  drawMode: DrawMode;
+  drawMode: DrawModeName;
   topCameraOperator: OperatorId;
   toolOperator: OperatorId;
 }

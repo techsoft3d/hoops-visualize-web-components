@@ -11,7 +11,6 @@ import {
   core,
   PointSizeUnit as WebViewerPointSizeUnit,
   Color,
-  DrawMode,
 } from '@ts3d-hoops/web-viewer';
 import { toWebViewerPointSizeUnit } from './utils';
 
@@ -166,8 +165,8 @@ export default class RenderOptionsService extends EventTarget implements IRender
     }
     const view = this._webviewer!.view;
     view.getHiddenLineSettings().setObscuredLineOpacity(opacity);
-    if (view.getDrawMode() === DrawMode.HiddenLine) {
-      view.setDrawMode(DrawMode.HiddenLine);
+    if (view.getDrawModeName() === 'HiddenLine') {
+      view.setDrawMode('HiddenLine');
     }
     this.dispatchEvent(
       new CustomEvent('hoops-hidden-line-opacity-changed', {

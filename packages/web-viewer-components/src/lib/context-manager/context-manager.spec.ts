@@ -4,7 +4,6 @@ import { describe, expect, it, vi, beforeEach, beforeAll } from 'vitest';
 import { renderTemplate } from '../testing/utils';
 import './context-manager';
 import {
-  DrawMode,
   MarkupManager,
   Projection,
   View,
@@ -37,7 +36,7 @@ describe('hoops-web-viewer-context-manager', () => {
   } as unknown as OperatorManager;
 
   const mockView = {
-    getDrawMode: vi.fn(() => DrawMode.Shaded),
+    getDrawModeName: vi.fn(() => 'Shaded'),
     setDrawMode: vi.fn(),
     getProjectionMode: vi.fn(() => Projection.Perspective),
     setProjectionMode: vi.fn(),
@@ -117,14 +116,14 @@ describe('hoops-web-viewer-context-manager', () => {
     expect(instance.webViewer).toBeUndefined();
   });
 
-  it('should call getDrawMode from the view', async () => {
+  it('should call getDrawModeName from the view', async () => {
     const contextManager: HTMLElement = document.querySelector('hoops-web-viewer-context-manager')!;
     const instance = contextManager as any;
 
     instance.webViewer = mockWebViewer;
 
-    expect(mockView.getDrawMode).toHaveBeenCalled();
-    expect(instance.webviewerState.drawMode).toBe(DrawMode.Shaded);
+    expect(mockView.getDrawModeName).toHaveBeenCalled();
+    expect(instance.webviewerState.drawMode).toBe('Shaded');
   });
 
   it('should set the draw mode and projection mode', async () => {
@@ -133,10 +132,10 @@ describe('hoops-web-viewer-context-manager', () => {
 
     instance.webViewer = mockWebViewer;
 
-    instance.setDrawMode(DrawMode.Wireframe);
+    instance.setDrawMode('Wireframe');
 
-    expect(mockView.setDrawMode).toHaveBeenCalledWith(DrawMode.Wireframe);
-    expect(instance.webviewerState.drawMode).toBe(DrawMode.Wireframe);
+    expect(mockView.setDrawMode).toHaveBeenCalledWith('Wireframe');
+    expect(instance.webviewerState.drawMode).toBe('Wireframe');
   });
 
   it('should reset properly', async () => {

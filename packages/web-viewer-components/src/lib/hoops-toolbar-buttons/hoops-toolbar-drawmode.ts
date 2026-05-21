@@ -12,21 +12,21 @@ import {
   goochShader,
   xRayShader,
 } from '@ts3d-hoops/ui-kit/icons';
-import { DrawMode } from '@ts3d-hoops/web-viewer';
+import { DrawModeName } from '@ts3d-hoops/web-viewer';
 import WebViewerContextManager, {
   contextManagerContext,
   webViewerStateContext,
   type WebViewerState,
 } from '../context-manager';
 
-const drawModeButtons = new Map([
-  [DrawMode.Wireframe, { title: 'Wireframe', icon: cubeWireframe }],
-  [DrawMode.Shaded, { title: 'Shaded', icon: noWireframeShaded }],
-  [DrawMode.WireframeOnShaded, { title: 'Wireframe On Shaded', icon: wireframeShaded }],
-  [DrawMode.HiddenLine, { title: 'Hidden Line', icon: cubeHiddenLine }],
-  [DrawMode.XRay, { title: 'XRay', icon: xRayShader }],
-  [DrawMode.Gooch, { title: 'Gooch', icon: goochShader }],
-  [DrawMode.Toon, { title: 'Toon', icon: toonShader }],
+const drawModeButtons = new Map<DrawModeName, { title: string; icon: unknown }>([
+  ['Wireframe', { title: 'Wireframe', icon: cubeWireframe }],
+  ['Shaded', { title: 'Shaded', icon: noWireframeShaded }],
+  ['WireframeOnShaded', { title: 'Wireframe On Shaded', icon: wireframeShaded }],
+  ['HiddenLine', { title: 'Hidden Line', icon: cubeHiddenLine }],
+  ['XRay', { title: 'XRay', icon: xRayShader }],
+  ['Gooch', { title: 'Gooch', icon: goochShader }],
+  ['Toon', { title: 'Toon', icon: toonShader }],
 ]);
 
 /**
@@ -73,7 +73,7 @@ export class HoopsDrawmodeButtonElement extends LitElement {
   @consume({ context: webViewerStateContext, subscribe: true })
   private webViewerState?: WebViewerState;
 
-  private setDrawMode(drawmode: DrawMode) {
+  private setDrawMode(drawmode: DrawModeName) {
     if (this.contextManager) {
       this.contextManager.setDrawMode(drawmode);
     }
@@ -84,7 +84,7 @@ export class HoopsDrawmodeButtonElement extends LitElement {
     const currentDrawMode =
       this.webViewerState && drawModeButtons.has(this.webViewerState.drawMode)
         ? this.webViewerState.drawMode
-        : DrawMode.WireframeOnShaded;
+        : 'WireframeOnShaded';
 
     const currentIcon = drawModeButtons.get(currentDrawMode)!;
 

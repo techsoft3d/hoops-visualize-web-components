@@ -120,10 +120,12 @@ export const viewerMachine = setup({
     }),
     takeSnapshot: () => takeSnapshot(getRegisteredViewer('')!.hwv),
     openEmptyViewer: () => (window.location.href = '.'),
-    openModel: ({ event }) =>
-      (window.location.href = `.?model=${
-        import.meta.env.VITE_MODEL_URL ? import.meta.env.VITE_MODEL_URL + '/' : ''
-      }${(event as OpenModelEvent).modelName}`),
+    openModel: ({ event }) => {
+      const modelPath = import.meta.env.VITE_MODEL_URL
+        ? `${import.meta.env.VITE_MODEL_URL}/${(event as OpenModelEvent).modelName}`
+        : (event as OpenModelEvent).modelName;
+      window.location.href = `.?model=${modelPath}`;
+    },
     importModel: ({ event }) => {
       const viewer = getRegisteredViewer('')!;
       viewer.hwv.model.loadSubtreeFromScsFile(

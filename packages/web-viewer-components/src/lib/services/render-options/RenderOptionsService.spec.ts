@@ -1,12 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import RenderOptionsService from './RenderOptionsService';
-import {
-  AntiAliasingMode,
-  Color,
-  DrawMode,
-  PointSizeUnit,
-  VerticalGradient,
-} from '@ts3d-hoops/web-viewer';
+import { AntiAliasingMode, Color, PointSizeUnit, VerticalGradient } from '@ts3d-hoops/web-viewer';
 
 function createMockWebViewer(overrides = {}) {
   const hiddenLineSettings = {
@@ -44,7 +38,7 @@ function createMockWebViewer(overrides = {}) {
     setEyeDomeLightingEnabled: vi.fn(),
     getBackgroundColor: vi.fn(() => new VerticalGradient(new Color(1, 2, 3), new Color(4, 5, 6))),
     setBackgroundColor: vi.fn(),
-    getDrawMode: vi.fn(() => DrawMode.HiddenLine),
+    getDrawModeName: vi.fn(() => 'HiddenLine'),
     setDrawMode: vi.fn(),
   };
   return {
